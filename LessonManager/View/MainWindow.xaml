@@ -4,19 +4,33 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LessonManager.View"
+        xmlns:vm="clr-namespace:LessonManager.ViewModel"
         mc:Ignorable="d"
         Title="Менеджер Занятий" Height="450" Width="800">
+    <Window.DataContext>
+        <vm:MainViewModel/>
+    </Window.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="32" x:Name="SideBar"/>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <StackPanel>
-            <Button Content="Скрыть меню" />
+        
+        <Button Content="≡" Grid.Column="0" Width="32" Height="32" FontWeight="Bold" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding OpenSideBarCommand}" 
+        CommandParameter="{Binding ElementName=SideBar}"/>
+        <StackPanel Visibility="{Binding Path=SideBarOpenedElementVisibility}" Grid.Column="0" >
+            <Rectangle HorizontalAlignment="Left" Height="32" Width="256"/>
+            <Rectangle Stroke="Violet" HorizontalAlignment="Left" Height="32" Width="256"/>
         </StackPanel>
-        <GridSplitter Grid.Column="1" ShowsPreview="False" Width="3" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
-        <StackPanel>
+        <StackPanel Visibility="{Binding Path=SideBarClosedElementVisibility}" Grid.Column="0">
+            <Rectangle HorizontalAlignment="Left" Height="32" Width="32"/>
+            <Rectangle Stroke="Red" HorizontalAlignment="Left" Height="32" Width="32"/>
+        </StackPanel>
+        
+        <GridSplitter IsEnabled="False" Grid.Column="1" ShowsPreview="False" Width="3" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
+        
+        <StackPanel Grid.Column="2">
             
         </StackPanel>
     </Grid>
