@@ -11,7 +11,7 @@ using System.Xml.Linq;
 
 namespace LessonManager.ViewModel
 {
-    internal class MainViewModel : ObservableObject
+    internal partial class MainViewModel : ObservableObject
     {
         private RelayCommand<ColumnDefinition>? m_OpenSideBarCommand;
         public RelayCommand<ColumnDefinition> OpenSideBarCommand
@@ -38,34 +38,14 @@ namespace LessonManager.ViewModel
             }
         }
 
+        [ObservableProperty]
         private bool m_IsSideBarOpen;
-        public bool IsSideBarOpen {
-            get => m_IsSideBarOpen; 
-            set
-            {
-                SetProperty(ref m_IsSideBarOpen, value);
-            }
-        }
 
+        [ObservableProperty]
         private Visibility m_SideBarOpenedElementVisibility;
-        public Visibility SideBarOpenedElementVisibility
-        {
-            get => m_SideBarOpenedElementVisibility;
-            set
-            {
-                SetProperty(ref m_SideBarOpenedElementVisibility, value);
-            }
-        }
 
+        [ObservableProperty]
         private Visibility m_SideBarClosedElementVisibility;
-        public Visibility SideBarClosedElementVisibility
-        {
-            get => m_SideBarClosedElementVisibility;
-            set
-            {
-                SetProperty(ref m_SideBarClosedElementVisibility, value);
-            }
-        }
 
         public MainViewModel()
         {
