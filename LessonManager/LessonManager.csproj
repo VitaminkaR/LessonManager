@@ -9,11 +9,26 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Content\**" />
+    <EmbeddedResource Remove="Content\**" />
+    <None Remove="Content\**" />
+    <Page Remove="Content\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="View\OpenSideBarIcon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Model\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="View\OpenSideBarIcon.png" />
   </ItemGroup>
 
 </Project>

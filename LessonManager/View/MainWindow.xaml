@@ -16,9 +16,11 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        
-        <Button Content="≡" Grid.Column="0" Width="32" Height="32" FontWeight="Bold" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding OpenSideBarCommand}" 
-        CommandParameter="{Binding ElementName=SideBar}"/>
+
+        <Button Grid.Column="0" Width="32" Height="32" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding OpenSideBarCommand}" 
+        CommandParameter="{Binding ElementName=SideBar}">
+            <Image Source="/View/OpenSideBarIcon.png"></Image>
+        </Button>
         <StackPanel Visibility="{Binding Path=SideBarOpenedElementVisibility}" Grid.Column="0" >
             <Rectangle HorizontalAlignment="Left" Height="32" Width="256"/>
             <Rectangle Stroke="Violet" HorizontalAlignment="Left" Height="32" Width="256"/>
