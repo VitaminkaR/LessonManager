@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:LessonManager.View"
         xmlns:vm="clr-namespace:LessonManager.ViewModel"
         mc:Ignorable="d"
-        Title="Добавить дисциплину" Height="200" Width="324">
+        Title="Добавить дисциплину" Height="213" Width="324" ResizeMode="NoResize">
     <Window.DataContext>
         <vm:SubjectAddViewModel/>
     </Window.DataContext>
