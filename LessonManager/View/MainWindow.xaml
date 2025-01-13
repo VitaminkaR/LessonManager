@@ -21,6 +21,11 @@
         <Button Grid.Column="0" Width="32" Height="32" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding OpenSideBarCommand}" 
         CommandParameter="{Binding ElementName=SideBar}">
             <Image Source="/View/OpenSideBarIcon.png"></Image>
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
         </Button>
         <!--Развернутое положение-->
         <StackPanel Visibility="{Binding Path=SideBarOpenedElementVisibility}" Grid.Column="0" >
