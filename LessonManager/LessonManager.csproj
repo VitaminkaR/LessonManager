@@ -16,6 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="View\AddActivity.png" />
+    <None Remove="View\AddSubject.png" />
     <None Remove="View\OpenSideBarIcon.png" />
   </ItemGroup>
 
@@ -28,6 +30,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="View\AddActivity.png" />
+    <Resource Include="View\AddSubject.png" />
     <Resource Include="View\OpenSideBarIcon.png" />
   </ItemGroup>
 
