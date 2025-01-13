@@ -17,9 +17,14 @@ namespace LessonManager.View
     /// </summary>
     public partial class MainWindow : Window
     {
+        static internal ApplicationContext? ApplicationContext { get; private set; }
+
         public MainWindow()
         {
             InitializeComponent();
+
+            ApplicationContext = new ApplicationContext();
+            ApplicationContext.Database.EnsureCreated();
         }
     }
 }
