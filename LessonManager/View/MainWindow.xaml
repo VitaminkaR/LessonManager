@@ -27,17 +27,10 @@
                 </Style>
             </Button.Resources>
         </Button>
-        <!--Развернутое положение-->
-        <StackPanel Visibility="{Binding Path=SideBarOpenedElementVisibility}" Grid.Column="0" >
-            <Rectangle HorizontalAlignment="Left" Height="32" Width="256"/>
-            <Rectangle Stroke="Violet" HorizontalAlignment="Left" Height="32" Width="256"/>
-        </StackPanel>
-        <!--Свернутое положение-->
-        <StackPanel Visibility="{Binding Path=SideBarClosedElementVisibility}" Grid.Column="0">
-            <Separator Opacity="0" Height="28"/>
-            <Separator Opacity="0" Height="2"/>
+        <!--Меню-->
+        <Canvas Grid.Column="0">
             <!--Кнопка добавления учебной дисциплины-->
-            <Button Width="32" Height="32" HorizontalAlignment="Left">
+            <Button Width="32" Height="32" Margin="0,34,0,0" HorizontalAlignment="Left">
                 <Image Source="/View/AddSubject.png"></Image>
                 <Button.Resources>
                     <Style TargetType="Border">
@@ -45,9 +38,9 @@
                     </Style>
                 </Button.Resources>
             </Button>
-            <Separator Opacity="0" Height="2"/>
+            <TextBlock Margin="34,42,0,0" FontFamily="Comic Sans MS" FontWeight="Bold" Visibility="{Binding Path=SideBarOpenedElementVisibility}">Добавить дисциплину</TextBlock>
             <!--Кнопка добавления учебного занятия-->
-            <Button Width="32" Height="32" HorizontalAlignment="Left">
+            <Button Width="32" Height="32" Margin="0,68,0,0" HorizontalAlignment="Left">
                 <Image Source="/View/AddActivity.png"></Image>
                 <Button.Resources>
                     <Style TargetType="Border">
@@ -55,7 +48,8 @@
                     </Style>
                 </Button.Resources>
             </Button>
-        </StackPanel>
+            <TextBlock Margin="34,74,0,0" FontFamily="Comic Sans MS" FontWeight="Bold" Visibility="{Binding Path=SideBarOpenedElementVisibility}">Добавить занятие</TextBlock>
+        </Canvas>
         
         <GridSplitter IsEnabled="False" Grid.Column="1" ShowsPreview="False" Width="3" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
 
