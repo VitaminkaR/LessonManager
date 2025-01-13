@@ -8,7 +8,6 @@ namespace LessonManager.Model
 {
     enum ExamType
     {
-        None,
         Exam,
         Test,
         DifTest
@@ -27,7 +26,7 @@ namespace LessonManager.Model
     {
         public int ID { get; set; }
         public string? Name { get; set; }
-        public ExamType Exam { get; set; } = ExamType.None;
+        public ExamType Exam { get; set; }
         public DateTime DateTime { get; set; }
         public ExamMarkType ExamMark { get; set; } = ExamMarkType.None;
     }

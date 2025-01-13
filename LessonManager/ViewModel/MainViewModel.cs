@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using LessonManager.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +40,12 @@ namespace LessonManager.ViewModel
 
         [ObservableProperty]
         private Visibility m_SideBarClosedElementVisibility;
+
+        [RelayCommand]
+        private void AddSubject()
+        {
+            new SubjectAddWindow().Show();
+        }
 
         public MainViewModel()
         {
