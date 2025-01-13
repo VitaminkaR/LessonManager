@@ -25,6 +25,17 @@ namespace LessonManager.View
             InitializeComponent();
 
             ExamTypeComboBox.ItemsSource = Enum.GetValues(typeof(ExamType));
+            Loaded += SubjectAddWindow_Loaded;
+        }
+
+        private void SubjectAddWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            ExamDatePicker.SelectedDate = DateTime.Now;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

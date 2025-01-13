@@ -6,17 +6,17 @@
         xmlns:local="clr-namespace:LessonManager.View"
         xmlns:vm="clr-namespace:LessonManager.ViewModel"
         mc:Ignorable="d"
-        Title="Добавить дисциплину" Height="178" Width="324">
+        Title="Добавить дисциплину" Height="200" Width="324">
     <Window.DataContext>
         <vm:SubjectAddViewModel/>
     </Window.DataContext>
     <StackPanel>
         <TextBlock FontFamily="Comic Sans MS" FontSize="16" FontWeight="Bold">Название предмета</TextBlock>
-        <TextBox x:Name="ExamNameTextBox" MaxLength="128" FontFamily="Comic Sans MS" FontSize="16"></TextBox>
+        <TextBox x:Name="ExamNameTextBox" MaxLength="128" FontFamily="Comic Sans MS" FontSize="16" Text="{Binding SubjectName}"></TextBox>
         <TextBlock FontFamily="Comic Sans MS" FontSize="16" FontWeight="Bold">Тип экзамена</TextBlock>
-        <ComboBox x:Name="ExamTypeComboBox"></ComboBox>
+        <ComboBox x:Name="ExamTypeComboBox" SelectedItem="{Binding ExamType}"  FontFamily="Comic Sans MS" FontSize="16"></ComboBox>
         <TextBlock FontFamily="Comic Sans MS" FontSize="16" FontWeight="Bold">Дата экзамена</TextBlock>
-        <DatePicker x:Name="ExamDatePicker"></DatePicker>
-        <Button FontFamily="Comic Sans MS" FontSize="16" FontWeight="Bold">Добавить дисциплину</Button>
+        <DatePicker x:Name="ExamDatePicker" SelectedDate="{Binding ExamDate}" FontFamily="Comic Sans MS" FontSize="16"></DatePicker>
+        <Button FontFamily="Comic Sans MS" FontSize="16" FontWeight="Bold" Command="{Binding AddSubjectCommand}" Click="Button_Click">Добавить дисциплину</Button>
     </StackPanel>
 </Window>

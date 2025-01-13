@@ -29,5 +29,15 @@ namespace LessonManager.Model
         public ExamType Exam { get; set; }
         public DateTime DateTime { get; set; }
         public ExamMarkType ExamMark { get; set; } = ExamMarkType.None;
+
+        public Subject() { }
+
+        public Subject(string? name, ExamType exam, DateTime dateTime, ExamMarkType examMark)
+        {
+            Name = name;
+            Exam = exam;
+            DateTime = dateTime;
+            ExamMark = examMark;
+        }
     }
 }

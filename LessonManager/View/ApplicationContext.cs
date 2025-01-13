@@ -5,7 +5,7 @@ namespace LessonManager.View
 {
     internal class ApplicationContext : DbContext
     {
-        public DbSet<Subject> Subjects { get; set; }
+        public DbSet<Subject> Subjects { get; set; } = null!;
 
         public string DbPath { get; }
 
@@ -17,6 +17,16 @@ namespace LessonManager.View
         public void DBLoad()
         {
             Subjects.Load();
+        }
+
+        public void AddSubject(string? name, string? exam, DateTime dateTime)
+        {
+            if (exam == null || name == null) return;
+
+            Subjects.Add(
+                new Subject(name, (ExamType)Enum.Parse(typeof(ExamType), exam), dateTime, ExamMarkType.None)
+            );
+            SaveChanges();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -17,24 +17,19 @@ namespace LessonManager.View
     /// </summary>
     public partial class MainWindow : Window
     {
-        static internal ApplicationContext? ApplicationContext { get; private set; }
-
         public MainWindow()
         {
             InitializeComponent();
-
-            ApplicationContext = new ApplicationContext();
-
             Loaded += MainWindow_Loaded;
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            if (ApplicationContext == null)
+            if (App.ApplicationContext == null)
                 throw new Exception("Ошибка загрузки контекста БД");
 
-            ApplicationContext.Database.EnsureCreated();
-            ApplicationContext.DBLoad();
+            App.ApplicationContext.Database.EnsureCreated();
+            App.ApplicationContext.DBLoad();
         }
 
         protected override void OnClosed(EventArgs e)
