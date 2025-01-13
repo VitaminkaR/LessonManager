@@ -24,7 +24,17 @@ namespace LessonManager.View
             InitializeComponent();
 
             ApplicationContext = new ApplicationContext();
+
+            Loaded += MainWindow_Loaded;
+        }
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (ApplicationContext == null)
+                throw new Exception("Ошибка загрузки контекста БД");
+
             ApplicationContext.Database.EnsureCreated();
+            ApplicationContext.DBLoad();
         }
     }
 }
