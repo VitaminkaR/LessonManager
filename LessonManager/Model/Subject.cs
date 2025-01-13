@@ -1,0 +1,34 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace LessonManager.Model
+{
+    enum ExamType
+    {
+        None,
+        Exam,
+        Test,
+        DifTest
+    }
+
+    enum ExamMarkType
+    {
+        None,
+        Great,
+        Well,
+        Passed,
+        NotPassed
+    }
+
+    internal class Subject
+    {
+        public int ID { get; set; }
+        public string? Name { get; set; }
+        public ExamType Exam { get; set; } = ExamType.None;
+        public DateTime DateTime { get; set; }
+        public ExamMarkType ExamMark { get; set; } = ExamMarkType.None;
+    }
+}
