@@ -1,8 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using LessonManager.Model;
 using LessonManager.View;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -47,9 +49,12 @@ namespace LessonManager.ViewModel
             new SubjectAddWindow().Show();
         }
 
+        public ObservableCollection<Subject> Subjects { get; set; }
+
         public MainViewModel()
         {
             SideBarOpenedElementVisibility = Visibility.Hidden;
+            Subjects = App.ApplicationContext.Subjects.Local.ToObservableCollection();
         }
     }
 }

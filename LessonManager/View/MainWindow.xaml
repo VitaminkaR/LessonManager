@@ -49,6 +49,15 @@
                 </Button.Resources>
             </Button>
             <TextBlock Margin="34,74,0,0" FontFamily="Comic Sans MS" FontWeight="Bold" Visibility="{Binding Path=SideBarOpenedElementVisibility}">Добавить занятие</TextBlock>
+
+            <!--Список дисциплин-->
+            <TreeView Margin="-16,102,0,0" ItemsSource="{Binding Subjects}" BorderThickness="0" Visibility="{Binding Path=SideBarOpenedElementVisibility}">
+                <TreeView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock  FontFamily="Comic Sans MS" FontWeight="Bold" Text="{Binding Path=Name}"/>
+                    </DataTemplate>
+                </TreeView.ItemTemplate>
+            </TreeView>
         </Canvas>
         
         <GridSplitter IsEnabled="False" Grid.Column="1" ShowsPreview="False" Width="3" HorizontalAlignment="Center" VerticalAlignment="Stretch" />

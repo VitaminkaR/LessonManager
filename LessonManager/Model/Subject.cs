@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,7 +23,7 @@ namespace LessonManager.Model
         NotPassed
     }
 
-    internal class Subject
+    internal class Subject : ObservableObject
     {
         public int ID { get; set; }
         public string? Name { get; set; }
