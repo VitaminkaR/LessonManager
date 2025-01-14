@@ -7,9 +7,6 @@
         xmlns:vm="clr-namespace:LessonManager.ViewModel"
         mc:Ignorable="d"
         Title="Менеджер Занятий" Height="450" Width="800">
-    <Window.DataContext>
-        <vm:MainViewModel/>
-    </Window.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="32" x:Name="SideBar"/>
@@ -51,12 +48,7 @@
             <TextBlock Margin="34,74,0,0" FontFamily="Comic Sans MS" FontWeight="Bold" Visibility="{Binding Path=SideBarOpenedElementVisibility}">Добавить занятие</TextBlock>
 
             <!--Список дисциплин-->
-            <TreeView Margin="-16,102,0,0" ItemsSource="{Binding Subjects}" BorderThickness="0" Visibility="{Binding Path=SideBarOpenedElementVisibility}">
-                <TreeView.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock  FontFamily="Comic Sans MS" FontWeight="Bold" Text="{Binding Path=Name}"/>
-                    </DataTemplate>
-                </TreeView.ItemTemplate>
+            <TreeView x:Name="SubjectsAndLabTreeView" Margin="-16,102,0,0"  FontFamily="Comic Sans MS" FontWeight="Bold" BorderThickness="0" Visibility="{Binding Path=SideBarOpenedElementVisibility}">
                 <!--Контекстное меню-->
                 <TreeView.ContextMenu>
                     <ContextMenu>
