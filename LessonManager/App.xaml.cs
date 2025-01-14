@@ -1,4 +1,4 @@
-﻿using LessonManager.View;
+﻿using LessonManager.Model;
 using System.Configuration;
 using System.Data;
 using System.Windows;
