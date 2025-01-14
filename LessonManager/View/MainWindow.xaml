@@ -57,6 +57,13 @@
                         <TextBlock  FontFamily="Comic Sans MS" FontWeight="Bold" Text="{Binding Path=Name}"/>
                     </DataTemplate>
                 </TreeView.ItemTemplate>
+                <!--Контекстное меню-->
+                <TreeView.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Удалить"></MenuItem>
+                        <MenuItem Header="Редактировать"></MenuItem>
+                    </ContextMenu>
+                </TreeView.ContextMenu>
             </TreeView>
         </Canvas>
         
