@@ -12,7 +12,7 @@
     </Window.DataContext>
     <StackPanel>
         <TextBlock FontFamily="Comic Sans MS" FontSize="16" FontWeight="Bold">Название предмета</TextBlock>
-        <TextBox x:Name="ExamNameTextBox" MaxLength="128" FontFamily="Comic Sans MS" FontSize="16" Text="{Binding SubjectName}"></TextBox>
+        <TextBox x:Name="SubjectNameTextBox" MaxLength="128" FontFamily="Comic Sans MS" FontSize="16" Text="{Binding SubjectName}"></TextBox>
         <TextBlock FontFamily="Comic Sans MS" FontSize="16" FontWeight="Bold">Номер Семестра</TextBlock>
         <ComboBox x:Name="SemesterComboBox" SelectedItem="{Binding SemestrNubmer}"  FontFamily="Comic Sans MS" FontSize="16"></ComboBox>
         <TextBlock FontFamily="Comic Sans MS" FontSize="16" FontWeight="Bold">Тип экзамена</TextBlock>
