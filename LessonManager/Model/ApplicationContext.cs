@@ -38,7 +38,7 @@ internal class ApplicationContext : DbContext
     public void RemoveSubject(string name, int sn)
     {
         Subjects.Remove(
-            Subjects.Where(s => s.Name == name && s.SemesterNumber == sn).Select(s => s).First()
+            GetSubject(name, sn)
         );
         SaveChanges();
     }
@@ -47,6 +47,11 @@ internal class ApplicationContext : DbContext
     {
         Subjects.RemoveRange(Subjects.Where(s => s.SemesterNumber == sn).Select( s => s).ToArray());
         SaveChanges();
+    }
+
+    public Subject GetSubject(string name, int sn)
+    {
+        return Subjects.Where(s => s.Name == name && s.SemesterNumber == sn).Select(s => s).First();
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
