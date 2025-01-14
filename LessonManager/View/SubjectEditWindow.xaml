@@ -1,0 +1,21 @@
+﻿<Window x:Class="LessonManager.View.SubjectEditWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LessonManager.View"
+        xmlns:vm="clr-namespace:LessonManager.ViewModel"
+        mc:Ignorable="d"
+        Title="Редактировать дисциплину" Height="265" Width="324" ResizeMode="NoResize">
+    <StackPanel>
+        <TextBlock FontFamily="Comic Sans MS" FontSize="16" FontWeight="Bold">Название предмета</TextBlock>
+        <TextBox x:Name="SubjectNameTextBox" MaxLength="128" FontFamily="Comic Sans MS" FontSize="16" Text="{Binding SubjectName}"></TextBox>
+        <TextBlock FontFamily="Comic Sans MS" FontSize="16" FontWeight="Bold">Номер Семестра</TextBlock>
+        <ComboBox x:Name="SemesterComboBox" SelectedItem="{Binding SemestrNubmer}"  FontFamily="Comic Sans MS" FontSize="16"></ComboBox>
+        <TextBlock FontFamily="Comic Sans MS" FontSize="16" FontWeight="Bold">Тип экзамена</TextBlock>
+        <ComboBox x:Name="ExamTypeComboBox" SelectedItem="{Binding ExamType}"  FontFamily="Comic Sans MS" FontSize="16"></ComboBox>
+        <TextBlock FontFamily="Comic Sans MS" FontSize="16" FontWeight="Bold">Дата экзамена</TextBlock>
+        <DatePicker x:Name="ExamDatePicker" SelectedDate="{Binding ExamDate}" FontFamily="Comic Sans MS" FontSize="16"></DatePicker>
+        <Button FontFamily="Comic Sans MS" FontSize="16" FontWeight="Bold" Command="{Binding EditSubjectCommand}" Click="Button_Click">Принять</Button>
+    </StackPanel>
+</Window>

@@ -61,14 +61,7 @@ namespace LessonManager.ViewModel
                 return;
             }
 
-            // находим уровень дерева
-            object levelObj = ChoosenSubjectTreeItem;
-            int level = 0;
-            while (levelObj.GetType() != typeof(TreeView))
-            {
-                level++;
-                levelObj = ((TreeViewItem)levelObj).Parent;
-            }
+            int level = GetTreeLevel(ChoosenSubjectTreeItem);
 
             switch (level)
             {
@@ -85,7 +78,47 @@ namespace LessonManager.ViewModel
             }
         }
 
+        [RelayCommand]
+        private void EditSubjectTreeElement()
+        {
+            if (ChoosenSubjectTreeItem == null)
+            {
+                MessageBox.Show("Не выбран ни один элемент");
+                return;
+            }
+
+            int level = GetTreeLevel(ChoosenSubjectTreeItem);
+
+            switch (level)
+            {
+                // Удаление семестра
+                case 1:
+                    MessageBox.Show("Нельзя редактировать семестр");
+                    break;
+                // Удаление дисциплины
+                case 2:
+                    Subject s = App.ApplicationContext.GetSubject((string)ChoosenSubjectTreeItem.Header, int.Parse((string)((TreeViewItem)ChoosenSubjectTreeItem.Parent).Header));
+                    new SubjectEditWindow(s).Show();
+                    break;
+                default:
+                    break;
+            }
+        }
+
         public ObservableCollection<Subject> Subjects { get; set; }
+
+        private int GetTreeLevel(object levelObj)
+        {
+            // находим уровень дерева
+            int level = 0;
+            while (levelObj.GetType() != typeof(TreeView))
+            {
+                level++;
+                levelObj = ((TreeViewItem)levelObj).Parent;
+            }
+
+            return level;
+        }
 
         public MainViewModel()
         {

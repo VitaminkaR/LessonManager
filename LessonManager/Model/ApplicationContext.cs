@@ -43,6 +43,22 @@ internal class ApplicationContext : DbContext
         SaveChanges();
     }
 
+    public void EditSubject(string lastname, int lsn, string name, int sn, string exam, DateTime dateTime)
+    {
+        if (Subjects.Any(s => s.Name == name && s.SemesterNumber == sn))
+        {
+            MessageBox.Show("Такой предмет в этом семестре уже существует");
+            return;
+        }
+
+        Subject s = GetSubject(lastname, lsn);
+        s.Name = name;
+        s.SemesterNumber = sn;
+        s.Exam = (ExamType)Enum.Parse(typeof(ExamType), exam);
+        s.DateTime = dateTime;
+        SaveChanges();
+    }
+
     public void RemoveSemester(int sn)
     {
         Subjects.RemoveRange(Subjects.Where(s => s.SemesterNumber == sn).Select( s => s).ToArray());
