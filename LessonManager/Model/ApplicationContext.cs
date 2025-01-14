@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Windows;
 
 namespace LessonManager.Model;
 
@@ -20,7 +21,17 @@ internal class ApplicationContext : DbContext
 
     public void AddSubject(string? name, int sn, string? exam, DateTime dateTime)
     {
-        if (exam == null || name == null) return;
+        if (exam == null || name == null)
+        {
+            MessageBox.Show("Не все поля заполненные");
+            return;
+        }
+
+        if (Subjects.Any(s => s.Name == name && s.SemesterNumber == sn))
+        {
+            MessageBox.Show("Такой предмет в этом семестре уже существует");
+            return;
+        }
 
         Subjects.Add(
             new Subject(name, sn, (ExamType)Enum.Parse(typeof(ExamType), exam), dateTime, ExamMarkType.None)
