@@ -15,6 +15,9 @@ namespace LessonManager.ViewModel
         private string? m_SubjectName;
 
         [ObservableProperty]
+        private string? m_SemestrNubmer;
+
+        [ObservableProperty]
         private string? m_ExamType;
 
         [ObservableProperty]
@@ -23,7 +26,9 @@ namespace LessonManager.ViewModel
         [RelayCommand]
         private void AddSubject()
         {
-            App.ApplicationContext?.AddSubject(SubjectName, ExamType, ExamDate);
+            if (m_SemestrNubmer == null) return; 
+
+            App.ApplicationContext?.AddSubject(SubjectName, int.Parse(m_SemestrNubmer), ExamType, ExamDate);
         }
     }
 }

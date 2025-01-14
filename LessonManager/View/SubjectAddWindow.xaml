@@ -6,13 +6,15 @@
         xmlns:local="clr-namespace:LessonManager.View"
         xmlns:vm="clr-namespace:LessonManager.ViewModel"
         mc:Ignorable="d"
-        Title="Добавить дисциплину" Height="213" Width="324" ResizeMode="NoResize">
+        Title="Добавить дисциплину" Height="265" Width="324" ResizeMode="NoResize">
     <Window.DataContext>
         <vm:SubjectAddViewModel/>
     </Window.DataContext>
     <StackPanel>
         <TextBlock FontFamily="Comic Sans MS" FontSize="16" FontWeight="Bold">Название предмета</TextBlock>
         <TextBox x:Name="ExamNameTextBox" MaxLength="128" FontFamily="Comic Sans MS" FontSize="16" Text="{Binding SubjectName}"></TextBox>
+        <TextBlock FontFamily="Comic Sans MS" FontSize="16" FontWeight="Bold">Номер Семестра</TextBlock>
+        <ComboBox x:Name="SemesterComboBox" SelectedItem="{Binding SemestrNubmer}"  FontFamily="Comic Sans MS" FontSize="16"></ComboBox>
         <TextBlock FontFamily="Comic Sans MS" FontSize="16" FontWeight="Bold">Тип экзамена</TextBlock>
         <ComboBox x:Name="ExamTypeComboBox" SelectedItem="{Binding ExamType}"  FontFamily="Comic Sans MS" FontSize="16"></ComboBox>
         <TextBlock FontFamily="Comic Sans MS" FontSize="16" FontWeight="Bold">Дата экзамена</TextBlock>

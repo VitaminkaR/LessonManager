@@ -18,12 +18,12 @@ internal class ApplicationContext : DbContext
         Subjects.Load();
     }
 
-    public void AddSubject(string? name, string? exam, DateTime dateTime)
+    public void AddSubject(string? name, int sn, string? exam, DateTime dateTime)
     {
         if (exam == null || name == null) return;
 
         Subjects.Add(
-            new Subject(name, (ExamType)Enum.Parse(typeof(ExamType), exam), dateTime, ExamMarkType.None)
+            new Subject(name, sn, (ExamType)Enum.Parse(typeof(ExamType), exam), dateTime, ExamMarkType.None)
         );
         SaveChanges();
     }
