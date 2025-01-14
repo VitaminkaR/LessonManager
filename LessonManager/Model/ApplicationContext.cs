@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Windows;
+using System.Xml.Linq;
 
 namespace LessonManager.Model;
 
@@ -30,6 +32,20 @@ internal class ApplicationContext : DbContext
         Subjects.Add(
             new Subject(name, sn, (ExamType)Enum.Parse(typeof(ExamType), exam), dateTime, ExamMarkType.None)
         );
+        SaveChanges();
+    }
+
+    public void RemoveSubject(string name, int sn)
+    {
+        Subjects.Remove(
+            Subjects.Where(s => s.Name == name && s.SemesterNumber == sn).Select(s => s).First()
+        );
+        SaveChanges();
+    }
+
+    public void RemoveSemester(int sn)
+    {
+        Subjects.RemoveRange(Subjects.Where(s => s.SemesterNumber == sn).Select( s => s).ToArray());
         SaveChanges();
     }
 

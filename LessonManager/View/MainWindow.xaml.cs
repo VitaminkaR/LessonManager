@@ -29,6 +29,12 @@ namespace LessonManager.View
             DataContext = m_ViewModel;
 
             m_ViewModel.Subjects.CollectionChanged += Subjects_CollectionChanged;
+            SubjectsAndLabTreeView.SelectedItemChanged += SubjectsAndLabTreeView_SelectedItemChanged;
+        }
+
+        private void SubjectsAndLabTreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            m_ViewModel.ChoosenSubjectTreeItem = (TreeViewItem)SubjectsAndLabTreeView.SelectedItem;
         }
 
         private void Subjects_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)

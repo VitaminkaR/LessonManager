@@ -52,7 +52,7 @@
                 <!--Контекстное меню-->
                 <TreeView.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="Удалить"></MenuItem>
+                        <MenuItem Header="Удалить" Command="{Binding RemoveSubjectTreeElementCommand}"></MenuItem>
                         <MenuItem Header="Редактировать"></MenuItem>
                     </ContextMenu>
                 </TreeView.ContextMenu>

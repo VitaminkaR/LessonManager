@@ -43,10 +43,46 @@ namespace LessonManager.ViewModel
         [ObservableProperty]
         private Visibility m_SideBarClosedElementVisibility;
 
+        [ObservableProperty]
+        private TreeViewItem m_ChoosenSubjectTreeItem;
+
         [RelayCommand]
         private void AddSubject()
         {
             new SubjectAddWindow().Show();
+        }
+
+        [RelayCommand]
+        private void RemoveSubjectTreeElement()
+        {
+            if (ChoosenSubjectTreeItem == null)
+            {
+                MessageBox.Show("Не выбран ни один элемент");
+                return;
+            }
+
+            // находим уровень дерева
+            object levelObj = ChoosenSubjectTreeItem;
+            int level = 0;
+            while (levelObj.GetType() != typeof(TreeView))
+            {
+                level++;
+                levelObj = ((TreeViewItem)levelObj).Parent;
+            }
+
+            switch (level)
+            {
+                // Удаление семестра
+                case 1:
+                    App.ApplicationContext.RemoveSemester(int.Parse((string)ChoosenSubjectTreeItem.Header));
+                    break;
+                // Удаление дисциплины
+                case 2:
+                    App.ApplicationContext.RemoveSubject((string)ChoosenSubjectTreeItem.Header, int.Parse((string)((TreeViewItem)ChoosenSubjectTreeItem.Parent).Header));
+                    break;
+                default:
+                    break;
+            }
         }
 
         public ObservableCollection<Subject> Subjects { get; set; }
