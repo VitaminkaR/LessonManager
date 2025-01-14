@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Xml.Linq;
 
 namespace LessonManager.ViewModel
 {
@@ -26,7 +27,11 @@ namespace LessonManager.ViewModel
         [RelayCommand]
         private void AddSubject()
         {
-            if (m_SemestrNubmer == null) return; 
+            if (m_ExamType == null || m_SubjectName == null || m_SemestrNubmer == null)
+            {
+                MessageBox.Show("Не все поля заполненные");
+                return;
+            }
 
             App.ApplicationContext?.AddSubject(SubjectName, int.Parse(m_SemestrNubmer), ExamType, ExamDate);
         }

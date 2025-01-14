@@ -19,14 +19,8 @@ internal class ApplicationContext : DbContext
         Subjects.Load();
     }
 
-    public void AddSubject(string? name, int sn, string? exam, DateTime dateTime)
+    public void AddSubject(string name, int sn, string exam, DateTime dateTime)
     {
-        if (exam == null || name == null)
-        {
-            MessageBox.Show("Не все поля заполненные");
-            return;
-        }
-
         if (Subjects.Any(s => s.Name == name && s.SemesterNumber == sn))
         {
             MessageBox.Show("Такой предмет в этом семестре уже существует");
