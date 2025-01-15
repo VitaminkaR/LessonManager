@@ -58,7 +58,16 @@
             </TreeView>
         </Canvas>
 
-        <GridSplitter  IsEnabled="False" Grid.Column="1" ShowsPreview="False" Width="3" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
+        <GridSplitter  IsEnabled="False" Grid.Column="1" ShowsPreview="False" Width="3" HorizontalAlignment="Center" VerticalAlignment="Stretch">
+            <GridSplitter.Template>
+                <ControlTemplate TargetType="{x:Type GridSplitter}">
+                    <Grid>
+                        <Button Content="⁞" />
+                        <Rectangle Fill="LightGray" />
+                    </Grid>
+                </ControlTemplate>
+            </GridSplitter.Template>
+        </GridSplitter>
 
         <!--Рабочая область-->
         <StackPanel Grid.Column="2">
