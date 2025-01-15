@@ -76,6 +76,11 @@ namespace LessonManager.View
                 {
                     TreeViewItem treeViewItemSubjects = new TreeViewItem();
                     treeViewItemSubjects.Header = list[i];
+
+                    treeViewItemSubjects.Items.Add(new TreeViewItem() { Header = "Lab" });
+                    treeViewItemSubjects.Items.Add(new TreeViewItem() { Header = "Prac" });
+                    treeViewItemSubjects.Items.Add(new TreeViewItem() { Header = "Lec" });
+
                     treeViewItemSemesters.Items.Add(treeViewItemSubjects);
                 }
                 SubjectsAndLabTreeView.Items.Add(treeViewItemSemesters);
