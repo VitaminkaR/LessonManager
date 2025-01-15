@@ -32,7 +32,7 @@ namespace LessonManager.Model
         public DateTime ActivityTime { get; set; }
         public ActivityStateType State { get; set; }
 
-        public Activity(string? name, Subject subject, ActivityType type, DateTime activityTime, ActivityStateType state)
+        public Activity(string? name, Subject subject, ActivityType type, DateTime activityTime, ActivityStateType state = ActivityStateType.None)
         {
             Name = name;
             Type = type;
