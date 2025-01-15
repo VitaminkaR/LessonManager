@@ -35,19 +35,9 @@
                 </Button.Resources>
             </Button>
             <TextBlock x:Name="AddSubjectTextBlock" Margin="34,42,0,0" FontFamily="Comic Sans MS" FontWeight="Bold">Добавить дисциплину</TextBlock>
-            <!--Кнопка добавления учебного занятия-->
-            <Button Width="32" Height="32" Margin="0,68,0,0" HorizontalAlignment="Left">
-                <Image Source="/View/Content/AddActivity.png"></Image>
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="5"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
-            <TextBlock x:Name="AddActivityTextBlock" Margin="34,74,0,0" FontFamily="Comic Sans MS" FontWeight="Bold">Добавить занятие</TextBlock>
 
             <!--Список дисциплин-->
-            <TreeView x:Name="SubjectsAndLabTreeView" Margin="0,102,0,0"  FontFamily="Comic Sans MS" FontWeight="Bold" BorderThickness="0">
+            <TreeView x:Name="SubjectsAndLabTreeView" Margin="0,70,0,0"  FontFamily="Comic Sans MS" FontWeight="Bold" BorderThickness="0">
             </TreeView>
         </Canvas>
 

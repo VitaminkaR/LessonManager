@@ -27,7 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="View\Content\AddActivity.png" />
     <Resource Include="View\Content\AddSubject.png" />
     <Resource Include="View\Content\OpenSideBarIcon.png" />
   </ItemGroup>
