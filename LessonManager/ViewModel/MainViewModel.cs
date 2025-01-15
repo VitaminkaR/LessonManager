@@ -23,12 +23,6 @@ namespace LessonManager.ViewModel
         private TreeViewItem m_ChoosenSubjectTreeItem;
 
         [RelayCommand]
-        private void AddSubject()
-        {
-            new SubjectAddWindow().Show();
-        }
-
-        [RelayCommand]
         private void RemoveSubjectTreeElement()
         {
             if (ChoosenSubjectTreeItem == null)

@@ -26,7 +26,7 @@
         <!--Меню-->
         <Canvas Grid.Column="0">
             <!--Кнопка добавления учебной дисциплины-->
-            <Button Width="32" Height="32" Margin="0,34,0,0" HorizontalAlignment="Left" Command="{Binding AddSubjectCommand}">
+            <Button x:Name="AddSubjectButton" Width="32" Height="32" Margin="0,34,0,0" HorizontalAlignment="Left" Click="AddSubjectButton_Click">
                 <Image Source="/View/AddSubject.png"></Image>
                 <Button.Resources>
                     <Style TargetType="Border">

@@ -110,5 +110,10 @@ namespace LessonManager.View
             else
                 SideBarOpen();
         }
+
+        private void AddSubjectButton_Click(object sender, RoutedEventArgs e)
+        {
+            new SubjectAddWindow().Show();
+        }
     }
 }
