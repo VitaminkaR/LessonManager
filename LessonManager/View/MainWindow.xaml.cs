@@ -1,6 +1,7 @@
 ﻿using LessonManager.Model;
 using LessonManager.ViewModel;
 using System.Collections.ObjectModel;
+using System.Reflection;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -51,7 +52,12 @@ namespace LessonManager.View
 
         private void Subjects_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            ObservableCollection<Subject> subjects = (ObservableCollection<Subject>)sender;
+            UpdateSubjectAndActivityView(sender);
+        }
+
+        private void UpdateSubjectAndActivityView(object param)
+        {
+            ObservableCollection<Subject> subjects = (ObservableCollection<Subject>)param;
             SubjectsAndLabTreeView.Items.Clear();
             Dictionary<int, List<string>> semesterAndSubjects = new Dictionary<int, List<string>>();
             for (int i = 0; i < subjects.Count; i++)
