@@ -30,12 +30,6 @@ namespace LessonManager.Model
 
         public void EditActivity(string predname, Subject predsubject, string? name, ActivityType type, DateTime activityTime, ActivityStateType state)
         {
-            if (Activities.Any(s => s.Name == name && s.Subject == predsubject))
-            {
-                MessageBox.Show("Такой предмет в этом семестре уже существует");
-                return;
-            }
-
             Activity a = GetActivity(predname, predsubject);
             a.Name = name;
             a.Type = type;
