@@ -10,7 +10,7 @@ namespace LessonManager
     /// </summary>
     public partial class App : Application
     {
-        static internal ApplicationContext? ApplicationContext { get; private set; }
+        static internal ApplicationContext ApplicationContext { get; private set; } = null!;
 
         protected override void OnStartup(StartupEventArgs e)
         {

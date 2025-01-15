@@ -37,11 +37,11 @@ namespace LessonManager.ViewModel
             {
                 // Удаление семестра
                 case 1:
-                    App.ApplicationContext.RemoveSemester(int.Parse((string)ChoosenSubjectTreeItem.Header));
+                    App.ApplicationContext.SubjectDB.RemoveSemester(int.Parse((string)ChoosenSubjectTreeItem.Header));
                     break;
                 // Удаление дисциплины
                 case 2:
-                    App.ApplicationContext.RemoveSubject((string)ChoosenSubjectTreeItem.Header, int.Parse((string)((TreeViewItem)ChoosenSubjectTreeItem.Parent).Header));
+                    App.ApplicationContext.SubjectDB.RemoveSubject((string)ChoosenSubjectTreeItem.Header, int.Parse((string)((TreeViewItem)ChoosenSubjectTreeItem.Parent).Header));
                     break;
                 default:
                     break;
@@ -67,7 +67,7 @@ namespace LessonManager.ViewModel
                     break;
                 // Удаление дисциплины
                 case 2:
-                    Subject s = App.ApplicationContext.GetSubject((string)ChoosenSubjectTreeItem.Header, int.Parse((string)((TreeViewItem)ChoosenSubjectTreeItem.Parent).Header));
+                    Subject s = App.ApplicationContext.SubjectDB.GetSubject((string)ChoosenSubjectTreeItem.Header, int.Parse((string)((TreeViewItem)ChoosenSubjectTreeItem.Parent).Header));
                     new SubjectEditWindow(s).Show();
                     break;
                 default:
@@ -92,7 +92,7 @@ namespace LessonManager.ViewModel
 
         public MainViewModel()
         {
-            Subjects = App.ApplicationContext.Subjects.Local.ToObservableCollection();
+            Subjects = App.ApplicationContext.SubjectDB.Subjects.Local.ToObservableCollection();
         }
     }
 }

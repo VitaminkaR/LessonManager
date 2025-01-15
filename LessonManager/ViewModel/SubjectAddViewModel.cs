@@ -27,13 +27,13 @@ namespace LessonManager.ViewModel
         [RelayCommand]
         private void AddSubject()
         {
-            if (m_ExamType == null || m_SubjectName == null || m_SemestrNubmer == null)
+            if (ExamType == null || SubjectName == null || SemestrNubmer == null)
             {
                 MessageBox.Show("Не все поля заполненные");
                 return;
             }
 
-            App.ApplicationContext?.AddSubject(SubjectName, int.Parse(m_SemestrNubmer), ExamType, ExamDate);
+            App.ApplicationContext?.SubjectDB.AddSubject(SubjectName, int.Parse(SemestrNubmer), ExamType, ExamDate);
         }
     }
 }

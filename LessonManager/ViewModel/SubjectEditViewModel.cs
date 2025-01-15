@@ -30,7 +30,7 @@ namespace LessonManager.ViewModel
         [RelayCommand]
         private void EditSubject()
         {
-            App.ApplicationContext.EditSubject(m_PredName, m_PredSemesterNumber, SubjectName, int.Parse(m_SemestrNubmer), ExamType, ExamDate);
+            App.ApplicationContext.SubjectDB.EditSubject(m_PredName, m_PredSemesterNumber, SubjectName, int.Parse(SemestrNubmer), ExamType, ExamDate);
         }
 
         public SubjectEditViewModel(Subject subject)
