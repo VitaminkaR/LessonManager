@@ -7,7 +7,9 @@ namespace LessonManager.Model;
 
 internal class ApplicationContext : DbContext
 {
+    public DbSet<Subject> Subjects { get; set; } = null!;
     public ISubjectDB SubjectDB { get; set; }
+    public DbSet<Activity> Activities { get; set; } = null!;
     public IActivityDB ActivityDB { get; set; }
 
     public string DbPath { get; }
@@ -22,8 +24,8 @@ internal class ApplicationContext : DbContext
 
     public void DBLoad()
     {
-        SubjectDB.SubjectDBInit(this);
-        ActivityDB.ActivityDBInit(this);
+        SubjectDB.SubjectDBInit(Subjects, this);
+        ActivityDB.ActivityDBInit(Activities, this);
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -12,18 +12,18 @@ namespace LessonManager.Model
     internal class ActivityDB : IActivityDB
     {
         private DbContext? m_DbContext = null!;
+        private DbSet<Activity> m_Activity;
 
-        public DbSet<Activity> Activities { get; set; } = null!;
-
-        public void ActivityDBInit(DbContext context)
+        public void ActivityDBInit(DbSet<Activity> dbset, DbContext context)
         {
             m_DbContext = context;
-            Activities.Load();
+            m_Activity = dbset;
+            m_Activity.Load();
         }
 
         public void AddActivity(string? name, Subject subject, ActivityType type, DateTime activityTime)
         {
-            Activities.Add(
+            m_Activity.Add(
                 new Activity(name, subject, type, activityTime)
                 );
         }
@@ -40,12 +40,12 @@ namespace LessonManager.Model
 
         public Activity GetActivity(string name, Subject subject)
         {
-            return Activities.Where(s => s.Name == name && s.Subject == subject).Select(s => s).First();
+            return m_Activity.Where(s => s.Name == name && s.Subject == subject).Select(s => s).First();
         }
 
         public void RemoveActivity(string name, Subject subject)
         {
-            Activities.Remove(
+            m_Activity.Remove(
                 GetActivity(name, subject)
             );
             m_DbContext.SaveChanges();

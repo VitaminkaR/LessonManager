@@ -9,9 +9,7 @@ namespace LessonManager.Model
 {
     internal interface ISubjectDB
     {
-        public DbSet<Subject> Subjects { get; set; }
-
-        public void SubjectDBInit(DbContext context);
+        public void SubjectDBInit(DbSet<Subject> dbset, DbContext context);
 
         public void AddSubject(string name, int sn, string exam, DateTime dateTime);
 

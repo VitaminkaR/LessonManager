@@ -92,7 +92,7 @@ namespace LessonManager.ViewModel
 
         public MainViewModel()
         {
-            Subjects = App.ApplicationContext.SubjectDB.Subjects.Local.ToObservableCollection();
+            Subjects = App.ApplicationContext.Subjects.Local.ToObservableCollection();
         }
     }
 }

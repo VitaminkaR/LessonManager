@@ -32,6 +32,8 @@ namespace LessonManager.Model
         public DateTime ExamDate { get; set; }
         public ExamMarkType ExamMark { get; set; } = ExamMarkType.None;
 
+        public ICollection<Activity> Activities { get; set; }
+
         public Subject() { }
 
         public Subject(string? name, int semesterNumber, ExamType exam, DateTime dateTime, ExamMarkType examMark)

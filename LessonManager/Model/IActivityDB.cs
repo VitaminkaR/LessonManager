@@ -9,9 +9,7 @@ namespace LessonManager.Model
 {
     internal interface IActivityDB
     {
-        public DbSet<Activity> Activities { get; set; }
-
-        public void ActivityDBInit(DbContext context);
+        public void ActivityDBInit(DbSet<Activity> dbset, DbContext context);
 
         public void AddActivity(string? name, Subject subject, ActivityType type, DateTime activityTime);
 
