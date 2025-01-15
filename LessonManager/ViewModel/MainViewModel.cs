@@ -61,6 +61,21 @@ namespace LessonManager.ViewModel
                 MessageBox.Show("Не выбран ни один элемент");
                 return;
             }
+
+            string type = (string)m_ChoosenSubjectTreeItem.Header;
+            ActivityType activityType = (ActivityType)Enum.Parse(typeof(ActivityType), type);
+            if(!Enum.IsDefined(typeof(ActivityType), activityType))
+            {
+                MessageBox.Show("Выбран неправильный элемент! Выберите категорию занятий.");
+                return;
+            }
+
+            // получем дисциплину этого занятия
+            string subjectName = (string)((TreeViewItem)ChoosenSubjectTreeItem.Parent).Header;
+            int semesterNumber = int.Parse((string)((TreeViewItem)((TreeViewItem)ChoosenSubjectTreeItem.Parent).Parent).Header);
+            Subject subject = App.ApplicationContext.SubjectDB.GetSubject(subjectName, semesterNumber);
+            
+            new ActivityAddWindow(activityType, subject).Show();
         }
 
         public ObservableCollection<Subject> Subjects { get; set; }

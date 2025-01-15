@@ -1,0 +1,22 @@
+﻿<Window x:Class="LessonManager.View.ActivityAddWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LessonManager.View"
+        xmlns:vm="clr-namespace:LessonManager.ViewModel"
+        mc:Ignorable="d"
+        Title="Добавить занятие" Height="208" Width="324" ResizeMode="NoResize">
+    <Window.DataContext>
+        <vm:ActivityAddViewModel/>
+    </Window.DataContext>
+    <StackPanel>
+        <TextBlock FontFamily="Comic Sans MS" FontSize="16" FontWeight="Bold">Название занятия</TextBlock>
+        <TextBox x:Name="ActivityNameTextBox" MaxLength="128" FontFamily="Comic Sans MS" FontSize="16" Text="{Binding ActivityName}"></TextBox>
+        <TextBlock FontFamily="Comic Sans MS" FontSize="16" FontWeight="Bold">Тип занятия</TextBlock>
+        <TextBlock x:Name="ActivityTypeTextBlock" FontFamily="Comic Sans MS" FontSize="16" FontWeight="Bold" Text="{Binding ActivityType}"></TextBlock>
+        <TextBlock FontFamily="Comic Sans MS" FontSize="16" FontWeight="Bold">Время занятия</TextBlock>
+        <DatePicker x:Name="ActivityDatePicker" SelectedDate="{Binding ActivityDate}" FontFamily="Comic Sans MS" FontSize="16"></DatePicker>
+        <Button FontFamily="Comic Sans MS" FontSize="16" FontWeight="Bold" Command="{Binding AddActivityCommand}" Click="Button_Click">Добавить занятие</Button>
+    </StackPanel>
+</Window>

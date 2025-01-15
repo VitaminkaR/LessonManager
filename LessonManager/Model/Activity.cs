@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LessonManager.Model
 {
-    enum ActivityType
+    public enum ActivityType
     {
         Lab,
         Prac,
