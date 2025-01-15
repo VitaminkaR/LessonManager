@@ -55,7 +55,7 @@ internal class ApplicationContext : DbContext
         s.Name = name;
         s.SemesterNumber = sn;
         s.Exam = (ExamType)Enum.Parse(typeof(ExamType), exam);
-        s.DateTime = dateTime;
+        s.ExamDate = dateTime;
         SaveChanges();
     }
 

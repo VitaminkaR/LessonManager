@@ -38,7 +38,7 @@ namespace LessonManager.ViewModel
             SubjectName = subject.Name;
             SemestrNubmer = subject.SemesterNumber.ToString();
             ExamType= subject.Exam.ToString();
-            ExamDate = subject.DateTime;
+            ExamDate = subject.ExamDate;
             m_PredName = subject.Name;
             m_PredSemesterNumber = subject.SemesterNumber;
         }

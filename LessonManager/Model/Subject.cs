@@ -29,7 +29,7 @@ namespace LessonManager.Model
         public string? Name { get; set; }
         public int SemesterNumber { get; set; }
         public ExamType Exam { get; set; }
-        public DateTime DateTime { get; set; }
+        public DateTime ExamDate { get; set; }
         public ExamMarkType ExamMark { get; set; } = ExamMarkType.None;
 
         public Subject() { }
@@ -39,7 +39,7 @@ namespace LessonManager.Model
             Name = name;
             SemesterNumber = semesterNumber;
             Exam = exam;
-            DateTime = dateTime;
+            ExamDate = dateTime;
             ExamMark = examMark;
         }
     }
