@@ -8,6 +8,7 @@ namespace LessonManager.Model;
 internal class ApplicationContext : DbContext
 {
     public ISubjectDB SubjectDB { get; set; }
+    public IActivityDB ActivityDB { get; set; }
 
     public string DbPath { get; }
 
@@ -16,11 +17,13 @@ internal class ApplicationContext : DbContext
         DbPath = System.IO.Path.Join("", "LessonManager.db");
 
         SubjectDB = new SubjectDB();
+        ActivityDB = new ActivityDB();
     }
 
     public void DBLoad()
     {
         SubjectDB.SubjectDBInit(this);
+        ActivityDB.ActivityDBInit(this);
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
