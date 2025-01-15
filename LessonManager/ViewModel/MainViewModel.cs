@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Xml.Linq;
 
 namespace LessonManager.ViewModel
@@ -22,73 +23,38 @@ namespace LessonManager.ViewModel
         [ObservableProperty]
         private TreeViewItem m_ChoosenSubjectTreeItem;
 
-        [RelayCommand]
-        private void RemoveSubjectTreeElement()
+        public void RemoveSubjectElement(object? sender, RoutedEventArgs e)
         {
             if (ChoosenSubjectTreeItem == null)
             {
                 MessageBox.Show("Не выбран ни один элемент");
                 return;
             }
-
-            int level = GetTreeLevel(ChoosenSubjectTreeItem);
-
-            switch (level)
-            {
-                // Удаление семестра
-                case 1:
-                    App.ApplicationContext.SubjectDB.RemoveSemester(int.Parse((string)ChoosenSubjectTreeItem.Header));
-                    break;
-                // Удаление дисциплины
-                case 2:
-                    App.ApplicationContext.SubjectDB.RemoveSubject((string)ChoosenSubjectTreeItem.Header, int.Parse((string)((TreeViewItem)ChoosenSubjectTreeItem.Parent).Header));
-                    break;
-                default:
-                    break;
-            }
+            App.ApplicationContext.SubjectDB.RemoveSubject((string)ChoosenSubjectTreeItem.Header, int.Parse((string)((TreeViewItem)ChoosenSubjectTreeItem.Parent).Header));
         }
 
-        [RelayCommand]
-        private void EditSubjectTreeElement()
+        public void RemoveSemesterElement(object? sender, RoutedEventArgs e)
         {
             if (ChoosenSubjectTreeItem == null)
             {
                 MessageBox.Show("Не выбран ни один элемент");
                 return;
             }
+            App.ApplicationContext.SubjectDB.RemoveSemester(int.Parse((string)ChoosenSubjectTreeItem.Header));
+        }
 
-            int level = GetTreeLevel(ChoosenSubjectTreeItem);
-
-            switch (level)
+        public void EditSubjectElement(object? sender, RoutedEventArgs e)
+        {
+            if (ChoosenSubjectTreeItem == null)
             {
-                // Удаление семестра
-                case 1:
-                    MessageBox.Show("Нельзя редактировать семестр");
-                    break;
-                // Удаление дисциплины
-                case 2:
-                    Subject s = App.ApplicationContext.SubjectDB.GetSubject((string)ChoosenSubjectTreeItem.Header, int.Parse((string)((TreeViewItem)ChoosenSubjectTreeItem.Parent).Header));
-                    new SubjectEditWindow(s).Show();
-                    break;
-                default:
-                    break;
+                MessageBox.Show("Не выбран ни один элемент");
+                return;
             }
+            Subject s = App.ApplicationContext.SubjectDB.GetSubject((string)ChoosenSubjectTreeItem.Header, int.Parse((string)((TreeViewItem)ChoosenSubjectTreeItem.Parent).Header));
+            new SubjectEditWindow(s).Show();
         }
 
         public ObservableCollection<Subject> Subjects { get; set; }
-
-        private int GetTreeLevel(object levelObj)
-        {
-            // находим уровень дерева
-            int level = 0;
-            while (levelObj.GetType() != typeof(TreeView))
-            {
-                level++;
-                levelObj = ((TreeViewItem)levelObj).Parent;
-            }
-
-            return level;
-        }
 
         public MainViewModel()
         {

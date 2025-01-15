@@ -76,7 +76,9 @@ namespace LessonManager.View
 
                 // создание и установка контекстного меню для семестров
                 ContextMenu contextMenu = new ContextMenu();
-                contextMenu.Items.Add(new MenuItem() { Header = "Удалить семестр" });
+                MenuItem menuItem = new MenuItem() { Header = "Удалить семестр" };
+                menuItem.Click += m_ViewModel.RemoveSemesterElement;
+                contextMenu.Items.Add(menuItem);
                 treeViewItemSemesters.ContextMenu = contextMenu;
 
                 List<string> list = semesterAndSubjects[key];
@@ -87,7 +89,12 @@ namespace LessonManager.View
                     treeViewItemSubjects.Header = list[i];
 
                     contextMenu = new ContextMenu();
-                    contextMenu.Items.Add(new MenuItem() { Header = "Удалить дисциплину" });
+                    menuItem = new MenuItem() { Header = "Удалить дисциплину" };
+                    menuItem.Click += m_ViewModel.RemoveSubjectElement;
+                    contextMenu.Items.Add(menuItem);
+                    menuItem = new MenuItem() { Header = "Редактировать дисциплину" };
+                    menuItem.Click += m_ViewModel.EditSubjectElement;
+                    contextMenu.Items.Add(menuItem);
                     treeViewItemSubjects.ContextMenu = contextMenu;
 
                     contextMenu = new ContextMenu();
