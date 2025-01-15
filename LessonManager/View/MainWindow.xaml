@@ -48,13 +48,6 @@
 
             <!--Список дисциплин-->
             <TreeView x:Name="SubjectsAndLabTreeView" Margin="0,102,0,0"  FontFamily="Comic Sans MS" FontWeight="Bold" BorderThickness="0">
-                <!--Контекстное меню-->
-                <TreeView.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem Header="Удалить" Command="{Binding RemoveSubjectTreeElementCommand}"></MenuItem>
-                        <MenuItem Header="Редактировать" Command="{Binding EditSubjectTreeElementCommand}"></MenuItem>
-                    </ContextMenu>
-                </TreeView.ContextMenu>
             </TreeView>
         </Canvas>
 

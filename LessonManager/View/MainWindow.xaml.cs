@@ -59,6 +59,7 @@ namespace LessonManager.View
         {
             ObservableCollection<Subject> subjects = (ObservableCollection<Subject>)param;
             SubjectsAndLabTreeView.Items.Clear();
+            // получаем для каждого семестра названия предметов
             Dictionary<int, List<string>> semesterAndSubjects = new Dictionary<int, List<string>>();
             for (int i = 0; i < subjects.Count; i++)
             {
@@ -67,19 +68,33 @@ namespace LessonManager.View
                 semesterAndSubjects[sem].Add(subjects[i].Name);
             }
 
+            // проходися по всем семестрам
             foreach (var key in semesterAndSubjects.Keys)
             {
                 TreeViewItem treeViewItemSemesters = new TreeViewItem();
                 treeViewItemSemesters.Header = key.ToString();
+
+                // создание и установка контекстного меню для семестров
+                ContextMenu contextMenu = new ContextMenu();
+                contextMenu.Items.Add(new MenuItem() { Header = "Удалить семестр" });
+                treeViewItemSemesters.ContextMenu = contextMenu;
+
                 List<string> list = semesterAndSubjects[key];
+                // проходимся по всем дисциплинам
                 for (int i = 0; i < list.Count; i++)
                 {
                     TreeViewItem treeViewItemSubjects = new TreeViewItem();
                     treeViewItemSubjects.Header = list[i];
 
-                    treeViewItemSubjects.Items.Add(new TreeViewItem() { Header = "Lab" });
-                    treeViewItemSubjects.Items.Add(new TreeViewItem() { Header = "Prac" });
-                    treeViewItemSubjects.Items.Add(new TreeViewItem() { Header = "Lec" });
+                    contextMenu = new ContextMenu();
+                    contextMenu.Items.Add(new MenuItem() { Header = "Удалить дисциплину" });
+                    treeViewItemSubjects.ContextMenu = contextMenu;
+
+                    contextMenu = new ContextMenu();
+                    // категории
+                    treeViewItemSubjects.Items.Add(new TreeViewItem() { Header = "Lab", ContextMenu = contextMenu });
+                    treeViewItemSubjects.Items.Add(new TreeViewItem() { Header = "Prac", ContextMenu = contextMenu });
+                    treeViewItemSubjects.Items.Add(new TreeViewItem() { Header = "Lec", ContextMenu = contextMenu });
 
                     treeViewItemSemesters.Items.Add(treeViewItemSubjects);
                 }
