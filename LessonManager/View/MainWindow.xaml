@@ -47,7 +47,7 @@
             <TextBlock x:Name="AddActivityTextBlock" Margin="34,74,0,0" FontFamily="Comic Sans MS" FontWeight="Bold">Добавить занятие</TextBlock>
 
             <!--Список дисциплин-->
-            <TreeView x:Name="SubjectsAndLabTreeView" Margin="-16,102,0,0"  FontFamily="Comic Sans MS" FontWeight="Bold" BorderThickness="0">
+            <TreeView x:Name="SubjectsAndLabTreeView" Margin="0,102,0,0"  FontFamily="Comic Sans MS" FontWeight="Bold" BorderThickness="0">
                 <!--Контекстное меню-->
                 <TreeView.ContextMenu>
                     <ContextMenu>
