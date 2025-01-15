@@ -40,7 +40,6 @@ namespace LessonManager.View
 
             // настройка параметров бокового меню
             m_IsSideBarOpened = false;
-            AddActivityTextBlock.Visibility = Visibility.Hidden;
             AddSubjectTextBlock.Visibility = Visibility.Hidden;
             SubjectsAndLabTreeView.Visibility = Visibility.Hidden;
         }
@@ -98,6 +97,9 @@ namespace LessonManager.View
                     treeViewItemSubjects.ContextMenu = contextMenu;
 
                     contextMenu = new ContextMenu();
+                    menuItem = new MenuItem() { Header = "Добавить занятие" };
+                    menuItem.Click += m_ViewModel.AddActivity;
+                    contextMenu.Items.Add(menuItem);
                     // категории
                     treeViewItemSubjects.Items.Add(new TreeViewItem() { Header = "Lab", ContextMenu = contextMenu });
                     treeViewItemSubjects.Items.Add(new TreeViewItem() { Header = "Prac", ContextMenu = contextMenu });
@@ -121,7 +123,6 @@ namespace LessonManager.View
         private void SideBarOpen()
         {
             m_IsSideBarOpened = true;
-            AddActivityTextBlock.Visibility = Visibility.Visible;
             AddSubjectTextBlock.Visibility = Visibility.Visible;
             SubjectsAndLabTreeView.Visibility = Visibility.Visible;
             SideBar.Width = new GridLength(SIDE_BAR_OPEN_SIZE);
@@ -130,7 +131,6 @@ namespace LessonManager.View
         private void SideBarClose()
         {
             m_IsSideBarOpened = false;
-            AddActivityTextBlock.Visibility = Visibility.Hidden;
             AddSubjectTextBlock.Visibility = Visibility.Hidden;
             SubjectsAndLabTreeView.Visibility = Visibility.Hidden;
             SideBar.Width = new GridLength(SIDE_BAR_CLOSE_SIZE);

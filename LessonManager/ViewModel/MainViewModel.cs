@@ -54,6 +54,15 @@ namespace LessonManager.ViewModel
             new SubjectEditWindow(s).Show();
         }
 
+        public void AddActivity(object? sender, RoutedEventArgs e)
+        {
+            if (ChoosenSubjectTreeItem == null)
+            {
+                MessageBox.Show("Не выбран ни один элемент");
+                return;
+            }
+        }
+
         public ObservableCollection<Subject> Subjects { get; set; }
 
         public MainViewModel()
