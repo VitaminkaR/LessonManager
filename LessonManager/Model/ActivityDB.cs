@@ -26,6 +26,7 @@ namespace LessonManager.Model
             m_Activity.Add(
                 new Activity(name, subject, type, activityTime)
                 );
+            m_DbContext.SaveChanges();
         }
 
         public void EditActivity(string predname, Subject predsubject, string? name, ActivityType type, DateTime activityTime, ActivityStateType state)
