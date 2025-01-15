@@ -72,12 +72,5 @@ namespace LessonManager.View
             App.ApplicationContext.Database.EnsureCreated();
             App.ApplicationContext.DBLoad();
         }
-
-        protected override void OnClosed(EventArgs e)
-        {
-            base.OnClosed(e);
-
-            Application.Current.Shutdown();
-        }
     }
 }
