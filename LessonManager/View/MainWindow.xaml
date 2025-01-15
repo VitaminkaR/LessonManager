@@ -16,7 +16,7 @@
 
         <!--Кнопка открытия SideBar-->
         <Button x:Name="SideBarButton" Grid.Column="0" Width="32" Height="32" HorizontalAlignment="Left" VerticalAlignment="Top" Click="SideBarButton_Click">
-            <Image Source="/View/OpenSideBarIcon.png"></Image>
+            <Image Source="/View/Content/OpenSideBarIcon.png"></Image>
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="5"/>
@@ -27,7 +27,7 @@
         <Canvas Grid.Column="0">
             <!--Кнопка добавления учебной дисциплины-->
             <Button x:Name="AddSubjectButton" Width="32" Height="32" Margin="0,34,0,0" HorizontalAlignment="Left" Click="AddSubjectButton_Click">
-                <Image Source="/View/AddSubject.png"></Image>
+                <Image Source="/View/Content/AddSubject.png"></Image>
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="5"/>
@@ -37,7 +37,7 @@
             <TextBlock x:Name="AddSubjectTextBlock" Margin="34,42,0,0" FontFamily="Comic Sans MS" FontWeight="Bold">Добавить дисциплину</TextBlock>
             <!--Кнопка добавления учебного занятия-->
             <Button Width="32" Height="32" Margin="0,68,0,0" HorizontalAlignment="Left">
-                <Image Source="/View/AddActivity.png"></Image>
+                <Image Source="/View/Content/AddActivity.png"></Image>
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="5"/>
