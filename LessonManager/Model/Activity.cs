@@ -31,9 +31,8 @@ namespace LessonManager.Model
         public DateTime ActivityTime { get; set; }
         public ActivityStateType State { get; set; }
 
-        public Activity(int iD, string? name, ActivityType type, DateTime activityTime, ActivityStateType state)
+        public Activity(string? name, ActivityType type, DateTime activityTime, ActivityStateType state)
         {
-            ID = iD;
             Name = name;
             Type = type;
             ActivityTime = activityTime;
