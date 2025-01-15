@@ -15,8 +15,7 @@
         </Grid.ColumnDefinitions>
 
         <!--Кнопка открытия SideBar-->
-        <Button Grid.Column="0" Width="32" Height="32" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding OpenSideBarCommand}" 
-        CommandParameter="{Binding ElementName=SideBar}">
+        <Button x:Name="SideBarButton" Grid.Column="0" Width="32" Height="32" HorizontalAlignment="Left" VerticalAlignment="Top" Click="SideBarButton_Click">
             <Image Source="/View/OpenSideBarIcon.png"></Image>
             <Button.Resources>
                 <Style TargetType="Border">
@@ -35,7 +34,7 @@
                     </Style>
                 </Button.Resources>
             </Button>
-            <TextBlock Margin="34,42,0,0" FontFamily="Comic Sans MS" FontWeight="Bold" Visibility="{Binding Path=SideBarOpenedElementVisibility}">Добавить дисциплину</TextBlock>
+            <TextBlock x:Name="AddSubjectTextBlock" Margin="34,42,0,0" FontFamily="Comic Sans MS" FontWeight="Bold">Добавить дисциплину</TextBlock>
             <!--Кнопка добавления учебного занятия-->
             <Button Width="32" Height="32" Margin="0,68,0,0" HorizontalAlignment="Left">
                 <Image Source="/View/AddActivity.png"></Image>
@@ -45,10 +44,10 @@
                     </Style>
                 </Button.Resources>
             </Button>
-            <TextBlock Margin="34,74,0,0" FontFamily="Comic Sans MS" FontWeight="Bold" Visibility="{Binding Path=SideBarOpenedElementVisibility}">Добавить занятие</TextBlock>
+            <TextBlock x:Name="AddActivityTextBlock" Margin="34,74,0,0" FontFamily="Comic Sans MS" FontWeight="Bold">Добавить занятие</TextBlock>
 
             <!--Список дисциплин-->
-            <TreeView x:Name="SubjectsAndLabTreeView" Margin="-16,102,0,0"  FontFamily="Comic Sans MS" FontWeight="Bold" BorderThickness="0" Visibility="{Binding Path=SideBarOpenedElementVisibility}">
+            <TreeView x:Name="SubjectsAndLabTreeView" Margin="-16,102,0,0"  FontFamily="Comic Sans MS" FontWeight="Bold" BorderThickness="0">
                 <!--Контекстное меню-->
                 <TreeView.ContextMenu>
                     <ContextMenu>
@@ -58,8 +57,8 @@
                 </TreeView.ContextMenu>
             </TreeView>
         </Canvas>
-        
-        <GridSplitter IsEnabled="False" Grid.Column="1" ShowsPreview="False" Width="3" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
+
+        <GridSplitter  IsEnabled="False" Grid.Column="1" ShowsPreview="False" Width="3" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
 
         <!--Рабочая область-->
         <StackPanel Grid.Column="2">

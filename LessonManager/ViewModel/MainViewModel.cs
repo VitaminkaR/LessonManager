@@ -16,32 +16,8 @@ namespace LessonManager.ViewModel
 {
     internal partial class MainViewModel : ObservableObject
     {
-        [RelayCommand]
-        private void OpenSideBar(ColumnDefinition param)
-        {
-            if (param != null)
-                if (param.Width.Value == 256)
-                {
-                    param.Width = new System.Windows.GridLength(32);
-                    SideBarOpenedElementVisibility = Visibility.Hidden;
-                    SideBarClosedElementVisibility = Visibility.Visible;
-                }
-                else
-                {
-                    param.Width = new System.Windows.GridLength(256);
-                    SideBarOpenedElementVisibility = Visibility.Visible;
-                    SideBarClosedElementVisibility = Visibility.Hidden;
-                }
-        }
-
         [ObservableProperty]
         private bool m_IsSideBarOpen;
-
-        [ObservableProperty]
-        private Visibility m_SideBarOpenedElementVisibility;
-
-        [ObservableProperty]
-        private Visibility m_SideBarClosedElementVisibility;
 
         [ObservableProperty]
         private TreeViewItem m_ChoosenSubjectTreeItem;
@@ -122,7 +98,6 @@ namespace LessonManager.ViewModel
 
         public MainViewModel()
         {
-            SideBarOpenedElementVisibility = Visibility.Hidden;
             Subjects = App.ApplicationContext.Subjects.Local.ToObservableCollection();
         }
     }

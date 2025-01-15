@@ -8,6 +8,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -19,7 +20,12 @@ namespace LessonManager.View
     /// </summary>
     public partial class MainWindow : Window
     {
+        const double SIDE_BAR_OPEN_SIZE = 256;
+        const double SIDE_BAR_CLOSE_SIZE = 32;
+
         private MainViewModel m_ViewModel;
+
+        private bool m_IsSideBarOpened;
 
         public MainWindow()
         {
@@ -30,6 +36,12 @@ namespace LessonManager.View
 
             m_ViewModel.Subjects.CollectionChanged += Subjects_CollectionChanged;
             SubjectsAndLabTreeView.SelectedItemChanged += SubjectsAndLabTreeView_SelectedItemChanged;
+
+            // настройка параметров бокового меню
+            m_IsSideBarOpened = false;
+            AddActivityTextBlock.Visibility = Visibility.Hidden;
+            AddSubjectTextBlock.Visibility = Visibility.Hidden;
+            SubjectsAndLabTreeView.Visibility = Visibility.Hidden;
         }
 
         private void SubjectsAndLabTreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -71,6 +83,32 @@ namespace LessonManager.View
 
             App.ApplicationContext.Database.EnsureCreated();
             App.ApplicationContext.DBLoad();
+        }
+
+        private void SideBarOpen()
+        {
+            m_IsSideBarOpened = true;
+            AddActivityTextBlock.Visibility = Visibility.Visible;
+            AddSubjectTextBlock.Visibility = Visibility.Visible;
+            SubjectsAndLabTreeView.Visibility = Visibility.Visible;
+            SideBar.Width = new GridLength(SIDE_BAR_OPEN_SIZE);
+        }
+
+        private void SideBarClose()
+        {
+            m_IsSideBarOpened = false;
+            AddActivityTextBlock.Visibility = Visibility.Hidden;
+            AddSubjectTextBlock.Visibility = Visibility.Hidden;
+            SubjectsAndLabTreeView.Visibility = Visibility.Hidden;
+            SideBar.Width = new GridLength(SIDE_BAR_CLOSE_SIZE);
+        }
+
+        private void SideBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (m_IsSideBarOpened)
+                SideBarClose();
+            else
+                SideBarOpen();
         }
     }
 }
