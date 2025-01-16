@@ -53,8 +53,10 @@
         </GridSplitter>
 
         <!--Рабочая область-->
-        <StackPanel Grid.Column="2">
-            
-        </StackPanel>
+        <ScrollViewer Grid.Column="2">
+            <StackPanel x:Name="WorkFieldStackPanel">
+
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Window>

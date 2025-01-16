@@ -28,6 +28,12 @@ namespace LessonManager.ViewModel
         // выбранные по дисциплине занятия
         public ObservableCollection<Activity> CurrentActivities { get; set; }
 
+        // редактируемая активность (должна устанавливаться перед вызовом метода удаления или редактирования занятия)
+        public Activity EditableActivity { get; set; }
+        public string? EditableActivityName { get; set; }
+        public DateTime EditableActivityTime { get; set; }
+        public ActivityStateType EditableActivityState { get; set; }
+
         // удаляет дисциплину из меню
         public void RemoveSubjectElement(object? sender, RoutedEventArgs e)
         {
@@ -73,7 +79,7 @@ namespace LessonManager.ViewModel
 
             string type = (string)ChoosenSubjectTreeItem.Header;
             ActivityType activityType = (ActivityType)Enum.Parse(typeof(ActivityType), type);
-            if(!Enum.IsDefined(typeof(ActivityType), activityType))
+            if (!Enum.IsDefined(typeof(ActivityType), activityType))
             {
                 MessageBox.Show("Выбран неправильный элемент! Выберите категорию занятий.");
                 return;
@@ -85,7 +91,7 @@ namespace LessonManager.ViewModel
             string subjectName = SubjectTreeViewItem.Header.ToString();
             int semesterNumber = int.Parse(SemesterTreeViewItem.Header.ToString());
             Subject subject = App.ApplicationContext.SubjectDB.GetSubject(subjectName, semesterNumber);
-            
+
             new ActivityAddWindow(activityType, subject).Show();
         }
 
@@ -107,6 +113,36 @@ namespace LessonManager.ViewModel
             CurrentActivities.Clear();
             foreach (var item in activities)
                 CurrentActivities.Add(item);
+        }
+
+        // редактирует событие
+        public void EditActivity(object? sender, RoutedEventArgs e)
+        {
+            if (EditableActivity == null)
+                MessageBox.Show("Ошибка выбора занятия");
+
+            if (EditableActivityName == null)
+                MessageBox.Show("Ошибка редатирования");
+
+            App.ApplicationContext.ActivityDB.EditActivity(
+                EditableActivity.Name,
+                EditableActivity.Subject,
+                EditableActivityName,
+                EditableActivity.Type,
+                EditableActivityTime,
+                EditableActivityState
+                );
+            EditableActivity = null;
+        }
+
+        // удаляет событие
+        public void RemoveActivity(object? sender, RoutedEventArgs e)
+        {
+            if (EditableActivity == null)
+                MessageBox.Show("Ошибка выбора занятия");
+            App.ApplicationContext.ActivityDB.RemoveActivity(EditableActivity.Name, EditableActivity.Subject);
+            CurrentActivities.Remove(EditableActivity);
+            EditableActivity = null;
         }
 
         public MainViewModel()

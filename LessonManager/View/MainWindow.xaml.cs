@@ -47,9 +47,11 @@ namespace LessonManager.View
 
         private void CurrentActivities_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
+            if(e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Reset && m_ViewModel.CurrentActivities.Count == 0)
+                WorkFieldStackPanel.Children.Clear();
             if (!(e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add))
                 return;
-            UpdateCurrentActivities(sender);
+            UpdateCurrentActivities(e.NewItems.Cast<Activity>().ToList());
         }
 
         private void SubjectsAndLabTreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -127,7 +129,94 @@ namespace LessonManager.View
 
         private void UpdateCurrentActivities(object param)
         {
-            MessageBox.Show($"Мы получили столько занятий {m_ViewModel.CurrentActivities.Count}");
+            var activity = ((IList<Activity>)param)[0];
+
+            StackPanel activityBlock = new StackPanel();
+
+            Button deleteActivityButton = new Button()
+            {
+                FontSize = 8,
+                Content = "✖",
+                Foreground = new SolidColorBrush(Color.FromRgb(255, 25, 25)),
+                HorizontalAlignment = HorizontalAlignment.Right,
+                Width = 16,
+                Height = 16
+            };
+            deleteActivityButton.Click += (sender, e) => m_ViewModel.EditableActivity = activity;
+            deleteActivityButton.Click += m_ViewModel.RemoveActivity;
+            activityBlock.Children.Add(deleteActivityButton);
+
+            TextBlock textBlock = new TextBlock()
+            {
+                FontFamily = new FontFamily("Comic Sans MS"),
+                FontWeight = FontWeights.Bold,
+                FontSize = 14,
+                Text = "Название занятия"
+            };
+            activityBlock.Children.Add(textBlock);
+
+            TextBox nameTextBox = new TextBox()
+            {
+                FontFamily = new FontFamily("Comic Sans MS"),
+                FontWeight = FontWeights.Bold,
+                FontSize = 12,
+                Text = activity.Name
+            };
+            nameTextBox.TextChanged += (sender, e) =>
+            {
+                m_ViewModel.EditableActivity = activity;
+                m_ViewModel.EditableActivityName = nameTextBox.Text;
+                m_ViewModel.EditableActivityTime = activity.ActivityTime;
+                m_ViewModel.EditableActivityState = activity.State;
+            };
+            nameTextBox.TextChanged += m_ViewModel.EditActivity;
+            activityBlock.Children.Add(nameTextBox);
+
+            textBlock = new TextBlock()
+            {
+                FontFamily = new FontFamily("Comic Sans MS"),
+                FontWeight = FontWeights.Bold,
+                FontSize = 12,
+                Text = $"Тип занятия: {activity.Type}"
+            };
+            activityBlock.Children.Add(textBlock);
+
+            DatePicker datePicker = new DatePicker()
+            {
+                FontFamily = new FontFamily("Comic Sans MS"),
+                FontWeight = FontWeights.Bold,
+                SelectedDate = activity.ActivityTime
+            };
+            datePicker.SelectedDateChanged += (sender, e) =>
+            {
+                m_ViewModel.EditableActivity = activity;
+                m_ViewModel.EditableActivityName = activity.Name;
+                m_ViewModel.EditableActivityTime = (DateTime)datePicker.SelectedDate;
+                m_ViewModel.EditableActivityState = activity.State;
+            };
+            datePicker.SelectedDateChanged += m_ViewModel.EditActivity;
+            activityBlock.Children.Add(datePicker);
+
+            var enumlist = Enum.GetValues(typeof(ActivityStateType));
+            ComboBox comboBox = new ComboBox()
+            {
+                FontFamily = new FontFamily("Comic Sans MS"),
+                FontWeight = FontWeights.Bold,
+                ItemsSource = enumlist,
+                SelectedItem = activity.State
+            };
+            comboBox.SelectionChanged += (sender, e) =>
+            {
+                m_ViewModel.EditableActivity = activity;
+                m_ViewModel.EditableActivityName = activity.Name;
+                m_ViewModel.EditableActivityTime = activity.ActivityTime;
+                m_ViewModel.EditableActivityState = (ActivityStateType)comboBox.SelectedItem;
+            };
+            comboBox.SelectionChanged += m_ViewModel.EditActivity;
+            activityBlock.Children.Add(comboBox);
+
+            WorkFieldStackPanel.Children.Add(activityBlock);
+            WorkFieldStackPanel.Children.Add(new Rectangle() { Height = 4, StrokeThickness = 4, Stroke = new SolidColorBrush(Color.FromRgb(150, 150, 150))});
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
