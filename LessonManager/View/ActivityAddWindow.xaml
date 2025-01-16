@@ -7,9 +7,6 @@
         xmlns:vm="clr-namespace:LessonManager.ViewModel"
         mc:Ignorable="d"
         Title="Добавить занятие" Height="208" Width="324" ResizeMode="NoResize">
-    <Window.DataContext>
-        <vm:ActivityAddViewModel/>
-    </Window.DataContext>
     <StackPanel>
         <TextBlock FontFamily="Comic Sans MS" FontSize="16" FontWeight="Bold">Название занятия</TextBlock>
         <TextBox x:Name="ActivityNameTextBox" MaxLength="128" FontFamily="Comic Sans MS" FontSize="16" Text="{Binding ActivityName}"></TextBox>

@@ -41,5 +41,18 @@ namespace LessonManager.ViewModel
 
             App.ApplicationContext.ActivityDB.AddActivity(m_ActivityName, SubjectActivity, (ActivityType)Enum.Parse(typeof(ActivityType), m_ActivityType), m_ActivityDate);
         }
+
+        // автоматически устанавливает шаблон названия (вызывать после установки контента данных)
+        public void AutoSetName()
+        {
+            if (ActivityType == "Lab")
+                ActivityName = "Лабораторная работа №";
+            else if (ActivityType == "Prac")
+                ActivityName = "Практика №";
+            else if (ActivityType == "Lec")
+                ActivityName = "Лекция №";
+            else
+                throw new Exception("Неизвестный вид занятия");
+        }
     }
 }

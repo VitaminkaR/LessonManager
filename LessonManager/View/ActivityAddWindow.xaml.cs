@@ -31,13 +31,17 @@ namespace LessonManager.View
             m_ActivityType = activityType;
             Loaded += ActivityAddWindow_Loaded;
             m_Subject = subject;
+
+            DataContext = new ActivityAddViewModel();
         }
 
         private void ActivityAddWindow_Loaded(object sender, RoutedEventArgs e)
         {
             ActivityTypeTextBlock.Text = m_ActivityType.ToString();
-            ((ActivityAddViewModel)DataContext).ActivityType = m_ActivityType.ToString();
-            ((ActivityAddViewModel)DataContext).SubjectActivity = m_Subject;
+            ActivityAddViewModel vm = (ActivityAddViewModel)DataContext;
+            vm.ActivityType = m_ActivityType.ToString();
+            vm.SubjectActivity = m_Subject;
+            vm.AutoSetName();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
