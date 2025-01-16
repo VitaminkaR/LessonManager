@@ -44,6 +44,11 @@ namespace LessonManager.Model
             return m_Activity.Where(s => s.Name == name && s.Subject == subject).Select(s => s).First();
         }
 
+        public ICollection<Activity> GetAllActivitiesOfTypeFromSubject(Subject subject, ActivityType type)
+        {
+            return m_Activity.Where(s => s.Subject == subject && s.Type == type).Select(s => s).ToArray();
+        }
+
         public void RemoveActivity(string name, Subject subject)
         {
             m_Activity.Remove(

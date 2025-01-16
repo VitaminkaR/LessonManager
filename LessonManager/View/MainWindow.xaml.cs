@@ -37,11 +37,19 @@ namespace LessonManager.View
 
             m_ViewModel.Subjects.CollectionChanged += Subjects_CollectionChanged;
             SubjectsAndLabTreeView.SelectedItemChanged += SubjectsAndLabTreeView_SelectedItemChanged;
+            m_ViewModel.CurrentActivities.CollectionChanged += CurrentActivities_CollectionChanged;
 
             // настройка параметров бокового меню
             m_IsSideBarOpened = false;
             AddSubjectTextBlock.Visibility = Visibility.Hidden;
             SubjectsAndLabTreeView.Visibility = Visibility.Hidden;
+        }
+
+        private void CurrentActivities_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if (!(e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add))
+                return;
+            UpdateCurrentActivities(sender);
         }
 
         private void SubjectsAndLabTreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -101,14 +109,25 @@ namespace LessonManager.View
                     menuItem.Click += m_ViewModel.AddActivity;
                     contextMenu.Items.Add(menuItem);
                     // категории
-                    treeViewItemSubjects.Items.Add(new TreeViewItem() { Header = "Lab", ContextMenu = contextMenu });
-                    treeViewItemSubjects.Items.Add(new TreeViewItem() { Header = "Prac", ContextMenu = contextMenu });
-                    treeViewItemSubjects.Items.Add(new TreeViewItem() { Header = "Lec", ContextMenu = contextMenu });
+                    TreeViewItem treeViewItemCategory = new TreeViewItem() { Header = "Lab", ContextMenu = contextMenu };
+                    treeViewItemCategory.Selected += m_ViewModel.SetActivities;
+                    treeViewItemSubjects.Items.Add(treeViewItemCategory);
+                    treeViewItemCategory = new TreeViewItem() { Header = "Prac", ContextMenu = contextMenu };
+                    treeViewItemCategory.Selected += m_ViewModel.SetActivities;
+                    treeViewItemSubjects.Items.Add(treeViewItemCategory);
+                    treeViewItemCategory = new TreeViewItem() { Header = "Lec", ContextMenu = contextMenu };
+                    treeViewItemCategory.Selected += m_ViewModel.SetActivities;
+                    treeViewItemSubjects.Items.Add(treeViewItemCategory);
 
                     treeViewItemSemesters.Items.Add(treeViewItemSubjects);
                 }
                 SubjectsAndLabTreeView.Items.Add(treeViewItemSemesters);
             }
+        }
+
+        private void UpdateCurrentActivities(object param)
+        {
+            MessageBox.Show($"Мы получили столько занятий {m_ViewModel.CurrentActivities.Count}");
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
