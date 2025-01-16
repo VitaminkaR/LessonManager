@@ -71,7 +71,7 @@ namespace LessonManager.ViewModel
                 return;
             }
 
-            string type = (string)m_ChoosenSubjectTreeItem.Header;
+            string type = (string)ChoosenSubjectTreeItem.Header;
             ActivityType activityType = (ActivityType)Enum.Parse(typeof(ActivityType), type);
             if(!Enum.IsDefined(typeof(ActivityType), activityType))
             {
@@ -79,9 +79,11 @@ namespace LessonManager.ViewModel
                 return;
             }
 
+            TreeViewItem SubjectTreeViewItem = (TreeViewItem)ChoosenSubjectTreeItem.Parent;
+            TreeViewItem SemesterTreeViewItem = (TreeViewItem)SubjectTreeViewItem.Parent;
             // получем дисциплину этого занятия
-            string subjectName = (string)((TreeViewItem)ChoosenSubjectTreeItem.Parent).Header;
-            int semesterNumber = int.Parse((string)((TreeViewItem)((TreeViewItem)ChoosenSubjectTreeItem.Parent).Parent).Header);
+            string subjectName = SubjectTreeViewItem.Header.ToString();
+            int semesterNumber = int.Parse(SemesterTreeViewItem.Header.ToString());
             Subject subject = App.ApplicationContext.SubjectDB.GetSubject(subjectName, semesterNumber);
             
             new ActivityAddWindow(activityType, subject).Show();
