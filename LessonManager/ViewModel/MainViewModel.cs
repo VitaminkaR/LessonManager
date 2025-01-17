@@ -130,6 +130,8 @@ namespace LessonManager.ViewModel
                 EditableActivityState
                 );
 
+            SettingActivities(EditableActivity.Subject, EditableActivity.Type);
+
             EditableActivity = null;
         }
 

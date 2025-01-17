@@ -133,6 +133,17 @@ namespace LessonManager.View
 
             StackPanel activityBlock = new StackPanel();
 
+            Color stateColor;
+            switch (activity.State)
+            {
+                case ActivityStateType.None: stateColor = Color.FromRgb(0, 0, 0); break; 
+                case ActivityStateType.Passed: stateColor = Color.FromRgb(0, 153, 0); break;
+                case ActivityStateType.Ready: stateColor = Color.FromRgb(204, 204, 0); break;
+                case ActivityStateType.Visited: stateColor = Color.FromRgb(0, 204, 204); break;
+                case ActivityStateType.Answer: stateColor = Color.FromRgb(0, 153, 0); break;
+                case ActivityStateType.NotVisited: stateColor = Color.FromRgb(204, 0, 0); break;
+            }
+
             Button deleteActivityButton = new Button()
             {
                 FontSize = 8,
@@ -151,7 +162,8 @@ namespace LessonManager.View
                 FontFamily = new FontFamily("Comic Sans MS"),
                 FontWeight = FontWeights.Bold,
                 FontSize = 14,
-                Text = "Название занятия"
+                Text = "Название занятия",
+                Foreground = new SolidColorBrush(stateColor)
             };
             activityBlock.Children.Add(textBlock);
 
@@ -203,7 +215,8 @@ namespace LessonManager.View
                 FontFamily = new FontFamily("Comic Sans MS"),
                 FontWeight = FontWeights.Bold,
                 ItemsSource = enumlist,
-                SelectedItem = activity.State
+                SelectedItem = activity.State,
+                Foreground = new SolidColorBrush(stateColor)
             };
             comboBox.SelectionChanged += (sender, e) =>
             {
