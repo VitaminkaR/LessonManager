@@ -95,7 +95,7 @@ namespace LessonManager.ViewModel
             new ActivityAddWindow(activityType, subject).Show();
         }
 
-        // устанавливает выбранные занятия
+        // инициализирует установку занятий (получает все необхоимые данные)
         public void SetActivities(object? sender, RoutedEventArgs e)
         {
             TreeViewItem curEl = (TreeViewItem)sender;
@@ -109,10 +109,7 @@ namespace LessonManager.ViewModel
             int semesterNumber = int.Parse(SemesterTreeViewItem.Header.ToString());
             Subject subject = App.ApplicationContext.SubjectDB.GetSubject(subjectName, semesterNumber);
 
-            var activities = App.ApplicationContext.ActivityDB.GetAllActivitiesOfTypeFromSubject(subject, activityType);
-            CurrentActivities.Clear();
-            foreach (var item in activities)
-                CurrentActivities.Add(item);
+            SettingActivities(subject, activityType);
         }
 
         // редактирует событие
@@ -132,6 +129,7 @@ namespace LessonManager.ViewModel
                 EditableActivityTime,
                 EditableActivityState
                 );
+
             EditableActivity = null;
         }
 
@@ -142,7 +140,19 @@ namespace LessonManager.ViewModel
                 MessageBox.Show("Ошибка выбора занятия");
             App.ApplicationContext.ActivityDB.RemoveActivity(EditableActivity.Name, EditableActivity.Subject);
             CurrentActivities.Remove(EditableActivity);
+
+            SettingActivities(EditableActivity.Subject, EditableActivity.Type);
+
             EditableActivity = null;
+        }
+
+        // непосредственно обновляет коллекцию занятий
+        private void SettingActivities(Subject subject, ActivityType type)
+        {
+            var activities = App.ApplicationContext.ActivityDB.GetAllActivitiesOfTypeFromSubject(subject, type);
+            CurrentActivities.Clear();
+            foreach (var item in activities)
+                CurrentActivities.Add(item);
         }
 
         public MainViewModel()
