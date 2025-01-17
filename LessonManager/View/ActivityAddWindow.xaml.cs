@@ -28,6 +28,8 @@ namespace LessonManager.View
         {
             InitializeComponent();
 
+            ActivityDatePicker.SelectedDate = DateTime.Now;
+
             m_ActivityType = activityType;
             Loaded += ActivityAddWindow_Loaded;
             m_Subject = subject;
