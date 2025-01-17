@@ -47,7 +47,7 @@ namespace LessonManager.View
 
         private void CurrentActivities_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            if(e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Reset && m_ViewModel.CurrentActivities.Count == 0)
+            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Reset && m_ViewModel.CurrentActivities.Count == 0)
                 WorkFieldStackPanel.Children.Clear();
             if (!(e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add))
                 return;
@@ -136,7 +136,7 @@ namespace LessonManager.View
             Color stateColor;
             switch (activity.State)
             {
-                case ActivityStateType.None: stateColor = Color.FromRgb(0, 0, 0); break; 
+                case ActivityStateType.None: stateColor = Color.FromRgb(0, 0, 0); break;
                 case ActivityStateType.Passed: stateColor = Color.FromRgb(0, 153, 0); break;
                 case ActivityStateType.Ready: stateColor = Color.FromRgb(204, 204, 0); break;
                 case ActivityStateType.Visited: stateColor = Color.FromRgb(0, 204, 204); break;
@@ -181,7 +181,8 @@ namespace LessonManager.View
                 m_ViewModel.EditableActivityTime = activity.ActivityTime;
                 m_ViewModel.EditableActivityState = activity.State;
             };
-            nameTextBox.TextChanged += m_ViewModel.EditActivity;
+            nameTextBox.LostFocus += m_ViewModel.EditActivity;
+            nameTextBox.KeyDown += (sender, e) => { if (e.Key == Key.Enter) deleteActivityButton.Focus(); };
             activityBlock.Children.Add(nameTextBox);
 
             textBlock = new TextBlock()
@@ -229,7 +230,7 @@ namespace LessonManager.View
             activityBlock.Children.Add(comboBox);
 
             WorkFieldStackPanel.Children.Add(activityBlock);
-            WorkFieldStackPanel.Children.Add(new Rectangle() { Height = 4, StrokeThickness = 4, Stroke = new SolidColorBrush(Color.FromRgb(150, 150, 150))});
+            WorkFieldStackPanel.Children.Add(new Rectangle() { Height = 4, StrokeThickness = 4, Stroke = new SolidColorBrush(Color.FromRgb(150, 150, 150)) });
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
