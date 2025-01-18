@@ -76,10 +76,10 @@
                 <Separator />
                 <MenuItem Header="Настройки"/>
                 <Separator />
-                <MenuItem Header="Выйти"/>
+                <MenuItem x:Name="ExitMenuItem" Header="Выйти" Click="ExitMenuItem_Click"/>
             </MenuItem>
             <MenuItem Header="Справка">
-                <MenuItem Header="Справка"/>
+                <MenuItem x:Name="InfoMenuItem" Header="Справка" Click="InfoMenuItem_Click"/>
             </MenuItem>
         </Menu>
 
