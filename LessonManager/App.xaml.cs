@@ -10,6 +10,8 @@ namespace LessonManager
     /// </summary>
     public partial class App : Application
     {
+        public const string VERSION = "0.9";
+
         static internal ApplicationContext ApplicationContext { get; private set; } = null!;
 
         protected override void OnStartup(StartupEventArgs e)

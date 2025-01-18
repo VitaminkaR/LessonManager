@@ -234,7 +234,9 @@ namespace LessonManager.View
 
         private void InfoMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Разработчик: Владимир Рыбянцов", "Справка", MessageBoxButton.OK);
+            string msg = $"Разработчик: Владимир Рыбянцов\n" +
+                                $"Версия:{App.VERSION}";
+            MessageBox.Show(msg, "Справка", MessageBoxButton.OK);
         }
 
         private void ExitMenuItem_Click(object sender, RoutedEventArgs e)
