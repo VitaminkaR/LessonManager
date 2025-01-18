@@ -1,7 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Windows;
-using System.Xml.Linq;
 
 namespace LessonManager.Model;
 

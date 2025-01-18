@@ -1,17 +1,10 @@
 ﻿using LessonManager.Model;
 using LessonManager.ViewModel;
 using System.Collections.ObjectModel;
-using System.Reflection;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace LessonManager.View
@@ -21,12 +14,7 @@ namespace LessonManager.View
     /// </summary>
     public partial class MainWindow : Window
     {
-        const double SIDE_BAR_OPEN_SIZE = 256;
-        const double SIDE_BAR_CLOSE_SIZE = 32;
-
         private MainViewModel m_ViewModel;
-
-        private bool m_IsSideBarOpened;
 
         public MainWindow()
         {
