@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:LessonManager.View"
              StartupUri="View/MainWindow.xaml" ShutdownMode="OnMainWindowClose">
     <Application.Resources>
-         
+
     </Application.Resources>
 </Application>

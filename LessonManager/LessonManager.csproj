@@ -9,13 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Content\**" />
-    <EmbeddedResource Remove="Content\**" />
-    <None Remove="Content\**" />
-    <Page Remove="Content\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="View\AddActivity.png" />
     <None Remove="View\AddSubject.png" />
     <None Remove="View\OpenSideBarIcon.png" />
@@ -27,8 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="View\Content\AddSubject.png" />
-    <Resource Include="View\Content\OpenSideBarIcon.png" />
+    <Resource Include="Content\AddSubject.png" />
+    <Resource Include="Content\OpenSideBarIcon.png" />
   </ItemGroup>
 
 </Project>
