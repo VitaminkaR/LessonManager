@@ -38,11 +38,6 @@ namespace LessonManager.View
             m_ViewModel.Subjects.CollectionChanged += Subjects_CollectionChanged;
             SubjectsAndLabTreeView.SelectedItemChanged += SubjectsAndLabTreeView_SelectedItemChanged;
             m_ViewModel.CurrentActivities.CollectionChanged += CurrentActivities_CollectionChanged;
-
-            // настройка параметров бокового меню
-            m_IsSideBarOpened = false;
-            AddSubjectTextBlock.Visibility = Visibility.Hidden;
-            SubjectsAndLabTreeView.Visibility = Visibility.Hidden;
         }
 
         private void CurrentActivities_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -230,30 +225,6 @@ namespace LessonManager.View
 
             App.ApplicationContext.Database.EnsureCreated();
             App.ApplicationContext.DBLoad();
-        }
-
-        private void SideBarOpen()
-        {
-            m_IsSideBarOpened = true;
-            AddSubjectTextBlock.Visibility = Visibility.Visible;
-            SubjectsAndLabTreeView.Visibility = Visibility.Visible;
-            SideBar.Width = new GridLength(SIDE_BAR_OPEN_SIZE);
-        }
-
-        private void SideBarClose()
-        {
-            m_IsSideBarOpened = false;
-            AddSubjectTextBlock.Visibility = Visibility.Hidden;
-            SubjectsAndLabTreeView.Visibility = Visibility.Hidden;
-            SideBar.Width = new GridLength(SIDE_BAR_CLOSE_SIZE);
-        }
-
-        private void SideBarButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (m_IsSideBarOpened)
-                SideBarClose();
-            else
-                SideBarOpen();
         }
 
         private void AddSubjectButton_Click(object sender, RoutedEventArgs e)

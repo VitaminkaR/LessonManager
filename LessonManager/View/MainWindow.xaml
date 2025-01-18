@@ -33,44 +33,42 @@
             <Setter Property="FontFamily" Value="Comic Sans MS"/>
             <Setter Property="FontWeight" Value="Bold"/>
         </Style>
+        <!--Красивые GridSplitter-ы-->
+        <ControlTemplate x:Key="GS">
+            <Grid>
+                <Button Content="⁞" />
+                <Rectangle Fill="LightGray" />
+            </Grid>
+        </ControlTemplate>
+        <Style TargetType="GridSplitter">
+            <Setter Property="Template" Value="{StaticResource GS}"/>
+            <Setter Property="Width" Value="5"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+            <Setter Property="ShowsPreview" Value="False"/>
+        </Style>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="32" x:Name="SideBar"/>
+            <ColumnDefinition Width="32"/>
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="0.5*" MinWidth="64"/>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="2*" MinWidth="256"/>
         </Grid.ColumnDefinitions>
+        <GridSplitter IsEnabled="False" Grid.Column="1"/>
+        <GridSplitter Grid.Column="3"/>
 
-        <!--Кнопка открытия SideBar-->
-        <Button x:Name="SideBarButton" Grid.Column="0" Width="32" Height="32" HorizontalAlignment="Left" VerticalAlignment="Top" Click="SideBarButton_Click">
-            <Image Source="../Content/OpenSideBarIcon.png"></Image>
+        <!--Кнопка добавления учебной дисциплины-->
+        <Button ToolTip="Добавить дисциплину" Grid.Column="0" x:Name="AddSubjectButton" Width="32" Height="32" VerticalAlignment="Top" HorizontalAlignment="Left" Click="AddSubjectButton_Click">
+            <Image Source="../Content/AddSubject.png"/>
         </Button>
-        <!--Меню-->
-        <Canvas Grid.Column="0">
-            <!--Кнопка добавления учебной дисциплины-->
-            <Button x:Name="AddSubjectButton" Width="32" Height="32" Margin="0,34,0,0" HorizontalAlignment="Left" Click="AddSubjectButton_Click">
-                <Image Source="../Content/AddSubject.png"></Image>
-            </Button>
-            <TextBlock x:Name="AddSubjectTextBlock" Margin="34,42,0,0">Добавить дисциплину</TextBlock>
 
-            <!--Список дисциплин-->
-            <TreeView x:Name="SubjectsAndLabTreeView" Margin="0,70,0,0" BorderThickness="0">
-            </TreeView>
-        </Canvas>
-
-        <GridSplitter  IsEnabled="False" Grid.Column="1" ShowsPreview="False" Width="3" HorizontalAlignment="Center" VerticalAlignment="Stretch">
-            <GridSplitter.Template>
-                <ControlTemplate TargetType="{x:Type GridSplitter}">
-                    <Grid>
-                        <Button Content="⁞" />
-                        <Rectangle Fill="LightGray" />
-                    </Grid>
-                </ControlTemplate>
-            </GridSplitter.Template>
-        </GridSplitter>
-
+        <!--Список дисциплин-->
+        <TreeView Grid.Column="2" x:Name="SubjectsAndLabTreeView" BorderThickness="0"/>
+        
         <!--Рабочая область-->
-        <ScrollViewer Grid.Column="2">
+        <ScrollViewer Grid.Column="4">
             <StackPanel x:Name="WorkFieldStackPanel">
 
             </StackPanel>
