@@ -8,6 +8,11 @@
         mc:Ignorable="d"
         Title="Менеджер Занятий" Height="450" Width="800">
     <Window.Resources>
+        <Style TargetType="Menu">
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="10" />
+        </Style>
         <Style TargetType="TextBlock">
             <Setter Property="FontFamily" Value="Comic Sans MS"/>
             <Setter Property="FontWeight" Value="Bold"/>
@@ -48,7 +53,14 @@
             <Setter Property="ShowsPreview" Value="False"/>
         </Style>
     </Window.Resources>
+    
+    
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="32"/>
             <ColumnDefinition Width="Auto" />
@@ -56,19 +68,31 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="2*" MinWidth="256"/>
         </Grid.ColumnDefinitions>
-        <GridSplitter IsEnabled="False" Grid.Column="1"/>
-        <GridSplitter Grid.Column="3"/>
+        <GridSplitter IsEnabled="False" Grid.Column="1" Grid.Row="1"/>
+        <GridSplitter Grid.Column="3" Grid.Row="1"/>
+
+        <Menu Grid.Row="0" Grid.ColumnSpan="5" Height="16">
+            <MenuItem Header="Основа">
+                <Separator />
+                <MenuItem Header="Настройки"/>
+                <Separator />
+                <MenuItem Header="Выйти"/>
+            </MenuItem>
+            <MenuItem Header="Справка">
+                <MenuItem Header="Справка"/>
+            </MenuItem>
+        </Menu>
 
         <!--Кнопка добавления учебной дисциплины-->
-        <Button ToolTip="Добавить дисциплину" Grid.Column="0" x:Name="AddSubjectButton" Width="32" Height="32" VerticalAlignment="Top" HorizontalAlignment="Left" Click="AddSubjectButton_Click">
+        <Button ToolTip="Добавить дисциплину" Grid.Column="0" Grid.Row="1" x:Name="AddSubjectButton" Width="32" Height="32" VerticalAlignment="Top" HorizontalAlignment="Left" Click="AddSubjectButton_Click">
             <Image Source="../Content/AddSubject.png"/>
         </Button>
 
         <!--Список дисциплин-->
-        <TreeView Grid.Column="2" x:Name="SubjectsAndLabTreeView" BorderThickness="0"/>
+        <TreeView Grid.Column="2" Grid.Row="1" x:Name="SubjectsAndLabTreeView" BorderThickness="0"/>
         
         <!--Рабочая область-->
-        <ScrollViewer Grid.Column="4">
+        <ScrollViewer Grid.Column="4" Grid.Row="1">
             <StackPanel x:Name="WorkFieldStackPanel">
 
             </StackPanel>
