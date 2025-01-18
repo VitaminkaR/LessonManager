@@ -7,6 +7,33 @@
         xmlns:vm="clr-namespace:LessonManager.ViewModel"
         mc:Ignorable="d"
         Title="Менеджер Занятий" Height="450" Width="800">
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Style.Resources>
+        </Style>
+        <Style TargetType="TreeView">
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+        <Style TargetType="DatePicker">
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="32" x:Name="SideBar"/>
@@ -17,27 +44,17 @@
         <!--Кнопка открытия SideBar-->
         <Button x:Name="SideBarButton" Grid.Column="0" Width="32" Height="32" HorizontalAlignment="Left" VerticalAlignment="Top" Click="SideBarButton_Click">
             <Image Source="../Content/OpenSideBarIcon.png"></Image>
-            <Button.Resources>
-                <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="5"/>
-                </Style>
-            </Button.Resources>
         </Button>
         <!--Меню-->
         <Canvas Grid.Column="0">
             <!--Кнопка добавления учебной дисциплины-->
             <Button x:Name="AddSubjectButton" Width="32" Height="32" Margin="0,34,0,0" HorizontalAlignment="Left" Click="AddSubjectButton_Click">
                 <Image Source="../Content/AddSubject.png"></Image>
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="5"/>
-                    </Style>
-                </Button.Resources>
             </Button>
-            <TextBlock x:Name="AddSubjectTextBlock" Margin="34,42,0,0" FontFamily="Comic Sans MS" FontWeight="Bold">Добавить дисциплину</TextBlock>
+            <TextBlock x:Name="AddSubjectTextBlock" Margin="34,42,0,0">Добавить дисциплину</TextBlock>
 
             <!--Список дисциплин-->
-            <TreeView x:Name="SubjectsAndLabTreeView" Margin="0,70,0,0"  FontFamily="Comic Sans MS" FontWeight="Bold" BorderThickness="0">
+            <TreeView x:Name="SubjectsAndLabTreeView" Margin="0,70,0,0" BorderThickness="0">
             </TreeView>
         </Canvas>
 

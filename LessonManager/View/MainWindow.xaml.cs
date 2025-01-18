@@ -159,8 +159,6 @@ namespace LessonManager.View
 
             TextBlock textBlock = new TextBlock()
             {
-                FontFamily = new FontFamily("Comic Sans MS"),
-                FontWeight = FontWeights.Bold,
                 FontSize = 14,
                 Text = "Название занятия",
                 Foreground = new SolidColorBrush(stateColor)
@@ -169,8 +167,6 @@ namespace LessonManager.View
 
             TextBox nameTextBox = new TextBox()
             {
-                FontFamily = new FontFamily("Comic Sans MS"),
-                FontWeight = FontWeights.Bold,
                 FontSize = 12,
                 Text = activity.Name
             };
@@ -187,8 +183,6 @@ namespace LessonManager.View
 
             textBlock = new TextBlock()
             {
-                FontFamily = new FontFamily("Comic Sans MS"),
-                FontWeight = FontWeights.Bold,
                 FontSize = 12,
                 Text = $"Тип занятия: {activity.Type}"
             };
@@ -196,8 +190,6 @@ namespace LessonManager.View
 
             DatePicker datePicker = new DatePicker()
             {
-                FontFamily = new FontFamily("Comic Sans MS"),
-                FontWeight = FontWeights.Bold,
                 SelectedDate = activity.ActivityTime
             };
             datePicker.SelectedDateChanged += (sender, e) =>
@@ -213,8 +205,6 @@ namespace LessonManager.View
             var enumlist = Enum.GetValues(typeof(ActivityStateType));
             ComboBox comboBox = new ComboBox()
             {
-                FontFamily = new FontFamily("Comic Sans MS"),
-                FontWeight = FontWeights.Bold,
                 ItemsSource = enumlist,
                 SelectedItem = activity.State,
                 Foreground = new SolidColorBrush(stateColor)
