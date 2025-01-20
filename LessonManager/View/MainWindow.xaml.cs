@@ -116,14 +116,6 @@ namespace LessonManager.View
             deleteActivityButton.Click += m_ViewModel.RemoveActivity;
             activityBlock.Children.Add(deleteActivityButton);
 
-            TextBlock textBlock = new TextBlock()
-            {
-                FontSize = 14,
-                Text = "Название занятия",
-                Foreground = new SolidColorBrush(stateColor)
-            };
-            activityBlock.Children.Add(textBlock);
-
             TextBox nameTextBox = new TextBox()
             {
                 FontSize = 12,
@@ -139,13 +131,6 @@ namespace LessonManager.View
             nameTextBox.LostFocus += m_ViewModel.EditActivity;
             nameTextBox.KeyDown += (sender, e) => { if (e.Key == Key.Enter) deleteActivityButton.Focus(); };
             activityBlock.Children.Add(nameTextBox);
-
-            textBlock = new TextBlock()
-            {
-                FontSize = 12,
-                Text = $"Тип занятия: {activity.Type}"
-            };
-            activityBlock.Children.Add(textBlock);
 
             DatePicker datePicker = new DatePicker()
             {
