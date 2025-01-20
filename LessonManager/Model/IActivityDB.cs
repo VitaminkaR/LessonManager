@@ -8,6 +8,8 @@ namespace LessonManager.Model
 
         public void AddActivity(string? name, Subject subject, ActivityType type, DateTime activityTime);
 
+        public void AddActivity(Activity activity);
+
         public void RemoveActivity(string name, Subject subject);
 
         public void EditActivity(string predname, Subject predsubject, string? name, ActivityType type, DateTime activityTime, ActivityStateType state);

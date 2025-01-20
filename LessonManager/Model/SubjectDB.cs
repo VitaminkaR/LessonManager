@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Windows;
+using System.Xml.Linq;
 
 namespace LessonManager.Model
 {
@@ -62,6 +64,18 @@ namespace LessonManager.Model
         public Subject GetSubject(string name, int sn)
         {
             return m_Subjects.Where(s => s.Name == name && s.SemesterNumber == sn).Select(s => s).First();
+        }
+
+        public void AddSubject(Subject subject)
+        {
+            if (m_Subjects.Any(s => s.Name == subject.Name && s.SemesterNumber == subject.SemesterNumber))
+            {
+                MessageBox.Show("Такой предмет в этом семестре уже существует");
+                return;
+            }
+
+            m_Subjects.Add(subject);
+            m_DbContext.SaveChanges();
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Windows;
+using System.Xml.Linq;
 
 namespace LessonManager.Model
 {
@@ -20,6 +22,19 @@ namespace LessonManager.Model
                 new Activity(name, subject, type, activityTime)
                 );
             m_DbContext.SaveChanges();
+        }
+
+        public void AddActivity(Activity activity)
+        {
+            m_Activity.Add(activity);
+            try
+            {
+                m_DbContext.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show($"{e.Message} {activity.Name}");
+            }
         }
 
         public void EditActivity(string predname, Subject predsubject, string? name, ActivityType type, DateTime activityTime, ActivityStateType state)

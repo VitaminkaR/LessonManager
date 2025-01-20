@@ -73,6 +73,7 @@
 
         <Menu Grid.Row="0" Grid.ColumnSpan="5" Height="16">
             <MenuItem Header="Основа">
+                <MenuItem Header="Импортировать ISC" Command="{Binding OpenISCFileCommand}"/>
                 <Separator />
                 <MenuItem Header="Настройки"/>
                 <Separator />

@@ -1,7 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using LessonManager.Model;
 using LessonManager.View;
+using Microsoft.Win32;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -9,8 +13,35 @@ namespace LessonManager.ViewModel
 {
     internal partial class MainViewModel : ObservableObject
     {
+        private IISCImport m_ISCImport;
+
         [ObservableProperty]
         private TreeViewItem m_ChoosenSubjectTreeItem;
+
+        [RelayCommand]
+        private void OpenISCFile()
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.FileName = "Document";
+            dialog.DefaultExt = ".ics";
+            dialog.Filter = "Файл календаря(.ics)|*.ics";
+
+            bool? result = dialog.ShowDialog();
+
+            if (result == true)
+            {
+                string filename = dialog.FileName;
+                using (FileStream fs = new FileStream(filename, FileMode.Open))
+                    m_ISCImport.Init(fs);
+
+                ICollection<Subject> subjects = m_ISCImport.GetSubjects();
+
+                foreach (Subject subject in subjects)
+                {
+                    App.ApplicationContext?.SubjectDB.AddSubject(subject);
+                }
+            }
+        }
 
         // все дисциплины
         public ObservableCollection<Subject> Subjects { get; set; }
@@ -150,6 +181,8 @@ namespace LessonManager.ViewModel
         {
             Subjects = App.ApplicationContext.Subjects.Local.ToObservableCollection();
             CurrentActivities = new ObservableCollection<Activity>();
+
+            m_ISCImport = new OGUICSImport();
         }
     }
 }
