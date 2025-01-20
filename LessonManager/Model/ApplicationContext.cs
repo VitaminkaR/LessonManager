@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace LessonManager.Model;
 
@@ -23,6 +24,15 @@ internal class ApplicationContext : DbContext
     {
         SubjectDB.SubjectDBInit(Subjects, this);
         ActivityDB.ActivityDBInit(Activities, this);
+    }
+
+    // очищает базу данных
+    public void ClearDB()
+    {
+        Subjects.RemoveRange(Subjects);
+        Activities.RemoveRange(Activities);
+
+        SaveChanges();
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -43,6 +43,22 @@ namespace LessonManager.ViewModel
             }
         }
 
+        [RelayCommand]
+        private void ReloadDB()
+        {
+            MessageBoxResult rsltMessageBox = MessageBox.Show(
+                "Вы действительно хотите полностью удалить информацию о занятиях?", 
+                "Потверждение",
+                MessageBoxButton.YesNo, 
+                MessageBoxImage.Warning);
+            switch (rsltMessageBox)
+            {
+                case MessageBoxResult.Yes:
+                    App.ApplicationContext.ClearDB();
+                    break;
+            }
+        }
+
         // все дисциплины
         public ObservableCollection<Subject> Subjects { get; set; }
         // выбранные по дисциплине занятия
