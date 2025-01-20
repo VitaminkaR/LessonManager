@@ -17,6 +17,7 @@ namespace LessonManager.View
             ExamTypeComboBox.ItemsSource = Enum.GetValues(typeof(ExamType));
 
             DataContext = new SubjectEditViewModel(subject);
+            ExamTypeComboBox.SelectedItem = subject.Exam;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
