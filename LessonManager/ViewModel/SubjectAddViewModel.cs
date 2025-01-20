@@ -10,9 +10,6 @@ namespace LessonManager.ViewModel
         private string? m_SubjectName;
 
         [ObservableProperty]
-        private string? m_SemestrNubmer;
-
-        [ObservableProperty]
         private string? m_ExamType;
 
         [ObservableProperty]
@@ -21,13 +18,13 @@ namespace LessonManager.ViewModel
         [RelayCommand]
         private void AddSubject()
         {
-            if (ExamType == null || SubjectName == null || SemestrNubmer == null)
+            if (ExamType == null || SubjectName == null)
             {
                 MessageBox.Show("Не все поля заполненные");
                 return;
             }
 
-            App.ApplicationContext?.SubjectDB.AddSubject(SubjectName, int.Parse(SemestrNubmer), ExamType, ExamDate);
+            App.ApplicationContext?.SubjectDB.AddSubject(SubjectName, ExamType, ExamDate);
         }
     }
 }

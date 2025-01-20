@@ -24,7 +24,7 @@ namespace LessonManager.View
             DataContext = m_ViewModel;
 
             m_ViewModel.Subjects.CollectionChanged += Subjects_CollectionChanged;
-            SubjectsAndLabTreeView.SelectedItemChanged += SubjectsAndLabTreeView_SelectedItemChanged;
+            ActivitiesTreeView.SelectedItemChanged += ActivitiesTreeView_SelectedItemChanged;
             m_ViewModel.CurrentActivities.CollectionChanged += CurrentActivities_CollectionChanged;
         }
 
@@ -37,9 +37,9 @@ namespace LessonManager.View
             UpdateCurrentActivities(e.NewItems.Cast<Activity>().ToList());
         }
 
-        private void SubjectsAndLabTreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        private void ActivitiesTreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            m_ViewModel.ChoosenSubjectTreeItem = (TreeViewItem)SubjectsAndLabTreeView.SelectedItem;
+            m_ViewModel.ChoosenSubjectTreeItem = (TreeViewItem)ActivitiesTreeView.SelectedItem;
         }
 
         private void Subjects_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -50,63 +50,39 @@ namespace LessonManager.View
         private void UpdateSubjectAndActivityView(object param)
         {
             ObservableCollection<Subject> subjects = (ObservableCollection<Subject>)param;
-            SubjectsAndLabTreeView.Items.Clear();
-            // получаем для каждого семестра названия предметов
-            Dictionary<int, List<string>> semesterAndSubjects = new Dictionary<int, List<string>>();
+            ActivitiesTreeView.Items.Clear();
+
+            // проходимся по всем дисциплинам
             for (int i = 0; i < subjects.Count; i++)
             {
-                int sem = subjects[i].SemesterNumber;
-                if (!semesterAndSubjects.ContainsKey(sem)) semesterAndSubjects[sem] = new List<string>();
-                semesterAndSubjects[sem].Add(subjects[i].Name);
-            }
+                TreeViewItem treeViewItemSubjects = new TreeViewItem();
+                treeViewItemSubjects.Header = subjects[i].Name;
 
-            // проходися по всем семестрам
-            foreach (var key in semesterAndSubjects.Keys)
-            {
-                TreeViewItem treeViewItemSemesters = new TreeViewItem();
-                treeViewItemSemesters.Header = key.ToString();
-
-                // создание и установка контекстного меню для семестров
                 ContextMenu contextMenu = new ContextMenu();
-                MenuItem menuItem = new MenuItem() { Header = "Удалить семестр" };
-                menuItem.Click += m_ViewModel.RemoveSemesterElement;
+                MenuItem menuItem = new MenuItem() { Header = "Удалить дисциплину" };
+                menuItem.Click += m_ViewModel.RemoveSubjectElement;
                 contextMenu.Items.Add(menuItem);
-                treeViewItemSemesters.ContextMenu = contextMenu;
+                menuItem = new MenuItem() { Header = "Редактировать дисциплину" };
+                menuItem.Click += m_ViewModel.EditSubjectElement;
+                contextMenu.Items.Add(menuItem);
+                treeViewItemSubjects.ContextMenu = contextMenu;
 
-                List<string> list = semesterAndSubjects[key];
-                // проходимся по всем дисциплинам
-                for (int i = 0; i < list.Count; i++)
-                {
-                    TreeViewItem treeViewItemSubjects = new TreeViewItem();
-                    treeViewItemSubjects.Header = list[i];
+                contextMenu = new ContextMenu();
+                menuItem = new MenuItem() { Header = "Добавить занятие" };
+                menuItem.Click += m_ViewModel.AddActivity;
+                contextMenu.Items.Add(menuItem);
+                // категории
+                TreeViewItem treeViewItemCategory = new TreeViewItem() { Header = "Lab", ContextMenu = contextMenu };
+                treeViewItemCategory.Selected += m_ViewModel.SetActivities;
+                treeViewItemSubjects.Items.Add(treeViewItemCategory);
+                treeViewItemCategory = new TreeViewItem() { Header = "Prac", ContextMenu = contextMenu };
+                treeViewItemCategory.Selected += m_ViewModel.SetActivities;
+                treeViewItemSubjects.Items.Add(treeViewItemCategory);
+                treeViewItemCategory = new TreeViewItem() { Header = "Lec", ContextMenu = contextMenu };
+                treeViewItemCategory.Selected += m_ViewModel.SetActivities;
+                treeViewItemSubjects.Items.Add(treeViewItemCategory);
 
-                    contextMenu = new ContextMenu();
-                    menuItem = new MenuItem() { Header = "Удалить дисциплину" };
-                    menuItem.Click += m_ViewModel.RemoveSubjectElement;
-                    contextMenu.Items.Add(menuItem);
-                    menuItem = new MenuItem() { Header = "Редактировать дисциплину" };
-                    menuItem.Click += m_ViewModel.EditSubjectElement;
-                    contextMenu.Items.Add(menuItem);
-                    treeViewItemSubjects.ContextMenu = contextMenu;
-
-                    contextMenu = new ContextMenu();
-                    menuItem = new MenuItem() { Header = "Добавить занятие" };
-                    menuItem.Click += m_ViewModel.AddActivity;
-                    contextMenu.Items.Add(menuItem);
-                    // категории
-                    TreeViewItem treeViewItemCategory = new TreeViewItem() { Header = "Lab", ContextMenu = contextMenu };
-                    treeViewItemCategory.Selected += m_ViewModel.SetActivities;
-                    treeViewItemSubjects.Items.Add(treeViewItemCategory);
-                    treeViewItemCategory = new TreeViewItem() { Header = "Prac", ContextMenu = contextMenu };
-                    treeViewItemCategory.Selected += m_ViewModel.SetActivities;
-                    treeViewItemSubjects.Items.Add(treeViewItemCategory);
-                    treeViewItemCategory = new TreeViewItem() { Header = "Lec", ContextMenu = contextMenu };
-                    treeViewItemCategory.Selected += m_ViewModel.SetActivities;
-                    treeViewItemSubjects.Items.Add(treeViewItemCategory);
-
-                    treeViewItemSemesters.Items.Add(treeViewItemSubjects);
-                }
-                SubjectsAndLabTreeView.Items.Add(treeViewItemSemesters);
+                ActivitiesTreeView.Items.Add(treeViewItemSubjects);
             }
         }
 

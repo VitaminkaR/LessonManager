@@ -7,13 +7,9 @@ namespace LessonManager.ViewModel
     internal partial class SubjectEditViewModel : ObservableObject
     {
         private string m_PredName;
-        private int m_PredSemesterNumber;
 
         [ObservableProperty]
         private string? m_SubjectName;
-
-        [ObservableProperty]
-        private string? m_SemestrNubmer;
 
         [ObservableProperty]
         private string? m_ExamType;
@@ -24,17 +20,15 @@ namespace LessonManager.ViewModel
         [RelayCommand]
         private void EditSubject()
         {
-            App.ApplicationContext.SubjectDB.EditSubject(m_PredName, m_PredSemesterNumber, SubjectName, int.Parse(SemestrNubmer), ExamType, ExamDate);
+            App.ApplicationContext.SubjectDB.EditSubject(m_PredName, SubjectName, ExamType, ExamDate);
         }
 
         public SubjectEditViewModel(Subject subject)
         {
             SubjectName = subject.Name;
-            SemestrNubmer = subject.SemesterNumber.ToString();
             ExamType= subject.Exam.ToString();
             ExamDate = subject.ExamDate;
             m_PredName = subject.Name;
-            m_PredSemesterNumber = subject.SemesterNumber;
         }
     }
 }

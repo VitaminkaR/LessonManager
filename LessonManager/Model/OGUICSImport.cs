@@ -22,7 +22,6 @@ namespace LessonManager.Model
                 {
                     Subject subject = new Subject(
                     subjectName,
-                    0,
                     ExamType.Test,
                     DateTime.MinValue,
                     ExamMarkType.None

@@ -17,58 +17,51 @@ namespace LessonManager.Model
             m_Subjects.Load();
         }
 
-        public void AddSubject(string name, int sn, string exam, DateTime dateTime)
+        public void AddSubject(string name, string exam, DateTime dateTime)
         {
-            if (m_Subjects.Any(s => s.Name == name && s.SemesterNumber == sn))
+            if (m_Subjects.Any(s => s.Name == name))
             {
-                MessageBox.Show("Такой предмет в этом семестре уже существует");
+                MessageBox.Show("Такой предмет уже существует");
                 return;
             }
 
             m_Subjects.Add(
-                new Subject(name, sn, (ExamType)Enum.Parse(typeof(ExamType), exam), dateTime, ExamMarkType.None)
+                new Subject(name, (ExamType)Enum.Parse(typeof(ExamType), exam), dateTime, ExamMarkType.None)
             );
             m_DbContext.SaveChanges();
         }
 
-        public void RemoveSubject(string name, int sn)
+        public void RemoveSubject(string name)
         {
             m_Subjects.Remove(
-                GetSubject(name, sn)
+                GetSubject(name)
             );
             m_DbContext.SaveChanges();
         }
 
-        public void EditSubject(string lastname, int lsn, string name, int sn, string exam, DateTime dateTime)
+        public void EditSubject(string lastname, string name, string exam, DateTime dateTime)
         {
-            if (m_Subjects.Any(s => s.Name == name && s.SemesterNumber == sn))
+            if (m_Subjects.Any(s => s.Name == name))
             {
                 MessageBox.Show("Такой предмет в этом семестре уже существует");
                 return;
             }
 
-            Subject s = GetSubject(lastname, lsn);
+            Subject s = GetSubject(lastname);
             s.Name = name;
-            s.SemesterNumber = sn;
             s.Exam = (ExamType)Enum.Parse(typeof(ExamType), exam);
             s.ExamDate = dateTime;
             m_DbContext.SaveChanges();
         }
 
-        public void RemoveSemester(int sn)
+        public Subject GetSubject(string name)
         {
-            m_Subjects.RemoveRange(m_Subjects.Where(s => s.SemesterNumber == sn).Select(s => s).ToArray());
-            m_DbContext.SaveChanges();
-        }
-
-        public Subject GetSubject(string name, int sn)
-        {
-            return m_Subjects.Where(s => s.Name == name && s.SemesterNumber == sn).Select(s => s).First();
+            return m_Subjects.Where(s => s.Name == name).Select(s => s).First();
         }
 
         public void AddSubject(Subject subject)
         {
-            if (m_Subjects.Any(s => s.Name == subject.Name && s.SemesterNumber == subject.SemesterNumber))
+            if (m_Subjects.Any(s => s.Name == subject.Name))
             {
                 MessageBox.Show("Такой предмет в этом семестре уже существует");
                 return;

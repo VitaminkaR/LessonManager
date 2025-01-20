@@ -91,7 +91,7 @@
         </Button>
 
         <!--Список дисциплин-->
-        <TreeView Grid.Column="2" Grid.Row="1" x:Name="SubjectsAndLabTreeView" BorderThickness="0"/>
+        <TreeView Grid.Column="2" Grid.Row="1" x:Name="ActivitiesTreeView" BorderThickness="0"/>
         
         <!--Рабочая область-->
         <ScrollViewer Grid.Column="4" Grid.Row="1">

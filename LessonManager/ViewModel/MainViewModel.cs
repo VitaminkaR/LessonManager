@@ -80,18 +80,7 @@ namespace LessonManager.ViewModel
                 MessageBox.Show("Не выбран ни один элемент");
                 return;
             }
-            App.ApplicationContext.SubjectDB.RemoveSubject((string)ChoosenSubjectTreeItem.Header, int.Parse((string)((TreeViewItem)ChoosenSubjectTreeItem.Parent).Header));
-        }
-
-        // удаляет целый семестр из меню
-        public void RemoveSemesterElement(object? sender, RoutedEventArgs e)
-        {
-            if (ChoosenSubjectTreeItem == null)
-            {
-                MessageBox.Show("Не выбран ни один элемент");
-                return;
-            }
-            App.ApplicationContext.SubjectDB.RemoveSemester(int.Parse((string)ChoosenSubjectTreeItem.Header));
+            App.ApplicationContext.SubjectDB.RemoveSubject((string)ChoosenSubjectTreeItem.Header);
         }
 
         // редактирует дисциплину из меню
@@ -102,7 +91,7 @@ namespace LessonManager.ViewModel
                 MessageBox.Show("Не выбран ни один элемент");
                 return;
             }
-            Subject s = App.ApplicationContext.SubjectDB.GetSubject((string)ChoosenSubjectTreeItem.Header, int.Parse((string)((TreeViewItem)ChoosenSubjectTreeItem.Parent).Header));
+            Subject s = App.ApplicationContext.SubjectDB.GetSubject((string)ChoosenSubjectTreeItem.Header);
             new SubjectEditWindow(s).Show();
         }
 
@@ -124,11 +113,9 @@ namespace LessonManager.ViewModel
             }
 
             TreeViewItem SubjectTreeViewItem = (TreeViewItem)ChoosenSubjectTreeItem.Parent;
-            TreeViewItem SemesterTreeViewItem = (TreeViewItem)SubjectTreeViewItem.Parent;
             // получем дисциплину этого занятия
             string subjectName = SubjectTreeViewItem.Header.ToString();
-            int semesterNumber = int.Parse(SemesterTreeViewItem.Header.ToString());
-            Subject subject = App.ApplicationContext.SubjectDB.GetSubject(subjectName, semesterNumber);
+            Subject subject = App.ApplicationContext.SubjectDB.GetSubject(subjectName);
 
             new ActivityAddWindow(activityType, subject).Show();
         }
@@ -141,11 +128,9 @@ namespace LessonManager.ViewModel
             ActivityType activityType = (ActivityType)Enum.Parse(typeof(ActivityType), type);
 
             TreeViewItem SubjectTreeViewItem = (TreeViewItem)curEl.Parent;
-            TreeViewItem SemesterTreeViewItem = (TreeViewItem)SubjectTreeViewItem.Parent;
             // получем дисциплину этого занятия
             string subjectName = SubjectTreeViewItem.Header.ToString();
-            int semesterNumber = int.Parse(SemesterTreeViewItem.Header.ToString());
-            Subject subject = App.ApplicationContext.SubjectDB.GetSubject(subjectName, semesterNumber);
+            Subject subject = App.ApplicationContext.SubjectDB.GetSubject(subjectName);
 
             SettingActivities(subject, activityType);
         }
