@@ -57,6 +57,8 @@ namespace LessonManager.ViewModel
                     App.ApplicationContext.ClearDB();
                     break;
             }
+
+            CurrentActivities.Clear();
         }
 
         // все дисциплины
