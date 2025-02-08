@@ -1,22 +1,5 @@
 ﻿namespace LessonManager.Model
 {
-    public enum ActivityType
-    {
-        Lab,
-        Prac,
-        Lec
-    }
-
-    enum ActivityStateType
-    {
-        None,
-        Ready,
-        Passed,
-        Visited,
-        NotVisited,
-        Answer
-    }
-
     internal class Activity
     {
         public int ID { get; set; }
