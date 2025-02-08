@@ -47,6 +47,12 @@ namespace LessonManager.Model
             m_DbContext.SaveChanges();
         }
 
+        public void EditActivity(Activity activity)
+        {
+            m_Activity.Update(activity);
+            m_DbContext.SaveChanges();
+        }
+
         public Activity GetActivity(string name, Subject subject)
         {
             return m_Activity.Where(s => s.Name == name && s.Subject == subject).Select(s => s).First();

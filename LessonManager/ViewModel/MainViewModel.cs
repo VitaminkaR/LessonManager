@@ -72,12 +72,6 @@ namespace LessonManager.ViewModel
         // выбранные по дисциплине занятия
         public ObservableCollection<Activity> CurrentActivities { get; set; }
 
-        // редактируемая активность (должна устанавливаться перед вызовом метода удаления или редактирования занятия)
-        public Activity EditableActivity { get; set; }
-        public string? EditableActivityName { get; set; }
-        public DateTime EditableActivityTime { get; set; }
-        public ActivityStateType EditableActivityState { get; set; }
-
         // удаляет дисциплину из меню
         public void RemoveSubjectElement(object? sender, RoutedEventArgs e)
         {
@@ -141,55 +135,26 @@ namespace LessonManager.ViewModel
             SettingActivities(subject, activityType);
         }
 
-        // редактирует событие
-        public void EditActivity(object? sender, RoutedEventArgs e)
-        {
-            if (EditableActivity == null)
-            {
-                MessageBox.Show("Ошибка выбора занятия");
-                return;
-            }
-
-            if (EditableActivityName == null)
-            {
-                MessageBox.Show("Ошибка редатирования");
-                return;
-            }
-
-            App.ApplicationContext.ActivityDB.EditActivity(
-                EditableActivity.Name,
-                EditableActivity.Subject,
-                EditableActivityName,
-                EditableActivity.Type,
-                EditableActivityTime,
-                EditableActivityState
-                );
-
-            SettingActivities(EditableActivity.Subject, EditableActivity.Type);
-
-            EditableActivity = null;
-        }
-
-        // удаляет событие
-        public void RemoveActivity(object? sender, RoutedEventArgs e)
-        {
-            if (EditableActivity == null)
-                MessageBox.Show("Ошибка выбора занятия");
-            App.ApplicationContext.ActivityDB.RemoveActivity(EditableActivity.Name, EditableActivity.Subject);
-            CurrentActivities.Remove(EditableActivity);
-
-            SettingActivities(EditableActivity.Subject, EditableActivity.Type);
-
-            EditableActivity = null;
-        }
-
         // непосредственно обновляет коллекцию занятий
         private void SettingActivities(Subject subject, ActivityType type)
         {
             var activities = App.ApplicationContext.ActivityDB.GetAllActivitiesOfTypeFromSubject(subject, type);
+            foreach (var item in CurrentActivities)
+            {
+                item.PropertyChanged -= Item_PropertyChanged;
+            }
             CurrentActivities.Clear();
             foreach (var item in activities)
+            {
                 CurrentActivities.Add(item);
+                item.PropertyChanged += Item_PropertyChanged;
+            }
+        }
+
+        // редактирвоание занятия
+        private void Item_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            App.ApplicationContext.ActivityDB.EditActivity((Activity)sender);
         }
 
         public MainViewModel()

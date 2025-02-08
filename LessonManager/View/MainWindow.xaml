@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LessonManager.View"
+        xmlns:localconv="clr-namespace:LessonManager.View.Converters"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:vm="clr-namespace:LessonManager.ViewModel"
         xmlns:m="clr-namespace:LessonManager.Model"
@@ -18,6 +19,8 @@
                 <x:Type Type="m:ActivityStateType"/>
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
+
+        <localconv:ActivityStateToColorConverter x:Key="ActivityStateToColorConverter"/>
         <!--СТИЛИ-->
         <Style TargetType="Menu">
             <Setter Property="FontFamily" Value="Comic Sans MS"/>
@@ -101,13 +104,13 @@
         <ScrollViewer Grid.Column="2" Grid.Row="1">
 
             <StackPanel>
-                <DataGrid 
+                <DataGrid
+                    x:Name="ActivitiesDataGrid"
                     ItemsSource="{Binding CurrentActivities}"
                     AutoGenerateColumns="False"
                     SelectionMode="Single"
                     SelectionUnit="Cell"
-                    CanUserAddRows="False"
-                    CellEditEnding="DataGrid_CellEditEnding">
+                    CanUserAddRows="False">
 
                     <DataGrid.Columns>
                         <DataGridTextColumn 
@@ -136,6 +139,12 @@
                             SelectedValueBinding="{Binding State}"
                             Width="1*"/>
                     </DataGrid.Columns>
+
+                    <DataGrid.RowStyle>
+                        <Style TargetType="DataGridRow">
+                            <Setter Property="Background" Value="{Binding State, Converter={StaticResource ActivityStateToColorConverter}}"/>
+                        </Style>
+                    </DataGrid.RowStyle>
                 </DataGrid>
             </StackPanel>
         </ScrollViewer>

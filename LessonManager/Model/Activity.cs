@@ -1,13 +1,19 @@
-﻿namespace LessonManager.Model
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+
+namespace LessonManager.Model
 {
-    internal class Activity
+    internal partial class Activity : ObservableObject
     {
         public int ID { get; set; }
-        public string? Name { get; set; }
+        [ObservableProperty]
+        private string? m_Name;
         public Subject Subject { get; set; }
-        public ActivityType Type { get; set; }
-        public DateTime ActivityTime { get; set; }
-        public ActivityStateType State { get; set; }
+        [ObservableProperty]
+        public ActivityType m_Type;
+        [ObservableProperty]
+        public DateTime m_ActivityTime;
+        [ObservableProperty]
+        public ActivityStateType m_State;
 
         public Activity() { }
 

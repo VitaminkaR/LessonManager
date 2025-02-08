@@ -14,6 +14,8 @@ namespace LessonManager.Model
 
         public void EditActivity(string predname, Subject predsubject, string? name, ActivityType type, DateTime activityTime, ActivityStateType state);
 
+        public void EditActivity(Activity activity);
+
         public Activity GetActivity(string name, Subject subject);
 
         public ICollection<Activity> GetAllActivitiesOfTypeFromSubject(Subject subject, ActivityType type);
