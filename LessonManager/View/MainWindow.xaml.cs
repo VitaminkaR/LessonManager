@@ -20,7 +20,7 @@ namespace LessonManager.View
         {
             InitializeComponent();
             Loaded += MainWindow_Loaded;
-            m_ViewModel = new MainViewModel();
+            m_ViewModel = (MainViewModel?)DataContext;
             DataContext = m_ViewModel;
 
             m_ViewModel.Subjects.CollectionChanged += Subjects_CollectionChanged;
@@ -30,8 +30,8 @@ namespace LessonManager.View
 
         private void CurrentActivities_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Reset && m_ViewModel.CurrentActivities.Count == 0)
-                WorkFieldStackPanel.Children.Clear();
+            //if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Reset && m_ViewModel.CurrentActivities.Count == 0)
+            //    WorkFieldStackPanel.Children.Clear();
             if (!(e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add))
                 return;
             UpdateCurrentActivities(e.NewItems.Cast<Activity>().ToList());
@@ -163,8 +163,8 @@ namespace LessonManager.View
             comboBox.SelectionChanged += m_ViewModel.EditActivity;
             activityBlock.Children.Add(comboBox);
 
-            WorkFieldStackPanel.Children.Add(activityBlock);
-            WorkFieldStackPanel.Children.Add(new Rectangle() { Height = 4, StrokeThickness = 4, Stroke = new SolidColorBrush(Color.FromRgb(150, 150, 150)) });
+            //WorkFieldStackPanel.Children.Add(activityBlock);
+            //WorkFieldStackPanel.Children.Add(new Rectangle() { Height = 4, StrokeThickness = 4, Stroke = new SolidColorBrush(Color.FromRgb(150, 150, 150)) });
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
