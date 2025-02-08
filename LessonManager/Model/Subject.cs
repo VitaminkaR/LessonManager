@@ -2,6 +2,22 @@
 
 namespace LessonManager.Model
 {
+    enum ExamType
+    {
+        Exam,
+        Test,
+        DifTest
+    }
+
+    enum ExamMarkType
+    {
+        None,
+        Great,
+        Well,
+        Passed,
+        NotPassed
+    }
+
     internal class Subject : ObservableObject
     {
         public int ID { get; set; }
