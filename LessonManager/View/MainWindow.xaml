@@ -106,7 +106,8 @@
                     AutoGenerateColumns="False"
                     SelectionMode="Single"
                     SelectionUnit="Cell"
-                    CanUserAddRows="False">
+                    CanUserAddRows="False"
+                    CellEditEnding="DataGrid_CellEditEnding">
 
                     <DataGrid.Columns>
                         <DataGridTextColumn 
