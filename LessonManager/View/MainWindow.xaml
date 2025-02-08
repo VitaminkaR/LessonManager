@@ -4,10 +4,21 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LessonManager.View"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:vm="clr-namespace:LessonManager.ViewModel"
+        xmlns:m="clr-namespace:LessonManager.Model"
         mc:Ignorable="d"
         Title="Менеджер Занятий" Height="450" Width="800">
+    <Window.DataContext>
+        <vm:MainViewModel/>
+    </Window.DataContext>
     <Window.Resources>
+        <ObjectDataProvider x:Key="ActivityStateTypeSR" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type Type="m:ActivityStateType"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <!--СТИЛИ-->
         <Style TargetType="Menu">
             <Setter Property="FontFamily" Value="Comic Sans MS"/>
             <Setter Property="FontWeight" Value="Bold"/>
@@ -53,8 +64,8 @@
             <Setter Property="ShowsPreview" Value="False"/>
         </Style>
     </Window.Resources>
-    
-    
+
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -85,11 +96,46 @@
 
         <!--Список дисциплин-->
         <TreeView Grid.Column="0" Grid.Row="1" x:Name="ActivitiesTreeView" BorderThickness="0"/>
-        
+
         <!--Рабочая область-->
         <ScrollViewer Grid.Column="2" Grid.Row="1">
-            <StackPanel x:Name="WorkFieldStackPanel">
 
+            <StackPanel>
+                <DataGrid 
+                    ItemsSource="{Binding CurrentActivities}"
+                    AutoGenerateColumns="False"
+                    SelectionMode="Single"
+                    SelectionUnit="Cell"
+                    CanUserAddRows="False">
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn 
+                            Header="Название" 
+                            Binding="{Binding Name}"
+                            Width="4*"/>
+                        
+                        <DataGridTemplateColumn
+                            Header="Дата"
+                            Width="2*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding ActivityTime}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                            <DataGridTemplateColumn.CellEditingTemplate>
+                                <DataTemplate>
+                                    <DatePicker SelectedDate="{Binding ActivityTime}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellEditingTemplate>
+                        </DataGridTemplateColumn>
+                        
+                        <DataGridComboBoxColumn 
+                            Header="Состояние"
+                            ItemsSource="{Binding Source={StaticResource ActivityStateTypeSR}}"
+                            SelectedValueBinding="{Binding State}"
+                            Width="1*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
             </StackPanel>
         </ScrollViewer>
     </Grid>

@@ -20,7 +20,7 @@ namespace LessonManager.View
         {
             InitializeComponent();
             Loaded += MainWindow_Loaded;
-            m_ViewModel = (MainViewModel?)DataContext;
+            m_ViewModel = new MainViewModel();
             DataContext = m_ViewModel;
 
             m_ViewModel.Subjects.CollectionChanged += Subjects_CollectionChanged;
