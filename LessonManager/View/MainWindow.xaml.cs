@@ -176,11 +176,6 @@ namespace LessonManager.View
             App.ApplicationContext.DBLoad();
         }
 
-        private void AddSubjectButton_Click(object sender, RoutedEventArgs e)
-        {
-            new SubjectAddWindow().Show();
-        }
-
         private void InfoMenuItem_Click(object sender, RoutedEventArgs e)
         {
             string msg = $"Разработчик: Владимир Рыбянцов\n" +

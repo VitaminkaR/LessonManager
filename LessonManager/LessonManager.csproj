@@ -21,7 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Content\AddSubject.png" />
     <Resource Include="Content\OpenSideBarIcon.png" />
   </ItemGroup>
 

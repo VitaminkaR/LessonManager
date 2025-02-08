@@ -62,17 +62,15 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="32"/>
-            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="0.5*" MinWidth="64"/>
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="2*" MinWidth="256"/>
+            <ColumnDefinition Width="1*" MinWidth="256"/>
         </Grid.ColumnDefinitions>
-        <GridSplitter IsEnabled="False" Grid.Column="1" Grid.Row="1"/>
-        <GridSplitter Grid.Column="3" Grid.Row="1"/>
+        <GridSplitter Grid.Column="1" Grid.Row="1"/>
 
-        <Menu Grid.Row="0" Grid.ColumnSpan="5" Height="16">
+        <Menu Grid.Row="0" Grid.ColumnSpan="3" Height="16">
             <MenuItem Header="Основа">
+                <MenuItem Header="Добавить дисциплину" Command="{Binding AddSubjectCommand}"/>
                 <MenuItem Header="Импортировать ISC" Command="{Binding OpenISCFileCommand}"/>
                 <MenuItem Header="Удалить информацию о занятиях" Command="{Binding ReloadDBCommand}"/>
                 <Separator />
@@ -85,16 +83,11 @@
             </MenuItem>
         </Menu>
 
-        <!--Кнопка добавления учебной дисциплины-->
-        <Button ToolTip="Добавить дисциплину" Grid.Column="0" Grid.Row="1" x:Name="AddSubjectButton" Width="32" Height="32" VerticalAlignment="Top" HorizontalAlignment="Left" Click="AddSubjectButton_Click">
-            <Image Source="../Content/AddSubject.png"/>
-        </Button>
-
         <!--Список дисциплин-->
-        <TreeView Grid.Column="2" Grid.Row="1" x:Name="ActivitiesTreeView" BorderThickness="0"/>
+        <TreeView Grid.Column="0" Grid.Row="1" x:Name="ActivitiesTreeView" BorderThickness="0"/>
         
         <!--Рабочая область-->
-        <ScrollViewer Grid.Column="4" Grid.Row="1">
+        <ScrollViewer Grid.Column="2" Grid.Row="1">
             <StackPanel x:Name="WorkFieldStackPanel">
 
             </StackPanel>

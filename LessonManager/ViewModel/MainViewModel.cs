@@ -61,6 +61,12 @@ namespace LessonManager.ViewModel
             CurrentActivities.Clear();
         }
 
+        [RelayCommand]
+        private void AddSubject()
+        {
+            new SubjectAddWindow().Show();
+        }
+
         // все дисциплины
         public ObservableCollection<Subject> Subjects { get; set; }
         // выбранные по дисциплине занятия
