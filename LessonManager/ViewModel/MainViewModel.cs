@@ -47,9 +47,9 @@ namespace LessonManager.ViewModel
         private void ReloadDB()
         {
             MessageBoxResult rsltMessageBox = MessageBox.Show(
-                "Вы действительно хотите полностью удалить информацию о занятиях?", 
+                "Вы действительно хотите полностью удалить информацию о занятиях?",
                 "Потверждение",
-                MessageBoxButton.YesNo, 
+                MessageBoxButton.YesNo,
                 MessageBoxImage.Warning);
             switch (rsltMessageBox)
             {
@@ -145,10 +145,16 @@ namespace LessonManager.ViewModel
         public void EditActivity(object? sender, RoutedEventArgs e)
         {
             if (EditableActivity == null)
+            {
                 MessageBox.Show("Ошибка выбора занятия");
+                return;
+            }
 
             if (EditableActivityName == null)
+            {
                 MessageBox.Show("Ошибка редатирования");
+                return;
+            }
 
             App.ApplicationContext.ActivityDB.EditActivity(
                 EditableActivity.Name,
