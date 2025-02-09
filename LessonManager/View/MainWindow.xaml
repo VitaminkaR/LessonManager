@@ -24,6 +24,10 @@
         <localconv:DaysToDeadLineConverter x:Key="DaysToDeadLineConverter"/>
         <localconv:DaysToDeadLineColorConverter x:Key="DaysToDeadLineColorConverter"/>
         <!--СТИЛИ-->
+        <Style TargetType="DataGrid">
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
         <Style TargetType="Menu">
             <Setter Property="FontFamily" Value="Comic Sans MS"/>
             <Setter Property="FontWeight" Value="Bold"/>
