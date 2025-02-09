@@ -87,13 +87,41 @@ namespace LessonManager.Model
 
                 subjects[subjectName].Activities.Add(
                     new Activity(
-                        $"{activityName}{subjects[subjectName].Activities.Where(a => a.Type == type).Count() + 1}",
+                        $"{activityName}",
                         subjects[subjectName],
                         type,
                         time
                     )
                 );
             }
+
+            // правильная нумерация занятий
+            foreach (var subject in subjects.Values)
+            {
+                int[] counts = { 1, 1, 1 };
+                foreach (var activity in subject.Activities.OrderBy((a) => a.ActivityTime))
+                {
+                    if(activity.Type == ActivityType.Lec)
+                    {
+                        activity.Name += counts[0].ToString();
+                        counts[0]++;
+                        continue;
+                    }
+                    if (activity.Type == ActivityType.Prac)
+                    {
+                        activity.Name += counts[1].ToString();
+                        counts[1]++;
+                        continue;
+                    }
+                    if (activity.Type == ActivityType.Lab)
+                    {
+                        activity.Name += counts[2].ToString();
+                        counts[2]++;
+                        continue;
+                    }
+                }
+            }
+
             return subjects.Values.ToList();
         }
 
