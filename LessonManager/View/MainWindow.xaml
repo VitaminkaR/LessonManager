@@ -21,6 +21,8 @@
         </ObjectDataProvider>
 
         <localconv:ActivityStateToColorConverter x:Key="ActivityStateToColorConverter"/>
+        <localconv:DaysToDeadLineConverter x:Key="DaysToDeadLineConverter"/>
+        <localconv:DaysToDeadLineColorConverter x:Key="DaysToDeadLineColorConverter"/>
         <!--СТИЛИ-->
         <Style TargetType="Menu">
             <Setter Property="FontFamily" Value="Comic Sans MS"/>
@@ -139,6 +141,19 @@
                             ItemsSource="{Binding Source={StaticResource ActivityStateTypeSR}}"
                             SelectedValueBinding="{Binding State}"
                             Width="1*"/>
+
+                        <DataGridTextColumn
+                            Header="ДдД"
+                            Width="0.5*" 
+                            Binding="{Binding ActivityTime,Converter={StaticResource DaysToDeadLineConverter}}"
+                            IsReadOnly="True">
+                            <DataGridTextColumn.CellStyle>
+                                <Style>
+                                    <Setter Property="TextBlock.Foreground" Value="{Binding ActivityTime,Converter={StaticResource DaysToDeadLineColorConverter}}"/>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+
                     </DataGrid.Columns>
 
                     <DataGrid.RowStyle>
