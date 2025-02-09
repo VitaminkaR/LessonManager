@@ -110,7 +110,7 @@
                     AutoGenerateColumns="False"
                     SelectionMode="Single"
                     SelectionUnit="FullRow"
-                    CanUserAddRows="False"
+                    CanUserAddRows="True"
                     CanUserDeleteRows="True">
 
                     <DataGrid.Columns>

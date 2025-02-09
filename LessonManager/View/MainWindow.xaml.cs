@@ -59,10 +59,6 @@ namespace LessonManager.View
                 contextMenu.Items.Add(menuItem);
                 treeViewItemSubjects.ContextMenu = contextMenu;
 
-                contextMenu = new ContextMenu();
-                menuItem = new MenuItem() { Header = "Добавить занятие" };
-                menuItem.Click += m_ViewModel.AddActivity;
-                contextMenu.Items.Add(menuItem);
                 // категории
                 TreeViewItem treeViewItemCategory = new TreeViewItem() { Header = "Lab", ContextMenu = contextMenu };
                 treeViewItemCategory.Selected += m_ViewModel.SetActivities;

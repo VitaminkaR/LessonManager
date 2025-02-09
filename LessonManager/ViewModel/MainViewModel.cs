@@ -95,31 +95,6 @@ namespace LessonManager.ViewModel
             new SubjectEditWindow(s).Show();
         }
 
-        // добаляет занятие в меню
-        public void AddActivity(object? sender, RoutedEventArgs e)
-        {
-            if (ChoosenSubjectTreeItem == null)
-            {
-                MessageBox.Show("Не выбран ни один элемент");
-                return;
-            }
-
-            string type = (string)ChoosenSubjectTreeItem.Header;
-            ActivityType activityType = (ActivityType)Enum.Parse(typeof(ActivityType), type);
-            if (!Enum.IsDefined(typeof(ActivityType), activityType))
-            {
-                MessageBox.Show("Выбран неправильный элемент! Выберите категорию занятий.");
-                return;
-            }
-
-            TreeViewItem SubjectTreeViewItem = (TreeViewItem)ChoosenSubjectTreeItem.Parent;
-            // получем дисциплину этого занятия
-            string subjectName = SubjectTreeViewItem.Header.ToString();
-            Subject subject = App.ApplicationContext.SubjectDB.GetSubject(subjectName);
-
-            new ActivityAddWindow(activityType, subject).Show();
-        }
-
         // инициализирует установку занятий (получает все необхоимые данные)
         public void SetActivities(object? sender, RoutedEventArgs e)
         {
@@ -168,10 +143,36 @@ namespace LessonManager.ViewModel
 
         private void CurrentActivities_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
+            // удаление активности
             if(e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove)
             {
                 Activity activity = (Activity)e.OldItems[0];
                 App.ApplicationContext.ActivityDB.RemoveActivity(activity);
+            }
+            // добавление активности
+            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add && e.NewItems.Count == 1)
+            {
+                Activity activity = (Activity)e.NewItems[0];
+                if(activity.Name == null)
+                {
+                    if (ChoosenSubjectTreeItem == null)
+                    {
+                        MessageBox.Show("Не выбран ни один элемент");
+                        return;
+                    }
+                    string type = (string)ChoosenSubjectTreeItem.Header;
+                    ActivityType activityType = (ActivityType)Enum.Parse(typeof(ActivityType), type);
+
+                    Subject s = App.ApplicationContext.SubjectDB.GetSubject((string)((TreeViewItem)ChoosenSubjectTreeItem.Parent).Header);
+
+                    activity.Name = "";
+                    activity.Subject = s;
+                    activity.Type = activityType;
+                    activity.ActivityTime = DateTime.Now;
+                    App.ApplicationContext.ActivityDB.AddActivity(activity);
+
+                    activity.PropertyChanged += Item_PropertyChanged;
+                }
             }
         }
     }
