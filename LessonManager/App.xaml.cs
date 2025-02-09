@@ -8,7 +8,7 @@ namespace LessonManager
     /// </summary>
     public partial class App : Application
     {
-        public const string VERSION = "0.9";
+        public const string VERSION = "1.0";
 
         static internal ApplicationContext ApplicationContext { get; private set; } = null!;
 
