@@ -124,7 +124,7 @@
                             Width="2*">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding ActivityTime}"/>
+                                    <TextBlock Text="{Binding ActivityTime, StringFormat=\{0:dd.MM.yy HH:mm:ss\}}"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                             <DataGridTemplateColumn.CellEditingTemplate>
