@@ -27,10 +27,29 @@
         <Style TargetType="DataGrid">
             <Setter Property="FontFamily" Value="Comic Sans MS"/>
             <Setter Property="FontWeight" Value="Bold"/>
+
             <Setter Property="RowStyle">
                 <Setter.Value>
                     <Style TargetType="DataGridRow">
                         <Setter Property="Background" Value="{Binding State, Converter={StaticResource ActivityStateToColorConverter}}"/>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+
+            <Setter Property="CellStyle">
+                <Setter.Value>
+                    <Style TargetType="DataGridCell">
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="LightGray"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                                <Setter Property="BorderBrush" Value="Black"/>
+                            </Trigger>
+
+                            <Trigger Property="IsReadOnly" Value="True">
+                                <Setter Property="TextBlock.Foreground" Value="{Binding ActivityTime,Converter={StaticResource DaysToDeadLineColorConverter}}"/>
+                            </Trigger>
+                        </Style.Triggers>
                     </Style>
                 </Setter.Value>
             </Setter>
@@ -157,13 +176,7 @@
                             Header="ДдД"
                             Width="0.5*" 
                             Binding="{Binding ActivityTime,Converter={StaticResource DaysToDeadLineConverter}}"
-                            IsReadOnly="True">
-                            <DataGridTextColumn.CellStyle>
-                                <Style>
-                                    <Setter Property="TextBlock.Foreground" Value="{Binding ActivityTime,Converter={StaticResource DaysToDeadLineColorConverter}}"/>
-                                </Style>
-                            </DataGridTextColumn.CellStyle>
-                        </DataGridTextColumn>
+                            IsReadOnly="True"/>
 
                     </DataGrid.Columns>
                 </DataGrid>
