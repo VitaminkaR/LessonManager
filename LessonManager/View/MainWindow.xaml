@@ -27,6 +27,13 @@
         <Style TargetType="DataGrid">
             <Setter Property="FontFamily" Value="Comic Sans MS"/>
             <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="RowStyle">
+                <Setter.Value>
+                    <Style TargetType="DataGridRow">
+                        <Setter Property="Background" Value="{Binding State, Converter={StaticResource ActivityStateToColorConverter}}"/>
+                    </Style>
+                </Setter.Value>
+            </Setter>
         </Style>
         <Style TargetType="Menu">
             <Setter Property="FontFamily" Value="Comic Sans MS"/>
@@ -124,7 +131,7 @@
                             Header="Название" 
                             Binding="{Binding Name}"
                             Width="4*"/>
-                        
+
                         <DataGridTemplateColumn
                             Header="Дата"
                             Width="2*">
@@ -139,7 +146,7 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellEditingTemplate>
                         </DataGridTemplateColumn>
-                        
+
                         <DataGridComboBoxColumn 
                             Header="Состояние"
                             ItemsSource="{Binding Source={StaticResource ActivityStateTypeSR}}"
@@ -159,12 +166,6 @@
                         </DataGridTextColumn>
 
                     </DataGrid.Columns>
-
-                    <DataGrid.RowStyle>
-                        <Style TargetType="DataGridRow">
-                            <Setter Property="Background" Value="{Binding State, Converter={StaticResource ActivityStateToColorConverter}}"/>
-                        </Style>
-                    </DataGrid.RowStyle>
                 </DataGrid>
             </StackPanel>
         </ScrollViewer>
