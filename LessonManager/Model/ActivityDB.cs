@@ -70,5 +70,13 @@ namespace LessonManager.Model
             );
             m_DbContext.SaveChanges();
         }
+
+        public void RemoveActivity(Activity activity)
+        {
+            m_Activity.Remove(
+                activity
+            );
+            m_DbContext.SaveChanges();
+        }
     }
 }

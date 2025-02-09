@@ -161,8 +161,18 @@ namespace LessonManager.ViewModel
         {
             Subjects = App.ApplicationContext.Subjects.Local.ToObservableCollection();
             CurrentActivities = new ObservableCollection<Activity>();
+            CurrentActivities.CollectionChanged += CurrentActivities_CollectionChanged;
 
             m_ISCImport = new OGUICSImport();
+        }
+
+        private void CurrentActivities_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if(e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove)
+            {
+                Activity activity = (Activity)e.OldItems[0];
+                App.ApplicationContext.ActivityDB.RemoveActivity(activity);
+            }
         }
     }
 }

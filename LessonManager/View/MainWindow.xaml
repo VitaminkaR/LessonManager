@@ -109,8 +109,9 @@
                     ItemsSource="{Binding CurrentActivities}"
                     AutoGenerateColumns="False"
                     SelectionMode="Single"
-                    SelectionUnit="Cell"
-                    CanUserAddRows="False">
+                    SelectionUnit="FullRow"
+                    CanUserAddRows="False"
+                    CanUserDeleteRows="True">
 
                     <DataGrid.Columns>
                         <DataGridTextColumn 

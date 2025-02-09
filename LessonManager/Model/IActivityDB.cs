@@ -12,6 +12,8 @@ namespace LessonManager.Model
 
         public void RemoveActivity(string name, Subject subject);
 
+        public void RemoveActivity(Activity activity);
+
         public void EditActivity(string predname, Subject predsubject, string? name, ActivityType type, DateTime activityTime, ActivityStateType state);
 
         public void EditActivity(Activity activity);
