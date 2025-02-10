@@ -67,6 +67,12 @@ namespace LessonManager.ViewModel
             new SubjectAddWindow().Show();
         }
 
+        [RelayCommand]
+        private void GetStatistics()
+        {
+            new StatisticsWindow().Show();
+        }
+
         // все дисциплины
         public ObservableCollection<Subject> Subjects { get; set; }
         // выбранные по дисциплине занятия

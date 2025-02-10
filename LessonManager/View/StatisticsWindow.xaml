@@ -1,0 +1,46 @@
+﻿<Window x:Class="LessonManager.View.StatisticsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LessonManager.View"
+        xmlns:vm="clr-namespace:LessonManager.ViewModel"
+        mc:Ignorable="d"
+        Title="StatisticsWindow" Height="300" Width="328" ResizeMode="NoResize">
+    <Window.DataContext>
+        <vm:StatisticsViewModel/>
+    </Window.DataContext>
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="16"/>
+        </Style>
+    </Window.Resources>
+    <StackPanel>
+        <TextBlock FontSize="20" HorizontalAlignment="Center">СТАТИСТИКА</TextBlock>
+        
+        <WrapPanel>
+            <TextBlock>Количество лекций:   </TextBlock>
+            <TextBlock Text="{Binding LectionsCount}"></TextBlock>
+        </WrapPanel>
+        <WrapPanel>
+            <TextBlock>Лекций посещено:</TextBlock>
+            <TextBlock Text="{Binding VisitedLectionsCount}"></TextBlock>
+        </WrapPanel>
+        <Rectangle Height="8"/>
+        <WrapPanel>
+            <TextBlock>Количество практических занятий:</TextBlock>
+            <TextBlock Text="{Binding PracticeCount}"></TextBlock>
+        </WrapPanel>
+        <Rectangle Height="8"/>
+        <WrapPanel>
+            <TextBlock>Количество лабораторных занятий:</TextBlock>
+            <TextBlock Text="{Binding LabsCount}"></TextBlock>
+        </WrapPanel>
+        <WrapPanel>
+            <TextBlock>Лабораторных сдано:</TextBlock>
+            <TextBlock Text="{Binding PassedLabsCount}"></TextBlock>
+        </WrapPanel>
+    </StackPanel>
+</Window>

@@ -119,6 +119,7 @@
                 <MenuItem Header="Добавить дисциплину" Command="{Binding AddSubjectCommand}"/>
                 <MenuItem Header="Импортировать ISC" Command="{Binding OpenISCFileCommand}"/>
                 <MenuItem Header="Удалить информацию о занятиях" Command="{Binding ReloadDBCommand}"/>
+                <MenuItem Header="Статистика" Command="{Binding GetStatisticsCommand}"/>
                 <Separator />
                 <MenuItem Header="Настройки"/>
                 <Separator />
