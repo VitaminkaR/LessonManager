@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using LessonManager.Model;
 
 namespace LessonManager.ViewModel
@@ -21,6 +22,9 @@ namespace LessonManager.ViewModel
 
         [ObservableProperty]
         private int m_PassedLabsCount;
+
+        [RelayCommand]
+        private void Update() => Analyse();
 
         public StatisticsViewModel()
         {
