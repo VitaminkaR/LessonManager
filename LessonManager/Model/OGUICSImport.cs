@@ -1,6 +1,8 @@
 ﻿using Ical.Net;
 using Ical.Net.CalendarComponents;
 using Ical.Net.DataTypes;
+using LessonManager.Core.Enums;
+using LessonManager.Model.Database.Entities;
 using System.IO;
 using System.Xml.Linq;
 namespace LessonManager.Model
@@ -9,9 +11,9 @@ namespace LessonManager.Model
     {
         private Calendar m_Calendar;
 
-        public ICollection<Subject> GetSubjects()
+        public ICollection<SubjectEntity> GetSubjects()
         {
-            Dictionary<string, Subject> subjects = new Dictionary<string, Subject>();
+            Dictionary<string, SubjectEntity> subjects = new Dictionary<string, SubjectEntity>();
             foreach (var ev in m_Calendar.Events)
             {
                 string summary = ev.Summary;
@@ -20,14 +22,14 @@ namespace LessonManager.Model
                 // создаем дисциплину если ее не было раньше
                 if (!subjects.ContainsKey(subjectName))
                 {
-                    Subject subject = new Subject(
+                    SubjectEntity subject = new SubjectEntity(
                     subjectName,
                     ExamType.Test,
                     DateTime.MinValue,
                     ExamMarkType.None
                     );
 
-                    subject.Activities = new List<Activity>();
+                    subject.Activities = new List<ActivityEntity>();
                     subjects.Add(subjectName, subject);
                 }
 
@@ -86,7 +88,7 @@ namespace LessonManager.Model
                     continue;
 
                 subjects[subjectName].Activities.Add(
-                    new Activity(
+                    new ActivityEntity(
                         $"{activityName}",
                         subjects[subjectName],
                         type,

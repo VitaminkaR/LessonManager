@@ -7,7 +7,7 @@
         xmlns:localconv="clr-namespace:LessonManager.View.Converters"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:vm="clr-namespace:LessonManager.ViewModel"
-        xmlns:m="clr-namespace:LessonManager.Model"
+        xmlns:ce="clr-namespace:LessonManager.Core.Enums"
         mc:Ignorable="d"
         Title="Менеджер Занятий" Height="450" Width="800">
     <Window.DataContext>
@@ -16,7 +16,7 @@
     <Window.Resources>
         <ObjectDataProvider x:Key="ActivityStateTypeSR" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
             <ObjectDataProvider.MethodParameters>
-                <x:Type Type="m:ActivityStateType"/>
+                <x:Type Type="ce:ActivityStateType"/>
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
 

@@ -1,6 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using LessonManager.Model;
+using LessonManager.Model.Database.Repositories;
+using LessonManager.Model.Database;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace LessonManager.ViewModel
 {
@@ -28,7 +31,9 @@ namespace LessonManager.ViewModel
 
         public StatisticsViewModel()
         {
-            m_StatisticsManager = new StatisticsManager(App.ApplicationContext.Subjects);
+            var serviceProvider = App.CurrentApplication.services.BuildServiceProvider();
+            var applicationContext = serviceProvider.GetRequiredService<ApplicationContext>();
+            m_StatisticsManager = new StatisticsManager(applicationContext.Subjects);
             Analyse();
         }
 

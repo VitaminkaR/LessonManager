@@ -1,10 +1,16 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using LessonManager.Core.Enums;
 using LessonManager.Model;
+using LessonManager.Model.Database;
+using LessonManager.Model.Database.Entities;
+using LessonManager.Model.Database.Repositories;
 using LessonManager.View;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Win32;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Numerics;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,6 +19,10 @@ namespace LessonManager.ViewModel
 {
     internal partial class MainViewModel : ObservableObject
     {
+        private ApplicationContext m_ApplicationContext;
+        private IActivityRepository m_ActivityRepository;
+        private ISubjectRepository m_SubjectRepository;
+
         private IISCImport m_ISCImport;
 
         [ObservableProperty]
@@ -34,11 +44,11 @@ namespace LessonManager.ViewModel
                 using (FileStream fs = new FileStream(filename, FileMode.Open))
                     m_ISCImport.Init(fs);
 
-                ICollection<Subject> subjects = m_ISCImport.GetSubjects();
+                ICollection<SubjectEntity> subjects = m_ISCImport.GetSubjects();
 
-                foreach (Subject subject in subjects)
+                foreach (SubjectEntity subject in subjects)
                 {
-                    App.ApplicationContext?.SubjectDB.AddSubject(subject);
+                    m_SubjectRepository.AddSubject(subject);
                 }
             }
         }
@@ -54,7 +64,7 @@ namespace LessonManager.ViewModel
             switch (rsltMessageBox)
             {
                 case MessageBoxResult.Yes:
-                    App.ApplicationContext.ClearDB();
+                    m_ApplicationContext.ClearDB();
                     break;
             }
 
@@ -74,9 +84,9 @@ namespace LessonManager.ViewModel
         }
 
         // все дисциплины
-        public ObservableCollection<Subject> Subjects { get; set; }
+        public ObservableCollection<SubjectEntity> Subjects { get; set; }
         // выбранные по дисциплине занятия
-        public ObservableCollection<Activity> CurrentActivities { get; set; }
+        public ObservableCollection<ActivityEntity> CurrentActivities { get; set; }
 
         // удаляет дисциплину из меню
         public void RemoveSubjectElement(object? sender, RoutedEventArgs e)
@@ -86,7 +96,7 @@ namespace LessonManager.ViewModel
                 MessageBox.Show("Не выбран ни один элемент");
                 return;
             }
-            App.ApplicationContext.SubjectDB.RemoveSubject((string)ChoosenSubjectTreeItem.Header);
+            m_SubjectRepository.RemoveSubject((string)ChoosenSubjectTreeItem.Header);
         }
 
         // редактирует дисциплину из меню
@@ -97,7 +107,7 @@ namespace LessonManager.ViewModel
                 MessageBox.Show("Не выбран ни один элемент");
                 return;
             }
-            Subject s = App.ApplicationContext.SubjectDB.GetSubject((string)ChoosenSubjectTreeItem.Header);
+            SubjectEntity s = m_SubjectRepository.GetSubject((string)ChoosenSubjectTreeItem.Header);
             new SubjectEditWindow(s).Show();
         }
 
@@ -111,15 +121,15 @@ namespace LessonManager.ViewModel
             TreeViewItem SubjectTreeViewItem = (TreeViewItem)curEl.Parent;
             // получем дисциплину этого занятия
             string subjectName = SubjectTreeViewItem.Header.ToString();
-            Subject subject = App.ApplicationContext.SubjectDB.GetSubject(subjectName);
+            SubjectEntity subject = m_SubjectRepository.GetSubject(subjectName);
 
             SettingActivities(subject, activityType);
         }
 
         // непосредственно обновляет коллекцию занятий
-        private void SettingActivities(Subject subject, ActivityType type)
+        private void SettingActivities(SubjectEntity subject, ActivityType type)
         {
-            var activities = App.ApplicationContext.ActivityDB.GetAllActivitiesOfTypeFromSubject(subject, type);
+            var activities = m_ActivityRepository.GetAllActivitiesOfTypeFromSubject(subject, type);
             foreach (var item in CurrentActivities)
             {
                 item.PropertyChanged -= Item_PropertyChanged;
@@ -135,13 +145,20 @@ namespace LessonManager.ViewModel
         // редактирвоание занятия
         private void Item_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            App.ApplicationContext.ActivityDB.EditActivity((Activity)sender);
+            var serviceProvider = App.CurrentApplication.services.BuildServiceProvider();
+            IActivityRepository activities = serviceProvider.GetRequiredService<IActivityRepository>();
+            m_ActivityRepository.EditActivity((ActivityEntity)sender);
         }
 
         public MainViewModel()
         {
-            Subjects = App.ApplicationContext.Subjects.Local.ToObservableCollection();
-            CurrentActivities = new ObservableCollection<Activity>();
+            var serviceProvider = App.CurrentApplication.services.BuildServiceProvider();
+            m_ApplicationContext = serviceProvider.GetRequiredService<ApplicationContext>();
+            m_ActivityRepository = serviceProvider.GetRequiredService<IActivityRepository>();
+            m_SubjectRepository = serviceProvider.GetRequiredService<ISubjectRepository>();
+
+            Subjects = m_ApplicationContext.Subjects.Local.ToObservableCollection();
+            CurrentActivities = new ObservableCollection<ActivityEntity>();
             CurrentActivities.CollectionChanged += CurrentActivities_CollectionChanged;
 
             m_ISCImport = new OGUICSImport();
@@ -152,13 +169,13 @@ namespace LessonManager.ViewModel
             // удаление активности
             if(e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove)
             {
-                Activity activity = (Activity)e.OldItems[0];
-                App.ApplicationContext.ActivityDB.RemoveActivity(activity);
+                ActivityEntity activity = (ActivityEntity)e.OldItems[0];
+                m_ActivityRepository.RemoveActivity(activity);
             }
             // добавление активности
             if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add && e.NewItems.Count == 1)
             {
-                Activity activity = (Activity)e.NewItems[0];
+                ActivityEntity activity = (ActivityEntity)e.NewItems[0];
                 if(activity.Name == null)
                 {
                     if (ChoosenSubjectTreeItem == null)
@@ -169,13 +186,13 @@ namespace LessonManager.ViewModel
                     string type = (string)ChoosenSubjectTreeItem.Header;
                     ActivityType activityType = (ActivityType)Enum.Parse(typeof(ActivityType), type);
 
-                    Subject s = App.ApplicationContext.SubjectDB.GetSubject((string)((TreeViewItem)ChoosenSubjectTreeItem.Parent).Header);
+                    SubjectEntity s = m_SubjectRepository.GetSubject((string)((TreeViewItem)ChoosenSubjectTreeItem.Parent).Header);
 
                     activity.Name = "";
                     activity.Subject = s;
                     activity.Type = activityType;
                     activity.ActivityTime = DateTime.Now;
-                    App.ApplicationContext.ActivityDB.AddActivity(activity);
+                    m_ActivityRepository.AddActivity(activity);
 
                     activity.PropertyChanged += Item_PropertyChanged;
                 }

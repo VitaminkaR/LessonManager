@@ -1,5 +1,8 @@
-﻿using LessonManager.Model;
+﻿using LessonManager.Model.Database;
+using LessonManager.Model.Database.Entities;
+using LessonManager.Model.Database.Repositories;
 using LessonManager.ViewModel;
+using Microsoft.Extensions.DependencyInjection;
 using SQLitePCL;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -21,7 +24,7 @@ namespace LessonManager.View
         public MainWindow()
         {
             InitializeComponent();
-            Loaded += MainWindow_Loaded;
+
             m_ViewModel = new MainViewModel();
             DataContext = m_ViewModel;
 
@@ -41,7 +44,7 @@ namespace LessonManager.View
 
         private void UpdateSubjectAndActivityView(object param)
         {
-            ObservableCollection<Subject> subjects = (ObservableCollection<Subject>)param;
+            ObservableCollection<SubjectEntity> subjects = (ObservableCollection<SubjectEntity>)param;
             ActivitiesTreeView.Items.Clear();
 
             // проходимся по всем дисциплинам
@@ -74,19 +77,10 @@ namespace LessonManager.View
             }
         }
 
-        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            if (App.ApplicationContext == null)
-                throw new Exception("Ошибка загрузки контекста БД");
-
-            App.ApplicationContext.Database.EnsureCreated();
-            App.ApplicationContext.DBLoad();
-        }
-
         private void InfoMenuItem_Click(object sender, RoutedEventArgs e)
         {
             string msg = $"Разработчик: Владимир Рыбянцов\n" +
-                                $"Версия:{App.VERSION}";
+                                $"Версия:{App.CurrentApplication.Configuration["VERSION"]}";
             MessageBox.Show(msg, "Справка", MessageBoxButton.OK);
         }
 

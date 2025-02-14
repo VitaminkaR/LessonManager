@@ -1,13 +1,15 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using LessonManager.Core.Enums;
+using LessonManager.Model.Database.Entities;
 
-namespace LessonManager.Model
+namespace LessonManager.Model.Database.Entities
 {
-    internal partial class Activity : ObservableObject
+    internal partial class ActivityEntity : ObservableObject
     {
         public int ID { get; set; }
         [ObservableProperty]
         private string? m_Name;
-        public Subject Subject { get; set; }
+        public SubjectEntity Subject { get; set; }
         [ObservableProperty]
         public ActivityType m_Type;
         [ObservableProperty]
@@ -15,9 +17,9 @@ namespace LessonManager.Model
         [ObservableProperty]
         public ActivityStateType m_State;
 
-        public Activity() { }
+        public ActivityEntity() { }
 
-        public Activity(string? name, Subject subject, ActivityType type, DateTime activityTime, ActivityStateType state = ActivityStateType.None)
+        public ActivityEntity(string? name, SubjectEntity subject, ActivityType type, DateTime activityTime, ActivityStateType state = ActivityStateType.None)
         {
             Name = name;
             Type = type;

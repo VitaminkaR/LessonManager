@@ -1,39 +1,38 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using LessonManager.Core.Enums;
+using LessonManager.Model.Database.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Windows;
 using System.Xml.Linq;
 
-namespace LessonManager.Model
+namespace LessonManager.Model.Database.Repositories
 {
-    internal class SubjectDB : ISubjectDB
+    internal class SubjectRepository : ISubjectRepository
     {
-        private DbContext m_DbContext;
-        private DbSet<Subject> m_Subjects;
+        private readonly ApplicationContext m_DbContext;
 
-        public void SubjectDBInit(DbSet<Subject> dbset, DbContext context)
+        public SubjectRepository(ApplicationContext dbContext)
         {
-            m_DbContext = context;
-            m_Subjects = dbset;
-            m_Subjects.Load();
+            m_DbContext = dbContext;
         }
 
         public void AddSubject(string name, string exam, DateTime dateTime)
         {
-            if (m_Subjects.Any(s => s.Name == name))
+            if (m_DbContext.Subjects.Any(s => s.Name == name))
             {
                 MessageBox.Show("Такой предмет уже существует");
                 return;
             }
 
-            m_Subjects.Add(
-                new Subject(name, (ExamType)Enum.Parse(typeof(ExamType), exam), dateTime, ExamMarkType.None)
+            m_DbContext.Subjects.Add(
+                new SubjectEntity(name, (ExamType)Enum.Parse(typeof(ExamType), exam), dateTime, ExamMarkType.None)
             );
             m_DbContext.SaveChanges();
         }
 
         public void RemoveSubject(string name)
         {
-            m_Subjects.Remove(
+            m_DbContext.Subjects.Remove(
                 GetSubject(name)
             );
             m_DbContext.SaveChanges();
@@ -41,33 +40,33 @@ namespace LessonManager.Model
 
         public void EditSubject(string lastname, string name, string exam, DateTime dateTime)
         {
-            if (m_Subjects.Any(s => s.Name == name))
+            if (m_DbContext.Subjects.Any(s => s.Name == name))
             {
                 MessageBox.Show("Такой предмет в этом семестре уже существует");
                 return;
             }
 
-            Subject s = GetSubject(lastname);
+            SubjectEntity s = GetSubject(lastname);
             s.Name = name;
             s.Exam = (ExamType)Enum.Parse(typeof(ExamType), exam);
             s.ExamDate = dateTime;
             m_DbContext.SaveChanges();
         }
 
-        public Subject GetSubject(string name)
+        public SubjectEntity GetSubject(string name)
         {
-            return m_Subjects.Where(s => s.Name == name).Select(s => s).First();
+            return m_DbContext.Subjects.Where(s => s.Name == name).Select(s => s).First();
         }
 
-        public void AddSubject(Subject subject)
+        public void AddSubject(SubjectEntity subject)
         {
-            if (m_Subjects.Any(s => s.Name == subject.Name))
+            if (m_DbContext.Subjects.Any(s => s.Name == subject.Name))
             {
                 MessageBox.Show("Такой предмет в этом семестре уже существует");
                 return;
             }
 
-            m_Subjects.Add(subject);
+            m_DbContext.Subjects.Add(subject);
             m_DbContext.SaveChanges();
         }
     }

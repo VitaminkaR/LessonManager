@@ -1,4 +1,4 @@
-﻿using LessonManager.Model;
+﻿using LessonManager.Core.Enums;
 using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;

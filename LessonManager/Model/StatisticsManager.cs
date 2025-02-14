@@ -1,12 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using LessonManager.Core.Enums;
+using LessonManager.Model.Database.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace LessonManager.Model
 {
     internal class StatisticsManager
     {
-        private readonly DbSet<Subject> m_Subjects;
+        private readonly DbSet<SubjectEntity> m_Subjects;
 
-        public StatisticsManager(DbSet<Subject> subjects)
+        public StatisticsManager(DbSet<SubjectEntity> subjects)
         {
             this.m_Subjects = subjects;
         }

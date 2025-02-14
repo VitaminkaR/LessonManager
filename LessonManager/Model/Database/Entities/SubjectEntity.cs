@@ -1,8 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using LessonManager.Core.Enums;
 
-namespace LessonManager.Model
+namespace LessonManager.Model.Database.Entities
 {
-    internal class Subject : ObservableObject
+    internal class SubjectEntity : ObservableObject
     {
         public int ID { get; set; }
         public string? Name { get; set; }
@@ -10,11 +11,11 @@ namespace LessonManager.Model
         public DateTime ExamDate { get; set; }
         public ExamMarkType ExamMark { get; set; } = ExamMarkType.None;
 
-        public ICollection<Activity> Activities { get; set; }
+        public ICollection<ActivityEntity> Activities { get; set; }
 
-        public Subject() { }
+        public SubjectEntity() { }
 
-        public Subject(string? name, ExamType exam, DateTime dateTime, ExamMarkType examMark)
+        public SubjectEntity(string? name, ExamType exam, DateTime dateTime, ExamMarkType examMark)
         {
             Name = name;
             Exam = exam;

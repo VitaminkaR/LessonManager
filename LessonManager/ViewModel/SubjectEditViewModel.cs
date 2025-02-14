@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using LessonManager.Model;
+using LessonManager.Model.Database.Entities;
+using LessonManager.Model.Database.Repositories;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace LessonManager.ViewModel
 {
@@ -20,10 +22,13 @@ namespace LessonManager.ViewModel
         [RelayCommand]
         private void EditSubject()
         {
-            App.ApplicationContext.SubjectDB.EditSubject(m_PredName, SubjectName, ExamType, ExamDate);
+            var serviceProvider = App.CurrentApplication.services.BuildServiceProvider();
+            var subjects = serviceProvider.GetRequiredService<ISubjectRepository>();
+
+            subjects.EditSubject(m_PredName, SubjectName, ExamType, ExamDate);
         }
 
-        public SubjectEditViewModel(Subject subject)
+        public SubjectEditViewModel(SubjectEntity subject)
         {
             SubjectName = subject.Name;
             ExamType= subject.Exam.ToString();

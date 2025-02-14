@@ -1,4 +1,4 @@
-﻿namespace LessonManager.Model
+﻿namespace LessonManager.Core.Enums
 {
     public enum ActivityType
     {

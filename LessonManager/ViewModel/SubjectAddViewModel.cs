@@ -1,5 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using LessonManager.Model.Database.Repositories;
+using LessonManager.Model.Database;
+using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
 
 namespace LessonManager.ViewModel
@@ -24,7 +27,10 @@ namespace LessonManager.ViewModel
                 return;
             }
 
-            App.ApplicationContext?.SubjectDB.AddSubject(SubjectName, ExamType, ExamDate);
+            var serviceProvider = App.CurrentApplication.services.BuildServiceProvider();
+            var subjects = serviceProvider.GetRequiredService<ISubjectRepository>();
+
+            subjects.AddSubject(SubjectName, ExamType, ExamDate);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using LessonManager.Model;
+﻿using LessonManager.Core.Enums;
+using LessonManager.Model;
+using LessonManager.Model.Database.Entities;
 using LessonManager.ViewModel;
 using System.Windows;
 
@@ -9,7 +11,7 @@ namespace LessonManager.View
     /// </summary>
     public partial class SubjectEditWindow : Window
     {
-        internal SubjectEditWindow(Subject subject)
+        internal SubjectEditWindow(SubjectEntity subject)
         {
             InitializeComponent();
 
