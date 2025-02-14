@@ -1,4 +1,5 @@
-﻿using LessonManager.Model;
+﻿using LessonManager.Core.Enums;
+using LessonManager.Model;
 using System.Windows;
 
 namespace LessonManager.View

@@ -1,4 +1,5 @@
 ﻿using LessonManager.Model;
+using Microsoft.Extensions.Configuration;
 using System.Windows;
 
 namespace LessonManager
@@ -8,7 +9,14 @@ namespace LessonManager
     /// </summary>
     public partial class App : Application
     {
-        public const string VERSION = "1.0";
+        static public readonly IConfiguration Configuration;
+
+        static App()
+        {
+            Configuration = new ConfigurationBuilder()
+                .AddJsonFile("./appsettings.json")
+                .Build();
+        }
 
         static internal ApplicationContext ApplicationContext { get; private set; } = null!;
 
