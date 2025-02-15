@@ -27,11 +27,13 @@ namespace LessonManager
                 .Build();
 
             services = new ServiceCollection();
-            services.AddDbContext<ApplicationContext>((options) => options.UseSqlite($"Data Source={Configuration["DBPATH"]}"), ServiceLifetime.Singleton);
+            services.AddSingleton<ApplicationContext>(new ApplicationContext(
+                new DbContextOptionsBuilder<ApplicationContext>()
+                    .UseSqlite($"Data Source={Configuration["DBPATH"]}")
+                    .Options
+                ));
             services.AddSingleton<IActivityRepository, ActivityRepository>();
             services.AddSingleton<ISubjectRepository, SubjectRepository>();
-
-            services.BuildServiceProvider().GetRequiredService<ApplicationContext>().Database.EnsureCreated();
         }
     }
 }

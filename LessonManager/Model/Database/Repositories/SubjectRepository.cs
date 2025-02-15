@@ -37,7 +37,7 @@ namespace LessonManager.Model.Database.Repositories
             s.Name = name;
             s.Exam = (ExamType)Enum.Parse(typeof(ExamType), exam);
             s.ExamDate = dateTime;
-            await Task.Run(() => m_DbContext.Update(s));
+            m_DbContext.Update(s);
             await m_DbContext.SaveChangesAsync();
         }
 

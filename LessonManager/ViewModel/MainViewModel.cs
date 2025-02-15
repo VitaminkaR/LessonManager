@@ -74,9 +74,9 @@ namespace LessonManager.ViewModel
         [RelayCommand]
         private void AddSubject()
         {
-            Window w = new SubjectAddWindow();
-            w.Show();
-            w.Closed += (sender, eventargs) => SetSubjects();
+            new SubjectAddWindow().ShowDialog();
+
+            SetSubjects();
         }
 
         [RelayCommand]
@@ -112,9 +112,9 @@ namespace LessonManager.ViewModel
                 return;
             }
             SubjectEntity s = await m_SubjectRepository.GetAsync((string)ChoosenSubjectTreeItem.Header);
-            Window w = new SubjectEditWindow(s);
-            w.Show();
-            w.Closed += (sender, eventargs) => SetSubjects();
+            new SubjectEditWindow(s).ShowDialog();
+
+            SetSubjects();
         }
 
         // инициализирует установку занятий (получает все необхоимые данные)
