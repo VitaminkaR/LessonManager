@@ -9,12 +9,9 @@ internal class ApplicationContext : DbContext
     public DbSet<SubjectEntity> Subjects { get; set; } = null!;
     public DbSet<ActivityEntity> Activities { get; set; } = null!;
 
-    public string DbPath { get; }
-
     public ApplicationContext(DbContextOptions<ApplicationContext> options) 
         : base(options)
     {
-        DbPath = System.IO.Path.Join("", "LessonManager.db");
     }
 
     // очищает базу данных
