@@ -30,7 +30,6 @@ namespace LessonManager
             services.AddSingleton<ApplicationContext>(new ApplicationContext(
                 new DbContextOptionsBuilder<ApplicationContext>()
                     .UseSqlite($"Data Source={Configuration["DBPATH"]}")
-                    .EnableSensitiveDataLogging()
                     .Options
                 ));
             services.AddSingleton<IActivityRepository, ActivityRepository>();
