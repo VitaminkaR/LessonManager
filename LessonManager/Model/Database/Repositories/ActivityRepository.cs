@@ -26,14 +26,7 @@ namespace LessonManager.Model.Database.Repositories
         public void AddActivity(ActivityEntity activity)
         {
             m_DbContext.Activities.Add(activity);
-            try
-            {
-                m_DbContext.SaveChanges();
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show($"{e.Message} {activity.Name}");
-            }
+            m_DbContext.SaveChanges();
         }
 
         public void EditActivity(string predname, SubjectEntity predsubject, string? name, ActivityType type, DateTime activityTime, ActivityStateType state)

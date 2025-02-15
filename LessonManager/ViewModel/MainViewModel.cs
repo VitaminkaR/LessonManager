@@ -54,6 +54,8 @@ namespace LessonManager.ViewModel
                     m_SubjectRepository.AddAsync(subject);
                 }
             }
+
+            SetSubjects();
         }
 
         [RelayCommand]
@@ -72,6 +74,7 @@ namespace LessonManager.ViewModel
             }
 
             CurrentActivities.Clear();
+            SetSubjects();
         }
 
         [RelayCommand]
@@ -220,10 +223,10 @@ namespace LessonManager.ViewModel
                     }
 
                     ActivityType activityType = GetActivityTypeByTab();
-                    SubjectEntity s = await m_SubjectRepository.GetAsync(ChoosenSubject.Name);
+                    SubjectEntity subject = m_ApplicationContext.Subjects.Where(s => s.Name == ChoosenSubject.Name).First();
 
                     activity.Name = "";
-                    activity.Subject = s;
+                    activity.Subject = subject;
                     activity.Type = activityType;
                     activity.ActivityTime = DateTime.Now;
                     m_ActivityRepository.AddActivity(activity);

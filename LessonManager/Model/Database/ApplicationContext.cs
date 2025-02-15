@@ -1,4 +1,5 @@
-﻿using LessonManager.Model.Database.Entities;
+﻿using LessonManager.Model.Database.Configurations;
+using LessonManager.Model.Database.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 
@@ -26,6 +27,7 @@ internal class ApplicationContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        
+        modelBuilder.ApplyConfiguration(new SubjectEntityConfiguration());
+        modelBuilder.ApplyConfiguration(new ActivityEntityConfiguration());
     }
 }
