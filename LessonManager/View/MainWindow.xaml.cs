@@ -28,60 +28,26 @@ namespace LessonManager.View
             m_ViewModel = new MainViewModel();
             DataContext = m_ViewModel;
 
-            m_ViewModel.Subjects.CollectionChanged += Subjects_CollectionChanged;
-            ActivitiesTreeView.SelectedItemChanged += ActivitiesTreeView_SelectedItemChanged;
-
             this.Loaded += MainWindow_Loaded;
+        }
+
+        private void SubjectsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(e.Source is ListView)
+                m_ViewModel.SetActivities();
+        }
+
+        private void ActivitiesTab_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(e.Source is TabControl)
+                m_ViewModel.SetActivities();
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             m_ViewModel.SetSubjects();
-        }
-
-        private void ActivitiesTreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
-        {
-            m_ViewModel.ChoosenSubjectTreeItem = (TreeViewItem)ActivitiesTreeView.SelectedItem;
-        }
-
-        private void Subjects_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            UpdateSubjectAndActivityView(sender);
-        }
-
-        private void UpdateSubjectAndActivityView(object param)
-        {
-            ObservableCollection<SubjectEntity> subjects = (ObservableCollection<SubjectEntity>)param;
-            ActivitiesTreeView.Items.Clear();
-
-            // проходимся по всем дисциплинам
-            for (int i = 0; i < subjects.Count; i++)
-            {
-                TreeViewItem treeViewItemSubjects = new TreeViewItem();
-                treeViewItemSubjects.Header = subjects[i].Name;
-
-                ContextMenu contextMenu = new ContextMenu();
-                MenuItem menuItem = new MenuItem() { Header = "Удалить дисциплину" };
-                menuItem.Click += m_ViewModel.RemoveSubjectElement;
-                contextMenu.Items.Add(menuItem);
-                menuItem = new MenuItem() { Header = "Редактировать дисциплину" };
-                menuItem.Click += m_ViewModel.EditSubjectElement;
-                contextMenu.Items.Add(menuItem);
-                treeViewItemSubjects.ContextMenu = contextMenu;
-
-                // категории
-                TreeViewItem treeViewItemCategory = new TreeViewItem() { Header = "Lab", ContextMenu = contextMenu };
-                treeViewItemCategory.Selected += m_ViewModel.SetActivities;
-                treeViewItemSubjects.Items.Add(treeViewItemCategory);
-                treeViewItemCategory = new TreeViewItem() { Header = "Prac", ContextMenu = contextMenu };
-                treeViewItemCategory.Selected += m_ViewModel.SetActivities;
-                treeViewItemSubjects.Items.Add(treeViewItemCategory);
-                treeViewItemCategory = new TreeViewItem() { Header = "Lec", ContextMenu = contextMenu };
-                treeViewItemCategory.Selected += m_ViewModel.SetActivities;
-                treeViewItemSubjects.Items.Add(treeViewItemCategory);
-
-                ActivitiesTreeView.Items.Add(treeViewItemSubjects);
-            }
+            ActivitiesTab.SelectionChanged += ActivitiesTab_SelectionChanged;
+            SubjectsListView.SelectionChanged += SubjectsListView_SelectionChanged;
         }
 
         private void InfoMenuItem_Click(object sender, RoutedEventArgs e)

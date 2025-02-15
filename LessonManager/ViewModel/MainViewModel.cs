@@ -26,7 +26,10 @@ namespace LessonManager.ViewModel
         private IISCImport m_ISCImport;
 
         [ObservableProperty]
-        private TreeViewItem m_ChoosenSubjectTreeItem;
+        private SubjectEntity m_ChoosenSubject;
+
+        [ObservableProperty]
+        private TabItem m_ChoosenTab;
 
         [RelayCommand]
         private void OpenISCFile()
@@ -85,6 +88,40 @@ namespace LessonManager.ViewModel
             new StatisticsWindow().Show();
         }
 
+        public void SetActivities()
+        {
+            if (ChoosenSubject == null)
+            {
+                MessageBox.Show("Не выбрана дисциплина");
+                return;
+            }
+
+            ActivityType activityType = GetActivityTypeByTab();
+
+            SettingActivities(ChoosenSubject, activityType);
+        }
+
+        private ActivityType GetActivityTypeByTab()
+        {
+            ActivityType activityType = ActivityType.Lec;
+            switch ((string)ChoosenTab.Header)
+            {
+                case "Лекции":
+                    activityType = ActivityType.Lec;
+                    break;
+                case "Практики":
+                    activityType = ActivityType.Prac;
+                    break;
+                case "Лабораторные":
+                    activityType = ActivityType.Lab;
+                    break;
+                default:
+                    throw new System.Exception("Неизвестный тип занятия");
+            }
+
+            return activityType;
+        }
+
         // все дисциплины
         public ObservableCollection<SubjectEntity> Subjects { get; set; }
         // выбранные по дисциплине занятия
@@ -93,12 +130,12 @@ namespace LessonManager.ViewModel
         // удаляет дисциплину из меню
         public async void RemoveSubjectElement(object? sender, RoutedEventArgs e)
         {
-            if (ChoosenSubjectTreeItem == null)
+            if (ChoosenSubject == null)
             {
                 MessageBox.Show("Не выбран ни один элемент");
                 return;
             }
-            await m_SubjectRepository.RemoveAsync((string)ChoosenSubjectTreeItem.Header);
+            await m_SubjectRepository.RemoveAsync(ChoosenSubject.Name);
 
             SetSubjects();
         }
@@ -106,30 +143,15 @@ namespace LessonManager.ViewModel
         // редактирует дисциплину из меню
         public async void EditSubjectElement(object? sender, RoutedEventArgs e)
         {
-            if (ChoosenSubjectTreeItem == null)
+            if (ChoosenSubject == null)
             {
                 MessageBox.Show("Не выбран ни один элемент");
                 return;
             }
-            SubjectEntity s = await m_SubjectRepository.GetAsync((string)ChoosenSubjectTreeItem.Header);
+            SubjectEntity s = await m_SubjectRepository.GetAsync(ChoosenSubject.Name);
             new SubjectEditWindow(s).ShowDialog();
 
             SetSubjects();
-        }
-
-        // инициализирует установку занятий (получает все необхоимые данные)
-        public async void SetActivities(object? sender, RoutedEventArgs e)
-        {
-            TreeViewItem curEl = (TreeViewItem)sender;
-            string type = curEl.Header.ToString();
-            ActivityType activityType = (ActivityType)Enum.Parse(typeof(ActivityType), type);
-
-            TreeViewItem SubjectTreeViewItem = (TreeViewItem)curEl.Parent;
-            // получем дисциплину этого занятия
-            string subjectName = SubjectTreeViewItem.Header.ToString();
-            SubjectEntity subject = await m_SubjectRepository.GetAsync(subjectName);
-
-            SettingActivities(subject, activityType);
         }
 
         // непосредственно обновляет коллекцию занятий
@@ -191,15 +213,14 @@ namespace LessonManager.ViewModel
                 ActivityEntity activity = (ActivityEntity)e.NewItems[0];
                 if(activity.Name == null)
                 {
-                    if (ChoosenSubjectTreeItem == null)
+                    if (ChoosenSubject == null)
                     {
                         MessageBox.Show("Не выбран ни один элемент");
                         return;
                     }
-                    string type = (string)ChoosenSubjectTreeItem.Header;
-                    ActivityType activityType = (ActivityType)Enum.Parse(typeof(ActivityType), type);
 
-                    SubjectEntity s = await m_SubjectRepository.GetAsync((string)((TreeViewItem)ChoosenSubjectTreeItem.Parent).Header);
+                    ActivityType activityType = GetActivityTypeByTab();
+                    SubjectEntity s = await m_SubjectRepository.GetAsync(ChoosenSubject.Name);
 
                     activity.Name = "";
                     activity.Subject = s;
