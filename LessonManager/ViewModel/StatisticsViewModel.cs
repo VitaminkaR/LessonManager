@@ -27,17 +27,22 @@ namespace LessonManager.ViewModel
         private int m_PassedLabsCount;
 
         [RelayCommand]
-        private void Update() => Analyse();
+        private  void Update() => UpdateAsync();
+
+        private async void UpdateAsync()
+        {
+            await AnalyseAsync();
+        }
 
         public StatisticsViewModel()
         {
             var serviceProvider = App.CurrentApplication.services.BuildServiceProvider();
             var applicationContext = serviceProvider.GetRequiredService<ApplicationContext>();
             m_StatisticsManager = new StatisticsManager(applicationContext.Subjects);
-            Analyse();
+            UpdateAsync();
         }
 
-        private async Task Analyse()
+        private async Task AnalyseAsync()
         {
             LectionsCount = await m_StatisticsManager.GetLectionsCount();
             VisitedLectionsCount = await m_StatisticsManager.GetVisitedLectionsCount();
