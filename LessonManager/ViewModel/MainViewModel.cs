@@ -48,7 +48,7 @@ namespace LessonManager.ViewModel
 
                 foreach (SubjectEntity subject in subjects)
                 {
-                    m_SubjectRepository.AddSubject(subject);
+                    m_SubjectRepository.AddAsync(subject);
                 }
             }
         }
@@ -74,7 +74,9 @@ namespace LessonManager.ViewModel
         [RelayCommand]
         private void AddSubject()
         {
-            new SubjectAddWindow().Show();
+            Window w = new SubjectAddWindow();
+            w.Show();
+            w.Closed += (sender, eventargs) => SetSubjects();
         }
 
         [RelayCommand]
@@ -89,30 +91,34 @@ namespace LessonManager.ViewModel
         public ObservableCollection<ActivityEntity> CurrentActivities { get; set; }
 
         // удаляет дисциплину из меню
-        public void RemoveSubjectElement(object? sender, RoutedEventArgs e)
+        public async void RemoveSubjectElement(object? sender, RoutedEventArgs e)
         {
             if (ChoosenSubjectTreeItem == null)
             {
                 MessageBox.Show("Не выбран ни один элемент");
                 return;
             }
-            m_SubjectRepository.RemoveSubject((string)ChoosenSubjectTreeItem.Header);
+            await m_SubjectRepository.RemoveAsync((string)ChoosenSubjectTreeItem.Header);
+
+            SetSubjects();
         }
 
         // редактирует дисциплину из меню
-        public void EditSubjectElement(object? sender, RoutedEventArgs e)
+        public async void EditSubjectElement(object? sender, RoutedEventArgs e)
         {
             if (ChoosenSubjectTreeItem == null)
             {
                 MessageBox.Show("Не выбран ни один элемент");
                 return;
             }
-            SubjectEntity s = m_SubjectRepository.GetSubject((string)ChoosenSubjectTreeItem.Header);
-            new SubjectEditWindow(s).Show();
+            SubjectEntity s = await m_SubjectRepository.GetAsync((string)ChoosenSubjectTreeItem.Header);
+            Window w = new SubjectEditWindow(s);
+            w.Show();
+            w.Closed += (sender, eventargs) => SetSubjects();
         }
 
         // инициализирует установку занятий (получает все необхоимые данные)
-        public void SetActivities(object? sender, RoutedEventArgs e)
+        public async void SetActivities(object? sender, RoutedEventArgs e)
         {
             TreeViewItem curEl = (TreeViewItem)sender;
             string type = curEl.Header.ToString();
@@ -121,7 +127,7 @@ namespace LessonManager.ViewModel
             TreeViewItem SubjectTreeViewItem = (TreeViewItem)curEl.Parent;
             // получем дисциплину этого занятия
             string subjectName = SubjectTreeViewItem.Header.ToString();
-            SubjectEntity subject = m_SubjectRepository.GetSubject(subjectName);
+            SubjectEntity subject = await m_SubjectRepository.GetAsync(subjectName);
 
             SettingActivities(subject, activityType);
         }
@@ -157,14 +163,21 @@ namespace LessonManager.ViewModel
             m_ActivityRepository = serviceProvider.GetRequiredService<IActivityRepository>();
             m_SubjectRepository = serviceProvider.GetRequiredService<ISubjectRepository>();
 
-            Subjects = m_ApplicationContext.Subjects.Local.ToObservableCollection();
+            Subjects = new ObservableCollection<SubjectEntity>();
             CurrentActivities = new ObservableCollection<ActivityEntity>();
             CurrentActivities.CollectionChanged += CurrentActivities_CollectionChanged;
 
             m_ISCImport = new OGUICSImport();
         }
 
-        private void CurrentActivities_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        public async void SetSubjects()
+        {
+            Subjects.Clear();
+            foreach (var item in await m_SubjectRepository.GetAsync())
+                Subjects.Add(item);
+        }
+
+        private async void CurrentActivities_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             // удаление активности
             if(e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove)
@@ -186,7 +199,7 @@ namespace LessonManager.ViewModel
                     string type = (string)ChoosenSubjectTreeItem.Header;
                     ActivityType activityType = (ActivityType)Enum.Parse(typeof(ActivityType), type);
 
-                    SubjectEntity s = m_SubjectRepository.GetSubject((string)((TreeViewItem)ChoosenSubjectTreeItem.Parent).Header);
+                    SubjectEntity s = await m_SubjectRepository.GetAsync((string)((TreeViewItem)ChoosenSubjectTreeItem.Parent).Header);
 
                     activity.Name = "";
                     activity.Subject = s;

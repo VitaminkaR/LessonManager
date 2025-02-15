@@ -30,6 +30,13 @@ namespace LessonManager.View
 
             m_ViewModel.Subjects.CollectionChanged += Subjects_CollectionChanged;
             ActivitiesTreeView.SelectedItemChanged += ActivitiesTreeView_SelectedItemChanged;
+
+            this.Loaded += MainWindow_Loaded;
+        }
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            m_ViewModel.SetSubjects();
         }
 
         private void ActivitiesTreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)

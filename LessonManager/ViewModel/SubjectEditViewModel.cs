@@ -22,10 +22,15 @@ namespace LessonManager.ViewModel
         [RelayCommand]
         private void EditSubject()
         {
+            EditSubjectAsync();
+        }
+
+        private async void EditSubjectAsync()
+        {
             var serviceProvider = App.CurrentApplication.services.BuildServiceProvider();
             var subjects = serviceProvider.GetRequiredService<ISubjectRepository>();
 
-            subjects.EditSubject(m_PredName, SubjectName, ExamType, ExamDate);
+            await subjects.EditAsync(m_PredName, SubjectName, ExamType, ExamDate);
         }
 
         public SubjectEditViewModel(SubjectEntity subject)

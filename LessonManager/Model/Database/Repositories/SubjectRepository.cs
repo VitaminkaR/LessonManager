@@ -16,58 +16,40 @@ namespace LessonManager.Model.Database.Repositories
             m_DbContext = dbContext;
         }
 
-        public void AddSubject(string name, string exam, DateTime dateTime)
+        public async Task AddAsync(string name, string exam, DateTime dateTime)
         {
-            if (m_DbContext.Subjects.Any(s => s.Name == name))
-            {
-                MessageBox.Show("Такой предмет уже существует");
-                return;
-            }
-
-            m_DbContext.Subjects.Add(
+            await m_DbContext.Subjects.AddAsync(
                 new SubjectEntity(name, (ExamType)Enum.Parse(typeof(ExamType), exam), dateTime, ExamMarkType.None)
             );
-            m_DbContext.SaveChanges();
+            await m_DbContext.SaveChangesAsync();
         }
 
-        public void RemoveSubject(string name)
+        public async Task RemoveAsync(string name)
         {
-            m_DbContext.Subjects.Remove(
-                GetSubject(name)
-            );
-            m_DbContext.SaveChanges();
+            SubjectEntity entity = await GetAsync(name);
+            m_DbContext.Subjects.Remove(entity);
+            await m_DbContext.SaveChangesAsync();
         }
 
-        public void EditSubject(string lastname, string name, string exam, DateTime dateTime)
+        public async Task EditAsync(string lastname, string name, string exam, DateTime dateTime)
         {
-            if (m_DbContext.Subjects.Any(s => s.Name == name))
-            {
-                MessageBox.Show("Такой предмет в этом семестре уже существует");
-                return;
-            }
-
-            SubjectEntity s = GetSubject(lastname);
+            SubjectEntity s = await GetAsync(lastname);
             s.Name = name;
             s.Exam = (ExamType)Enum.Parse(typeof(ExamType), exam);
             s.ExamDate = dateTime;
-            m_DbContext.SaveChanges();
+            await m_DbContext.SaveChangesAsync();
         }
 
-        public SubjectEntity GetSubject(string name)
+        public async Task AddAsync(SubjectEntity subject)
         {
-            return m_DbContext.Subjects.Where(s => s.Name == name).Select(s => s).First();
+            await m_DbContext.Subjects.AddAsync(subject);
+            await m_DbContext.SaveChangesAsync();
         }
 
-        public void AddSubject(SubjectEntity subject)
-        {
-            if (m_DbContext.Subjects.Any(s => s.Name == subject.Name))
-            {
-                MessageBox.Show("Такой предмет в этом семестре уже существует");
-                return;
-            }
+        public async Task<IEnumerable<SubjectEntity>> GetAsync() =>
+            await m_DbContext.Subjects.AsNoTracking().ToArrayAsync();
 
-            m_DbContext.Subjects.Add(subject);
-            m_DbContext.SaveChanges();
-        }
+        public async Task<SubjectEntity> GetAsync(string name) =>
+            await m_DbContext.Subjects.AsNoTracking().Where(s => s.Name == name).Select(s => s).FirstAsync();
     }
 }

@@ -21,6 +21,11 @@ namespace LessonManager.ViewModel
         [RelayCommand]
         private void AddSubject()
         {
+            AddSubjectAsync();
+        }
+
+        private async void AddSubjectAsync()
+        {
             if (ExamType == null || SubjectName == null)
             {
                 MessageBox.Show("Не все поля заполненные");
@@ -30,7 +35,13 @@ namespace LessonManager.ViewModel
             var serviceProvider = App.CurrentApplication.services.BuildServiceProvider();
             var subjects = serviceProvider.GetRequiredService<ISubjectRepository>();
 
-            subjects.AddSubject(SubjectName, ExamType, ExamDate);
+            if (subjects.GetAsync().Result.Any((s) => s.Name == SubjectName))
+            {
+                MessageBox.Show("Дисциплина с таким названием уже существует");
+                return;
+            }
+
+            await subjects.AddAsync(SubjectName, ExamType, ExamDate);
         }
     }
 }
